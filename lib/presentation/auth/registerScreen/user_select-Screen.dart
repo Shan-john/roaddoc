@@ -3,7 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
-import 'package:roaddoc/enumfunction/type_of_users.dart';
+import 'package:roaddoc/function/type_of_users.dart';
+ 
 import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
 
 class UserTypeSelectionScreen extends StatelessWidget {
@@ -12,6 +13,13 @@ class UserTypeSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:  AppBar(
+         leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios))
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

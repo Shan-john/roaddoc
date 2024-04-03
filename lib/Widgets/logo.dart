@@ -9,11 +9,17 @@ class logoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset("assets/logo.png"),
-        titleText("Road Doc"),
-      ],
+    return SizedBox(
+      
+         
+          height: 200,
+          width: 300,
+      child: Column(
+        children: [
+          Image.asset("assets/logo.png"),
+          titleText("Road Doc"),
+        ],
+      ),
     );
   }
 }

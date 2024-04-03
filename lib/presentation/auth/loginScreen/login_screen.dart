@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
- 
-import 'package:roaddoc/function/type_of_users.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 
-class RegisterScreen extends StatelessWidget {
-  final UserType type;
-  RegisterScreen({super.key, required this.type});
-  TextEditingController usernameTextEditingController = TextEditingController();
+class LoginScreen extends StatelessWidget {
+   LoginScreen({super.key});
+ 
   TextEditingController passwordTextEditingController = TextEditingController();
-  TextEditingController phoneNumberTextEditingController =
-      TextEditingController();
+  
   TextEditingController mailIdTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -31,29 +27,22 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              titleText("Register"),
+              titleText("Log in"),
               Gap(10),
-              textfieldeditor(
-                  controller: usernameTextEditingController,
-                  hintlable: "username"),
-              Gap(10),
+             
               textfieldeditor(
                   controller: mailIdTextEditingController, hintlable: "Mail id"),
               Gap(10),
               PasswordTextField(
                   passwordcontroller: passwordTextEditingController),
               Gap(10),
-              textfieldeditor(
-                  keyboardType: TextInputType.number,
-                  controller: phoneNumberTextEditingController,
-                  hintlable: "Phone number"),
-              Gap(10),
+             
               Primarybutton(
                 onpressed: (){},
                   height: 55,
                   size: double.infinity,
                   colors: Colors.black,
-                  label: "NEXT",
+                  label: "LOG IN",
                   fontsize: 18,
                   Textcolor: Colors.white),
             ],

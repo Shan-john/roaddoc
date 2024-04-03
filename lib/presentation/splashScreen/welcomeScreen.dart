@@ -3,7 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
-import 'package:roaddoc/enumfunction/type_of_users.dart';
+import 'package:roaddoc/presentation/auth/loginScreen/login_screen.dart';
+ 
 import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/user_select-Screen.dart';
 
@@ -44,6 +45,11 @@ class _loginAndRegister extends StatelessWidget {
             size: 180,
             colors: Colors.white,
             label: "LOGIN",
+            onpressed: (){
+               Routes.instance
+                  .push(widget: LoginScreen(), context: context);
+              
+            },
             bordercolor: Colors.black,
             borderwidth: 3,
             fontsize: 18),

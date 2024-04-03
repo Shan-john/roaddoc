@@ -60,7 +60,6 @@ class Primarybutton extends StatelessWidget {
   }
 }
 
-
 /// custom 
    titleText(String lable) {
     return Text(
