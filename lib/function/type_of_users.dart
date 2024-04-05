@@ -1,4 +1,4 @@
-enum UserType{
+enum usertype {
   DRIVER,
   MECHANIC,
 }

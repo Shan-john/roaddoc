@@ -8,8 +8,8 @@ class SimpleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       lable,
-      style: const TextStyle(fontSize: 20, fontFamily: "Roboto",fontWeight: FontWeight.w600  ),
+      style: const TextStyle(
+          fontSize: 20, fontFamily: "Roboto", fontWeight: FontWeight.w600),
     );
-    
   }
 }

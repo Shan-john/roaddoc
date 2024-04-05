@@ -4,7 +4,7 @@ import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/function/type_of_users.dart';
- 
+
 import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
 
 class UserTypeSelectionScreen extends StatelessWidget {
@@ -13,13 +13,12 @@ class UserTypeSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-         leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios))
-      ),
+      appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios))),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,7 +34,7 @@ class UserTypeSelectionScreen extends StatelessWidget {
                   label: "As A USER",
                   onpressed: () {
                     Routes.instance.push(
-                        widget: RegisterScreen(type: UserType.DRIVER),
+                        widget: RegisterScreen(type: usertype.DRIVER),
                         context: context);
                   },
                   fontsize: 18,
@@ -47,9 +46,9 @@ class UserTypeSelectionScreen extends StatelessWidget {
                   size: 180,
                   colors: Colors.white,
                   label: "As A MECHANIC",
-                   onpressed: () {
+                  onpressed: () {
                     Routes.instance.push(
-                        widget: RegisterScreen(type: UserType.MECHANIC),
+                        widget: RegisterScreen(type: usertype.MECHANIC),
                         context: context);
                   },
                   fontsize: 18,

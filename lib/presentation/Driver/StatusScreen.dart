@@ -13,7 +13,7 @@ class _StatusScreenState extends State<StatusScreen> {
   bool isMechanicReached = false;
   bool isMechanicReachedButtonisUsed = false;
   bool isInspected = false;
-  void StutusCheck(){
+  void StutusCheck() {
     // todo check the status to the mech user to indicate the Status light
     // from history of the current mech user id on the user collection
   }
@@ -27,26 +27,26 @@ class _StatusScreenState extends State<StatusScreen> {
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
-      body: SafeArea( 
-         minimum: EdgeInsets.all(10),
+      body: SafeArea(
+        minimum: EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            titleText("Status"),
+            titleText("Status", 40),
             Gap(10),
             Primarybutton(
-              size: 390, 
-              colors: !isMechanicReached ? Colors.white : Color.fromARGB(255, 0, 255, 157), 
-              label: "Mechanic Reached",
-              onpressed: () { 
+              size: 390,
+              colors: !isMechanicReached
+                  ? Colors.white
+                  : Color.fromARGB(255, 0, 255, 157),
+              label: "Is Mechanic accept your request",
+              onpressed: () {
                 setState(() {
                   if (!isMechanicReachedButtonisUsed) {
                     isMechanicReached = !isMechanicReached;
-                     isMechanicReachedButtonisUsed = true;
-                  }  
-
-                 
+                    isMechanicReachedButtonisUsed = true;
+                  }
                 });
               },
               fontsize: 18,

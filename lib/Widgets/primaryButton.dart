@@ -21,7 +21,8 @@ class Primarybutton extends StatelessWidget {
     required this.label,
     required this.fontsize,
     required this.Textcolor,
-    this.bordercolor, this.borderwidth,
+    this.bordercolor,
+    this.borderwidth,
   });
 
   @override
@@ -33,7 +34,7 @@ class Primarybutton extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               color: bordercolor ?? Colors.transparent,
-              width: borderwidth??0.0,
+              width: borderwidth ?? 0.0,
             ),
             borderRadius: BorderRadius.circular(5),
             color: colors,
@@ -60,10 +61,18 @@ class Primarybutton extends StatelessWidget {
   }
 }
 
-/// custom 
-   titleText(String lable) {
-    return Text(
-        lable,
-        style: const TextStyle(fontSize: 40, fontFamily: "Comfortaa"),
-      );
-  }
+/// custom
+titleText(String lable, double fontsize) {
+  return Text(
+    lable,
+    style: TextStyle(fontSize: fontsize, fontFamily: "Comfortaa"),
+  );
+}
+
+Text TextConfortaa(String text, double size) {
+  return Text(
+    text,
+    style: TextStyle(
+        fontSize: size, fontWeight: FontWeight.w400, fontFamily: "Confortaa"),
+  );
+}

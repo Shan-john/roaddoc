@@ -1,15 +1,24 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
- 
+import 'package:roaddoc/core/routes.dart';
+import 'package:roaddoc/core/verificationfunc.dart';
+
 import 'package:roaddoc/function/type_of_users.dart';
+import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
+import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
+import 'package:roaddoc/service/firebase/firebase_auth.dart';
+import 'package:roaddoc/service/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final UserType type;
+  final usertype type;
   RegisterScreen({super.key, required this.type});
-  TextEditingController usernameTextEditingController = TextEditingController();
+  TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController phoneNumberTextEditingController =
       TextEditingController();
@@ -31,14 +40,14 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              titleText("Register"),
+              titleText("Register", 40),
               Gap(10),
               textfieldeditor(
-                  controller: usernameTextEditingController,
-                  hintlable: "username"),
+                  controller: nameTextEditingController, hintlable: "Name"),
               Gap(10),
               textfieldeditor(
-                  controller: mailIdTextEditingController, hintlable: "Mail id"),
+                  controller: mailIdTextEditingController,
+                  hintlable: "Mail id"),
               Gap(10),
               PasswordTextField(
                   passwordcontroller: passwordTextEditingController),
@@ -49,7 +58,39 @@ class RegisterScreen extends StatelessWidget {
                   hintlable: "Phone number"),
               Gap(10),
               Primarybutton(
-                onpressed: (){},
+                  onpressed: () async {
+                    bool isvalidated = Registorvalidation(
+                      Phonenumber: phoneNumberTextEditingController.text,
+                      email: mailIdTextEditingController.text,
+                      name: nameTextEditingController.text,
+                      password: passwordTextEditingController.text,
+                    );
+                      print(" done");
+                    if (isvalidated) {
+                        print(" done");
+                      bool isregistered =
+                          await FireBaseAuthHelper.instance.signup(
+                        nameTextEditingController.text,
+                        mailIdTextEditingController.text,
+                        phoneNumberTextEditingController.text.toString(),
+                        context,
+                        type,
+                      );
+                      if (isregistered) {
+                         print( "done");
+                        if (type == usertype.DRIVER) {
+                          Routes.instance.pushandRemoveUntil(
+                              widget: DriverHomeScreen(), context: context);
+                        } else {
+                        
+                          Routes.instance.pushandRemoveUntil(
+                              widget: MechanicHomeScreen( ), context: context);
+                        }
+                      } else {
+                        
+                      }
+                    }
+                  },
                   height: 55,
                   size: double.infinity,
                   colors: Colors.black,
