@@ -18,7 +18,7 @@ Widget textfieldeditor(
       decoration: InputDecoration(
         border: InputBorder.none,
         // ink well to switch the visiblity to true and false
-
+  //k
         hintText: hintlable,
         hintStyle: const TextStyle(
             color: Color.fromARGB(151, 43, 43, 43), fontSize: 20),

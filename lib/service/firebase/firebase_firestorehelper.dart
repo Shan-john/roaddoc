@@ -98,8 +98,6 @@ class FirebasefirestoreHelper {
 
       return availableUser;
     } catch (e) {
-      
-
       return UserModel();
     }
   }
@@ -120,9 +118,9 @@ class FirebasefirestoreHelper {
     }
   }
 
-  
   Future<bool> uploadhistory(
-      {required UserModel updatedDriverUser, required UserModel updatedMechUser}) async {
+      {required UserModel updatedDriverUser,
+      required UserModel updatedMechUser}) async {
     try {
       firebaseFirestore
           .collection("Users")
@@ -131,7 +129,7 @@ class FirebasefirestoreHelper {
           .doc()
           .set(updatedMechUser.toJson());
 
-           firebaseFirestore
+      firebaseFirestore
           .collection("Users")
           .doc(updatedMechUser.id)
           .collection("history")
@@ -143,5 +141,4 @@ class FirebasefirestoreHelper {
       return false;
     }
   }
-
 }

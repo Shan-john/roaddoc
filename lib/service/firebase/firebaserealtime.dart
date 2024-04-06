@@ -11,6 +11,4 @@ class firebaseRealtimeStorageHelper {
       "accept": value,
     });
   }
- 
-
 }

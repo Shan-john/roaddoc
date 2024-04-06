@@ -63,24 +63,16 @@ class LoginScreen extends StatelessWidget {
 
                       
                     
-                    //  Future.delayed(Duration(seconds: 5), () {});
+                    
                     
                       
                       if (isregistered) {
                         Routes.instance.pop(context);
                           
-                            //  if (user.type.toString() ==
-                            // usertype.DRIVER.toString()) {
+                            
                           Routes.instance.pushandRemoveUntil(
                               widget: SplashScreen(), context: context);
-                          // print("driver");
-                      //  }
-                        //  else {
-                          // print("mecha");
-                          // print(user.type);
-                          // Routes.instance.pushandRemoveUntil(
-                          //     widget: MechanicHomeScreen(), context: context);
-                        // }
+                         
                                                        
                         
                       }

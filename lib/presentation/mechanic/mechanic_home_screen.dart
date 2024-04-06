@@ -80,10 +80,13 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
               final data = requestdriverlist[index];
               return InkWell(
                 onTap: () async {
-                 //Position position = await getlocation();
+                  //Position position = await getlocation();
 
                   Routes.instance.push(
-                      widget: DriverRequesDetailsScreen(data: data,), context: context);
+                      widget: DriverRequesDetailsScreen(
+                        data: data,
+                      ),
+                      context: context);
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
@@ -108,7 +111,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 37,
-                      child: TextConfortaa("${index+1}", 20), 
+                      child: TextConfortaa("${index + 1}", 20),
                     ),
                     title: TextConfortaa(data.name.toString(), 20),
                     subtitle: TextConfortaa("+91 ${data.phoneNumber}", 18),
@@ -116,14 +119,16 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                         width: 100,
                         child: CircularButton(
                           color: Colors.green,
-                          onpress: () { 
-                           
+                          onpress: () {
                             appProvider.removeRequest(data);
                             firebaseRealtimeStorageHelper.instance
                                 .requeststatuschager(value: true, id: data.id);
                             FirebasefirestoreHelper.instance
                                 .removeRequest(id: data.id);
-                              FirebasefirestoreHelper.instance.uploadCurrentAccptedMech(MechUser: appProvider.getuserInfromation,driverUser: data);
+                            FirebasefirestoreHelper.instance
+                                .uploadCurrentAccptedMech(
+                                    MechUser: appProvider.getuserInfromation,
+                                    driverUser: data);
                           },
                           radius: 40,
                           child: const Icon(
@@ -168,42 +173,3 @@ class CircularButton extends StatelessWidget {
     );
   }
 }
-
- 
- 
-      
-      // body: StreamBuilder<DocumentSnapshot>(
-      //   stream: FirebaseFirestore.instance.collection('users').doc(currentUserId).snapshots(),
-      //   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-      //     if (snapshot.hasError) {
-      //       return Text('Error: ${snapshot.error}');
-      //     }
-
-      //     switch (snapshot.connectionState) {
-      //       case ConnectionState.waiting:
-      //         return Center(
-      //           child: CircularProgressIndicator(),
-      //         );
-      //       default:
-      //         if (!snapshot.hasData || !snapshot.data.exists) {
-      //           return Center(
-      //             child: Text('Document does not exist'),
-      //           );
-      //         }
-
-      //         // Assuming you have a field called 'name' in your user document
-              
-
-      //         return Center(
-      //           child: Column(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             children: [
-      //               Text('Hello, $userName!'),
-      //               // Add other UI elements here based on the user document data
-      //             ],
-      //           ),
-      //         );
-      //     }
-      //   },
-      // ),
-    

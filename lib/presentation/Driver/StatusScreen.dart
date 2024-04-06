@@ -50,7 +50,6 @@ class _StatusScreenState extends State<StatusScreen> {
                   ? Colors.white
                   : Color.fromARGB(255, 0, 255, 157),
               label: "Is Mechanic accept your request",
-              
               fontsize: 18,
               Textcolor: Colors.black,
               bordercolor: Colors.black,
@@ -84,10 +83,13 @@ class _StatusScreenState extends State<StatusScreen> {
               borderwidth: 2,
               height: 100,
             ),
-           isMechanicAccepted ? ListTile(
-              title: TextConfortaa(MechUser.name??"", 20),
-              subtitle: TextConfortaa("+91 ${MechUser.phoneNumber?? ""} ", 18),
-            ) : SizedBox(),
+            isMechanicAccepted
+                ? ListTile(
+                    title: TextConfortaa(MechUser.name ?? "", 20),
+                    subtitle:
+                        TextConfortaa("+91 ${MechUser.phoneNumber ?? ""} ", 18),
+                  )
+                : SizedBox(),
           ],
         ),
       ),

@@ -49,7 +49,7 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            SizedBox( 
               child: Column(
                 children: [
                   Primarybutton(

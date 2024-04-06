@@ -35,6 +35,7 @@ class FireBaseAuthHelper {
   Future<bool> signup(String name, String email, String phonenumber,
       BuildContext context, usertype type) async {
     try {
+      
       UserCredential? userCredential =
           await _auth.createUserWithEmailAndPassword(
               email: email, password: phonenumber);

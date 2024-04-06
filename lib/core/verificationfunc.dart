@@ -1,7 +1,10 @@
 import 'package:roaddoc/function/ShowMessage.dart';
 
 // login vadidation checker
-bool loginvalidation(String email, String password, ) {
+bool loginvalidation(
+  String email,
+  String password,
+) {
   if (email.isEmpty && password.isEmpty) {
     showMessage("Email is empty");
     return false;
@@ -11,8 +14,7 @@ bool loginvalidation(String email, String password, ) {
   } else if (password.isEmpty) {
     showMessage("Email is empty");
     return false;
-  }
-     else {
+  } else {
     return true;
   }
 }

@@ -14,7 +14,6 @@ class UserModel {
   String? dateAndTime;
   String? ismechreached;
   String? inspectionmessage;
- 
 
   UserModel({
     this.mailid,
@@ -27,7 +26,6 @@ class UserModel {
     this.dateAndTime,
     this.ismechreached,
     this.inspectionmessage,
-    
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -47,7 +45,6 @@ class UserModel {
     String? dateAndTime,
     String? ismechreached,
     String? inspectionmessage,
-     
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -60,7 +57,6 @@ class UserModel {
       dateAndTime: dateAndTime ?? this.dateAndTime,
       ismechreached: ismechreached ?? this.ismechreached,
       inspectionmessage: inspectionmessage ?? this.inspectionmessage,
-       
     );
   }
 }

@@ -55,7 +55,7 @@ class UserTypeSelectionScreen extends StatelessWidget {
                   Textcolor: Colors.black),
             ],
           ),
-          Gap(40),
+         const Gap(40),
         ],
       ),
     );

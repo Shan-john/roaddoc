@@ -43,7 +43,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 28 ,
+        toolbarHeight: 28,
         leading: IconButton(
             onPressed: () {
               FireBaseAuthHelper.instance.logOut();
@@ -56,17 +56,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             )),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(10 ),
+        padding: EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start
-          ,
-         
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             titleText(titlelable, 40),
             const SimpleText(lable: "Available Mechanics Around"),
             Gap(20),
             Container(
-              height: MediaQuery.of(context).size.height/1.6,
+              height: MediaQuery.of(context).size.height / 1.6,
               width: double.infinity,
               color: Colors.amber,
               child: Image.network(
@@ -75,30 +73,29 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             ),
             Gap(10),
             Primarybutton(
-                bordercolor: Colors.black, 
+                bordercolor: Colors.black,
                 borderwidth: 2,
                 size: 390,
                 colors: Colors.white,
                 label: "REQUEST MECHANIC",
                 onpressed: () async {
                   loaderIndicator(context);
-                
+
                   listofrequest = appProvider.getDriverRequestlist;
                   print(" altitude : ${position!.latitude}");
-                  UserModel userModel = appProvider.getuserInfromation
-                      .copyWith(
-                          inspectionmessage: "ho bro",
-                          latitude: position!.latitude,
-                          longitude: position!.longitude); 
-                          appProvider.getCurrentAcceptedMech( 
-                        driverUser: appProvider.getuserInfromation);
+                  UserModel userModel = appProvider.getuserInfromation.copyWith(
+                      inspectionmessage: "ho bro",
+                      latitude: position!.latitude,
+                      longitude: position!.longitude);
+                  appProvider.getCurrentAcceptedMech(
+                      driverUser: appProvider.getuserInfromation);
                   appProvider.updateuserinfo(userModel);
-                  
+
                   requestbuttom(appProvider.getuserInfromation.id);
                 },
                 fontsize: 18,
-                Textcolor: Colors.black), 
-           Gap(5),
+                Textcolor: Colors.black),
+            Gap(5),
             Primarybutton(
                 bordercolor: Colors.black,
                 borderwidth: 2,
@@ -107,9 +104,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 label: " CANNCEL REQUEST",
                 onpressed: () async {
                   loaderIndicator(context);
-                 appProvider.currentAvailableMechUser.id ==""?
-                  FirebasefirestoreHelper.instance
-                      .removeRequest(id: appProvider.getuserInfromation.id) : showMessage("your Request is already accepted");
+                  appProvider.currentAvailableMechUser.id == ""
+                      ? FirebasefirestoreHelper.instance
+                          .removeRequest(id: appProvider.getuserInfromation.id)
+                      : showMessage("your Request is already accepted");
                   Routes.instance.pop(context);
                 },
                 fontsize: 18,
@@ -143,7 +141,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           : null;
     } else {
       showMessage("Already requested routing to the status page.");
-      
+
       Routes.instance.push(widget: StatusScreen(), context: context);
     }
   }
