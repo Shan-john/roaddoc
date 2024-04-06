@@ -12,7 +12,7 @@ import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     return MechanicHomeScreen();
                   } else {
                     showMessage("NetWork Issue");
-                    return const WelcomeScreen();
+                    return const SplashScreen ();
                   }
                 } //  return if the user is driver goto drivermain page() other wize mechanic homepage;
                 else {

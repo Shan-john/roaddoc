@@ -16,7 +16,7 @@ import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 import 'package:roaddoc/service/firebase/firebaserealtime.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class MechanicHomeScreen extends StatefulWidget {
   MechanicHomeScreen({
@@ -75,76 +75,70 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
             )
           ]),
         ),
-        body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection("RequestList").snapshots(),
-          builder: (context, snapshot) {
-            return ListView.separated(
-                itemBuilder: (context, index) {
-                  final data = requestdriverlist[index];
-                  return InkWell(
-                    onTap: () async {
-                      Position position = await getlocation();
+        body: ListView.separated(
+            itemBuilder: (context, index) {
+              final data = requestdriverlist[index];
+              return InkWell(
+                onTap: () async {
+                 //Position position = await getlocation();
 
-                      Routes.instance.push(
-                          widget: DriverRequesDetailsScreen(),
-                          context: context);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: const Color.fromARGB(255, 252, 252, 252),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color.fromARGB(101, 58, 58, 58),
-                                blurRadius: 5,
-                                spreadRadius: 0,
-                                offset: Offset(3, 5)),
-                            BoxShadow(
-                                color: Color.fromARGB(48, 1, 111, 255),
-                                blurRadius: 5,
-                                spreadRadius: 0,
-                                offset: Offset(-5, -3))
-                          ]),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 37,
-                          child: TextConfortaa(index.toString(), 18),
-                        ),
-                        title: TextConfortaa("Username", 20),
-                        subtitle: TextConfortaa(data.id.toString(), 18),
-                        trailing: SizedBox(
-                            width: 100,
-                            child: CircularButton(
-                              color: Colors.green,
-                              onpress: () {
-                                appProvider.removeRequest(data);
-                                firebaseRealtimeStorageHelper.instance
-                                    .requeststatuschager(
-                                        value: true, id: data.id);
-                                FirebasefirestoreHelper.instance
-                                    .removeRequest(id: data.id);
-                              },
-                              radius: 40,
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ),
+                  Routes.instance.push(
+                      widget: DriverRequesDetailsScreen(data: data,), context: context);
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: const Color.fromARGB(255, 252, 252, 252),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromARGB(101, 58, 58, 58),
+                            blurRadius: 5,
+                            spreadRadius: 0,
+                            offset: Offset(3, 5)),
+                        BoxShadow(
+                            color: Color.fromARGB(48, 1, 111, 255),
+                            blurRadius: 5,
+                            spreadRadius: 0,
+                            offset: Offset(-5, -3))
+                      ]),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 37,
+                      child: TextConfortaa("${index+1}", 20), 
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return Gap(10);
-                },
-                itemCount: requestdriverlist.length);
-          },
-        ));
+                    title: TextConfortaa(data.name.toString(), 20),
+                    subtitle: TextConfortaa("+91 ${data.phoneNumber}", 18),
+                    trailing: SizedBox(
+                        width: 100,
+                        child: CircularButton(
+                          color: Colors.green,
+                          onpress: () { 
+                           
+                            appProvider.removeRequest(data);
+                            firebaseRealtimeStorageHelper.instance
+                                .requeststatuschager(value: true, id: data.id);
+                            FirebasefirestoreHelper.instance
+                                .removeRequest(id: data.id);
+                              FirebasefirestoreHelper.instance.uploadCurrentAccptedMech(MechUser: appProvider.getuserInfromation,driverUser: data);
+                          },
+                          radius: 40,
+                          child: const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Gap(10);
+            },
+            itemCount: requestdriverlist.length));
   }
 }
 

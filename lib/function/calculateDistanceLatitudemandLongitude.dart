@@ -30,11 +30,4 @@ double radians(double degrees) {
   return degrees * pi / 180;
 }
 
-void main() {
-  final LatLng point1 = LatLng(40.7128, -74.0060); // New York City
-  final LatLng point2 = LatLng(34.0522, -118.2437); // Los Angeles
 
-  final distance = calculateDistance(point1, point2);
-  print(
-      'Distance between New York City and Los Angeles: ${distance.toStringAsFixed(2)} kilometers');
-}

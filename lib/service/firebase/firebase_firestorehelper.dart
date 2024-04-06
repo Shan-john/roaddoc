@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class FirebasefirestoreHelper {
   static FirebasefirestoreHelper instance = FirebasefirestoreHelper();
@@ -24,7 +24,7 @@ class FirebasefirestoreHelper {
     }
   }
 
-  Future<bool> uploadRequest(BuildContext context,String ? id) async {
+  Future<bool> uploadRequest(BuildContext context, String? id) async {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
     try {
       await firebaseFirestore
@@ -52,21 +52,96 @@ class FirebasefirestoreHelper {
     }
   }
 
-Future<bool> removeRequest({required String? id}) async {
-  try {
-   
-    await FirebaseFirestore.instance.collection("RequestList").doc(id).delete();
-    
-    
-    showMessage("Request accepted successfully");
-    
-    
-    return true;
-  } catch (e) {
- 
-    showMessage("Failed to accept request: $e");
-    return false;
+  Future<bool> removeRequest({required String? id}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("RequestList")
+          .doc(id)
+          .delete();
+
+      showMessage("Request accepted successfully");
+
+      return true;
+    } catch (e) {
+      showMessage("Failed to accept request: $e");
+      return false;
+    }
   }
-}
+
+  Future<bool> uploadCurrentAccptedMech(
+      {required UserModel driverUser, required UserModel MechUser}) async {
+    try {
+      firebaseFirestore
+          .collection("Users")
+          .doc(driverUser.id)
+          .collection("CurrentAvailableMech")
+          .doc("1")
+          .set(MechUser.toJson());
+      return true;
+    } catch (e) {
+      showMessage("e");
+      return false;
+    }
+  }
+
+  Future<UserModel> getCurrentAccepetedMech(
+      {required UserModel driverUser}) async {
+    UserModel? availableUser;
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await firebaseFirestore
+              .collection("Users")
+              .doc(driverUser.id)
+              .collection("CurrentAvailableMech")
+              .get();
+      availableUser = UserModel.fromJson(querySnapshot.docs[0].data());
+
+      return availableUser;
+    } catch (e) {
+      
+
+      return UserModel();
+    }
+  }
+
+  Future<bool> deleteCurrentAccepetedMech({required driverUser}) async {
+    try {
+      firebaseFirestore
+          .collection("Users")
+          .doc(driverUser.id)
+          .collection("CurrentAvailableMech")
+          .doc("1")
+          .delete();
+      showMessage("delted");
+      return true;
+    } catch (e) {
+      showMessage("nah");
+      return false;
+    }
+  }
+
+  
+  Future<bool> uploadhistory(
+      {required UserModel updatedDriverUser, required UserModel updatedMechUser}) async {
+    try {
+      firebaseFirestore
+          .collection("Users")
+          .doc(updatedDriverUser.id)
+          .collection("history")
+          .doc()
+          .set(updatedMechUser.toJson());
+
+           firebaseFirestore
+          .collection("Users")
+          .doc(updatedMechUser.id)
+          .collection("history")
+          .doc()
+          .set(updatedDriverUser.toJson());
+      return true;
+    } catch (e) {
+      showMessage("e");
+      return false;
+    }
+  }
 
 }

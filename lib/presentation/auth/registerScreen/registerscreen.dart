@@ -13,7 +13,7 @@ import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfie
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   final usertype type;

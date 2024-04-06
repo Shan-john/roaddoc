@@ -1,14 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/function/calculateDistanceLatitudemandLongitude.dart';
+import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
+import 'package:roaddoc/service/firebase/firebaserealtime.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class DriverRequesDetailsScreen extends StatelessWidget {
-  const DriverRequesDetailsScreen({super.key});
+  final UserModel data;
+  const DriverRequesDetailsScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+    double distance = calculateDistance(point1, point2);
+    print(distance); 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,14 +56,24 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                       size: 300,
                       colors: Colors.green,
                       label: "ACCEPT",
+                      onpressed: () {
+                        appProvider.removeRequest(data);
+                        firebaseRealtimeStorageHelper.instance
+                            .requeststatuschager(value: true, id: data.id);
+                        FirebasefirestoreHelper.instance
+                            .removeRequest(id: data.id);
+                        FirebasefirestoreHelper.instance
+                            .uploadCurrentAccptedMech(
+                                MechUser: appProvider.getuserInfromation,
+                                driverUser: data);
+                      },
                       fontsize: 20,
                       Textcolor: Colors.white),
                   Gap(20),
-                
                   Primarybutton(
                     size: 300,
                     colors: Colors.transparent,
-                    label: "#KM distance",
+                    label: distance.toString(),
                     fontsize: 20,
                     Textcolor: Colors.black,
                     bordercolor: Colors.black,
@@ -69,3 +88,9 @@ class DriverRequesDetailsScreen extends StatelessWidget {
     );
   }
 }
+
+// my 9.357348, 76.866933// map
+// chenganuur 9.318288, 76.611102
+final LatLng point1 = LatLng(9.357348, 76.866933); // New York City
+final LatLng point2 = LatLng(9.318288, 76.611102);  // Los Angeles
+   

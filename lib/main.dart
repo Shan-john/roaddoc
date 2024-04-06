@@ -11,7 +11,7 @@ import 'package:roaddoc/presentation/mechanic/driverRequestScreen.dart';
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

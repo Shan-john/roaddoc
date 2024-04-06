@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class StatusScreen extends StatefulWidget {
   StatusScreen({super.key});
@@ -10,15 +13,21 @@ class StatusScreen extends StatefulWidget {
 }
 
 class _StatusScreenState extends State<StatusScreen> {
-  bool isMechanicReached = false;
+  bool isMechanicAccepted = false;
   bool isMechanicReachedButtonisUsed = false;
   bool isInspected = false;
-  void StutusCheck() {
-    // todo check the status to the mech user to indicate the Status light
-    // from history of the current mech user id on the user collection
-  }
+
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of(listen: true, context);
+    appProvider.getCurrentAcceptedMech(
+        driverUser: appProvider.getuserInfromation);
+    UserModel MechUser = appProvider.currentAvailableMechUser;
+    MechUser.id == null
+        ? isMechanicAccepted = false
+        : isMechanicAccepted = true;
+    print(MechUser.name);
+    print(isMechanicAccepted);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -30,25 +39,18 @@ class _StatusScreenState extends State<StatusScreen> {
       body: SafeArea(
         minimum: EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             titleText("Status", 40),
             Gap(10),
             Primarybutton(
               size: 390,
-              colors: !isMechanicReached
+              colors: isMechanicAccepted == false
                   ? Colors.white
                   : Color.fromARGB(255, 0, 255, 157),
               label: "Is Mechanic accept your request",
-              onpressed: () {
-                setState(() {
-                  if (!isMechanicReachedButtonisUsed) {
-                    isMechanicReached = !isMechanicReached;
-                    isMechanicReachedButtonisUsed = true;
-                  }
-                });
-              },
+              
               fontsize: 18,
               Textcolor: Colors.black,
               bordercolor: Colors.black,
@@ -60,6 +62,11 @@ class _StatusScreenState extends State<StatusScreen> {
               size: 390,
               colors: Colors.white,
               label: "Inspected",
+              onpressed: () {
+                appProvider.removecurrentavailableMech(
+                    driverUser: appProvider.getuserInfromation);
+                setState(() {});
+              },
               fontsize: 18,
               Textcolor: Colors.black,
               bordercolor: Colors.black,
@@ -76,7 +83,11 @@ class _StatusScreenState extends State<StatusScreen> {
               bordercolor: Colors.black,
               borderwidth: 2,
               height: 100,
-            )
+            ),
+           isMechanicAccepted ? ListTile(
+              title: TextConfortaa(MechUser.name??"", 20),
+              subtitle: TextConfortaa("+91 ${MechUser.phoneNumber?? ""} ", 18),
+            ) : SizedBox(),
           ],
         ),
       ),

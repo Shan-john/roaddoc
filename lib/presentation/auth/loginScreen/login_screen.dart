@@ -12,7 +12,7 @@ import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
-import 'package:roaddoc/service/provider.dart';
+import 'package:roaddoc/service/provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
