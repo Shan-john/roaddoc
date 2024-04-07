@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 
@@ -51,4 +53,23 @@ class AppProvider with ChangeNotifier {
         .deleteCurrentAccepetedMech(driverUser: driverUser);
     notifyListeners();
   }
+
+  Position _position = Position(
+    longitude: 0.0,
+    latitude: 0.0,
+    timestamp: DateTime.now(),
+    accuracy: 0.0,
+    altitude: 0.0,
+    altitudeAccuracy: 0.0,
+    heading: 0.0,
+    headingAccuracy: 0.0,
+    speed: 0.0,
+    speedAccuracy: 0.0,
+  );
+  void getUserloaction() async {
+    _position = await getlocation();
+    notifyListeners();
+  }
+
+ Position get getUserlocation => _position;
 }

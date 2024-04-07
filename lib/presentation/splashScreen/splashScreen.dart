@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
+import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/function/type_of_users.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
@@ -38,17 +39,20 @@ class _SplashScreenState extends State<SplashScreen> {
               stream: FireBaseAuthHelper.instance.getAuthChange,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                   appProvider.getUserloaction();
                   if (appProvider.getuserInfromation.type ==
                       usertype.DRIVER.toString()) {
+                  
                     showMessage(appProvider.getuserInfromation.type.toString());
                     return DriverHomeScreen();
                   } else if (appProvider.getuserInfromation.type ==
                       usertype.MECHANIC.toString()) {
+                           
                     showMessage(appProvider.getuserInfromation.type.toString());
                     return MechanicHomeScreen();
                   } else {
                     showMessage("NetWork Issue");
-                    return const SplashScreen ();
+                    return const SplashScreen();
                   }
                 } //  return if the user is driver goto drivermain page() other wize mechanic homepage;
                 else {
