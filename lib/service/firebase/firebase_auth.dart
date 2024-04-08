@@ -1,11 +1,10 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
- 
+import 'package:roaddoc/core/routes.dart';
+
 import 'package:roaddoc/function/ShowMessage.dart';
- 
+
 import 'package:roaddoc/models/user_model/user_model.dart';
 
 import '../../function/type_of_users.dart';
@@ -27,6 +26,7 @@ class FireBaseAuthHelper {
 
       return true;
     } on FirebaseAuthException catch (ex) {
+      // Routes.instance.pop(context);
       showMessage(ex.code.toString());
       return false;
     }
@@ -35,28 +35,25 @@ class FireBaseAuthHelper {
   Future<bool> signup(String name, String email, String phonenumber,
       BuildContext context, usertype type) async {
     try {
-      
-      UserCredential? userCredential =
-          await _auth.createUserWithEmailAndPassword(
-              email: email, password: phonenumber);
+      UserCredential? userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: phonenumber);
       showMessage("Signuped successfully completed ..");
-    
-        UserModel dirverUser = UserModel(
-          mailid: email,
-          id: userCredential.user!.uid,
-          name: name,
-          phoneNumber: int.parse(phonenumber),
-          type: type.toString(),
-        );
-        _firestore
-            .collection("Users")
-            .doc(dirverUser.id)
-            .set(dirverUser.toJson());
-        return true;
-    
+
+      UserModel dirverUser = UserModel(
+        mailid: email,
+        id: userCredential.user!.uid,
+        name: name,
+        phoneNumber: int.parse(phonenumber),
+        type: type.toString(),
+      );
+      _firestore
+          .collection("Users")
+          .doc(dirverUser.id)
+          .set(dirverUser.toJson());
+      return true;
     } on FirebaseAuthException catch (ex) {
       showMessage(ex.code.toString());
-
+     Routes.instance.pop(context);
       return false;
     }
   }

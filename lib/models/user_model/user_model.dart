@@ -5,26 +5,26 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
   String? name;
-  String? id;
+  String?  id;
   String? mailid;
   int? phoneNumber;
-  double? longitude;
+  double ?longitude;
   double? latitude;
   String? type;
   String? dateAndTime;
-  String? ismechreached;
+  String? inspectionCategory;
   String? inspectionmessage;
 
   UserModel({
     this.mailid,
-    this.name,
-    this.id,
-    this.phoneNumber,
+     this.name,
+     this.id,
+     this.phoneNumber,
     this.longitude,
-    this.latitude,
-    this.type,
+     this.latitude,
+     this.type,
     this.dateAndTime,
-    this.ismechreached,
+    this.inspectionCategory,
     this.inspectionmessage,
   });
 
@@ -43,7 +43,7 @@ class UserModel {
     double? latitude,
     String? type,
     String? dateAndTime,
-    String? ismechreached,
+    String? inspectionCategory,
     String? inspectionmessage,
   }) {
     return UserModel(
@@ -55,7 +55,7 @@ class UserModel {
       latitude: latitude ?? this.latitude,
       type: type ?? this.type,
       dateAndTime: dateAndTime ?? this.dateAndTime,
-      ismechreached: ismechreached ?? this.ismechreached,
+      inspectionCategory: inspectionCategory ?? this.inspectionCategory,
       inspectionmessage: inspectionmessage ?? this.inspectionmessage,
     );
   }

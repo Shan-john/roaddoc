@@ -15,7 +15,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       latitude: (json['latitude'] as num?)?.toDouble(),
       type: json['type'] as String?,
       dateAndTime: json['dateAndTime'] as String?,
-      ismechreached: json['ismechreached'] as String?,
+      inspectionCategory: json['inspectionCategory'] as String?,
       inspectionmessage: json['inspectionmessage'] as String?,
     );
 
@@ -28,6 +28,6 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'latitude': instance.latitude,
       'type': instance.type,
       'dateAndTime': instance.dateAndTime,
-      'ismechreached': instance.ismechreached,
+      'inspectionCategory': instance.inspectionCategory,
       'inspectionmessage': instance.inspectionmessage,
     };

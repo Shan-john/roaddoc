@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:gap/gap.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/core/routes.dart';
+import 'package:roaddoc/function/ShowMessage.dart';
+import 'package:roaddoc/function/calculateDistanceLatitudemandLongitude.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/presentation/Driver/acceptedMechuserDetailScreen.dart';
+import 'package:roaddoc/presentation/Driver/inspectionfeedbackScreen.dart';
 import 'package:roaddoc/service/provider/provider.dart';
 
 class StatusScreen extends StatefulWidget {
@@ -22,12 +29,15 @@ class _StatusScreenState extends State<StatusScreen> {
     AppProvider appProvider = Provider.of(listen: true, context);
     appProvider.getCurrentAcceptedMech(
         driverUser: appProvider.getuserInfromation);
-    UserModel MechUser = appProvider.currentAvailableMechUser;
-    MechUser.id == null
+    UserModel mechUser = appProvider.currentAvailableMechUser;
+    print("kdk ${mechUser.latitude}");
+    print("mm");
+    mechUser.id == null
         ? isMechanicAccepted = false
         : isMechanicAccepted = true;
-    print(MechUser.name);
-    print(isMechanicAccepted);
+    // print(mechUser.name);
+    // print(isMechanicAccepted);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,7 +49,7 @@ class _StatusScreenState extends State<StatusScreen> {
       body: SafeArea(
         minimum: EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             titleText("Status", 40),
@@ -49,22 +59,75 @@ class _StatusScreenState extends State<StatusScreen> {
               colors: isMechanicAccepted == false
                   ? Colors.white
                   : Color.fromARGB(255, 0, 255, 157),
-              label: "Is Mechanic accept your request",
+              label: "Request accepted?",
+              onpressed: () {
+                isMechanicAccepted
+                    ? Routes.instance.push(
+                        widget: AcceptedMechUserDetailsScreen(
+                          mechUser: mechUser,
+                        ),
+                        context: context)
+                    : showMessage("Pending acceptance..");
+              },
               fontsize: 18,
               Textcolor: Colors.black,
               bordercolor: Colors.black,
               borderwidth: 2,
               height: 100,
             ),
+            Gap(10),
+            isMechanicAccepted
+                ? Container(
+                    height: MediaQuery.of(context).size.height / 2.2,
+                    width: double.infinity,
+                    child: FlutterMap(
+                        options: MapOptions(
+                          minZoom: 10,
+                          initialCenter: LatLng(mechUser.latitude ?? 0.0,
+                              mechUser.longitude ?? 0.0),
+                        ),
+                        children: [
+                          TileLayer(
+                            urlTemplate:
+                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            subdomains: ['a', 'b', 'c'],
+                          ),
+                          MarkerLayer(markers: [
+                            Marker(
+                                //  point: LatLng(9.357359, 76.866928),
+                                point: LatLng(mechUser.latitude ?? 0.0,
+                                    mechUser.longitude ?? 0.0),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.red,
+                                  size: 30,
+                                ))
+                          ])
+                        ]))
+                : Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
             Gap(20),
             Primarybutton(
               size: 390,
               colors: Colors.white,
-              label: "Inspected",
+              label: "Payment",
               onpressed: () {
-                appProvider.removecurrentavailableMech(
-                    driverUser: appProvider.getuserInfromation);
-                setState(() {});
+                if (isMechanicAccepted) {
+                  Routes.instance.push(
+                      widget: FeedbackScreenDriver(
+                        MechUser: mechUser,
+                      ),
+                      context: context);
+                } else {
+                  showMessage("Pending acceptance..");
+                }
+
+                // appProvider.removecurrentavailableMech(
+                //     driverUser: appProvider.getuserInfromation);
+                // setState(() {});
               },
               fontsize: 18,
               Textcolor: Colors.black,
@@ -73,23 +136,6 @@ class _StatusScreenState extends State<StatusScreen> {
               height: 100,
             ),
             Gap(20),
-            Primarybutton(
-              size: 390,
-              colors: Colors.white,
-              label: "Payment",
-              fontsize: 18,
-              Textcolor: Colors.black,
-              bordercolor: Colors.black,
-              borderwidth: 2,
-              height: 100,
-            ),
-            isMechanicAccepted
-                ? ListTile(
-                    title: TextConfortaa(MechUser.name ?? "", 20),
-                    subtitle:
-                        TextConfortaa("+91 ${MechUser.phoneNumber ?? ""} ", 18),
-                  )
-                : SizedBox(),
           ],
         ),
       ),

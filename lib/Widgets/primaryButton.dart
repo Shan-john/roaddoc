@@ -71,6 +71,7 @@ titleText(String lable, double fontsize) {
 
 Text TextConfortaa(String text, double size) {
   return Text(
+     
     text,
     style: TextStyle(
         fontSize: size, fontWeight: FontWeight.w400, fontFamily: "Confortaa"),

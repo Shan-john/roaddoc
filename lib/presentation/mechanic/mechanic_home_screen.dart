@@ -6,16 +6,20 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
+import 'package:roaddoc/core/themes.dart';
+import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
+import 'package:roaddoc/presentation/HistoryScreen/UserdetailsSceen.dart';
+import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
 
 import 'package:roaddoc/presentation/mechanic/driverRequestScreen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
-import 'package:roaddoc/service/firebase/firebaserealtime.dart';
+
 import 'package:roaddoc/service/provider/provider.dart';
 
 class MechanicHomeScreen extends StatefulWidget {
@@ -28,27 +32,18 @@ class MechanicHomeScreen extends StatefulWidget {
 }
 
 class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
-  bool isloading = true;
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        isloading = false;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: true);
     appProvider.getDriversRequestList();
+    appProvider.getHistoryList(appProvider.getuserInfromation);
     List<UserModel> requestdriverlist = appProvider.getDriverRequestlist;
+    appProvider.getCurrenAcceptedDriverDetails(
+        mechUser: appProvider.getuserInfromation);
+    appProvider.getUserloaction();
+
+    Position position = appProvider.getUserlocation;
+    
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -58,6 +53,30 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                     widget: WelcomeScreen(), context: context);
               },
               icon: Icon(Icons.menu_sharp)),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  appProvider.currenAcceptedDriverDetails.id != null
+                      ? Routes.instance.push(
+                          widget: UserDetailScreen(
+                              userModel:
+                                  appProvider.currenAcceptedDriverDetails),
+                          context: context)
+                      : null;
+                },
+                icon: Icon(Icons.inventory_rounded)),
+            IconButton(
+                onPressed: () {
+                  Routes.instance.push(
+                      widget:
+                          HistoryScreen(UserHistory: appProvider.listofHistory),
+                      context: context);
+                },
+                icon: Icon(
+                  Icons.history,
+                  size: 30,
+                ))
+          ],
         ),
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
@@ -77,14 +96,14 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
         ),
         body: ListView.separated(
             itemBuilder: (context, index) {
-              final data = requestdriverlist[index];
+              final DriverUser = requestdriverlist[index];
               return InkWell(
                 onTap: () async {
                   //Position position = await getlocation();
 
                   Routes.instance.push(
                       widget: DriverRequesDetailsScreen(
-                        data: data,
+                        data: DriverUser,
                       ),
                       context: context);
                 },
@@ -94,41 +113,52 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: const Color.fromARGB(255, 252, 252, 252),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(101, 58, 58, 58),
-                            blurRadius: 5,
-                            spreadRadius: 0,
-                            offset: Offset(3, 5)),
-                        BoxShadow(
-                            color: Color.fromARGB(48, 1, 111, 255),
-                            blurRadius: 5,
-                            spreadRadius: 0,
-                            offset: Offset(-5, -3))
-                      ]),
+                    borderRadius: BorderRadius.circular(18),
+                    color: Color.fromARGB(255, 252, 252, 252),
+                    boxShadow: listoBoxshadow,
+                  ),
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 37,
                       child: TextConfortaa("${index + 1}", 20),
                     ),
-                    title: TextConfortaa(data.name.toString(), 20),
-                    subtitle: TextConfortaa("+91 ${data.phoneNumber}", 18),
+                    title: TextConfortaa(DriverUser.name.toString(), 20),
+                    subtitle:
+                        TextConfortaa("+91 ${DriverUser.phoneNumber}", 18),
                     trailing: SizedBox(
                         width: 100,
                         child: CircularButton(
                           color: Colors.green,
                           onpress: () {
-                            appProvider.removeRequest(data);
-                            firebaseRealtimeStorageHelper.instance
-                                .requeststatuschager(value: true, id: data.id);
-                            FirebasefirestoreHelper.instance
-                                .removeRequest(id: data.id);
-                            FirebasefirestoreHelper.instance
-                                .uploadCurrentAccptedMech(
-                                    MechUser: appProvider.getuserInfromation,
-                                    driverUser: data);
+                            if (appProvider.currenAcceptedDriverDetails.id ==
+                                null) {
+                              appProvider.removeRequest(DriverUser);  
+                               FirebasefirestoreHelper.instance
+                                  .removeRequest(id: DriverUser.id);
+                              FirebasefirestoreHelper.instance
+                                  .uploadCurrenAcceptedDriverDetails(
+                                      driverUser: DriverUser,
+                                      MechUser: appProvider.getuserInfromation);
+
+                           
+                              UserModel UpdatedMech =
+                                  appProvider.getuserInfromation.copyWith(
+                                      latitude: position.latitude,
+                                      longitude: position.longitude);
+                              
+                              appProvider.updateuserinfo(UpdatedMech);
+                              FirebasefirestoreHelper.instance
+                                  .uploadCurrenAcceptedDriverDetails(
+                                      driverUser: DriverUser,
+                                      MechUser: appProvider.getuserInfromation);
+                              FirebasefirestoreHelper.instance
+                                  .uploadCurrentAccptedMech(
+                                      MechUser: appProvider.getuserInfromation,
+                                      driverUser: DriverUser);
+                            } else {
+                              showMessage(
+                                  "Already Accepted a request ,Check the details screen");
+                            }
                           },
                           radius: 40,
                           child: const Icon(

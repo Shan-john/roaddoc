@@ -71,5 +71,29 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
- Position get getUserlocation => _position;
+  Position get getUserlocation => _position;
+
+  List<UserModel> _historylist = [];
+  void getHistoryList(UserModel userModel) async {
+    _historylist =
+        await FirebasefirestoreHelper.instance.getHistoryOfUser(userModel);
+    notifyListeners();
+  }
+
+  List<UserModel> get listofHistory => _historylist;
+
+   UserModel _currenAcceptedDriverDetails = UserModel();
+  void getCurrenAcceptedDriverDetails({required UserModel mechUser}) async {
+    _currenAcceptedDriverDetails = await FirebasefirestoreHelper.instance
+        .getCurrenAcceptedDriverDetails(MechUser: mechUser);
+    notifyListeners();
+  }
+
+  UserModel get currenAcceptedDriverDetails => _currenAcceptedDriverDetails;
+
+  void removeCurrenAcceptedDriverDetails({required UserModel mechUser}) {
+    FirebasefirestoreHelper.instance
+        .deleteCurrenAcceptedDriverDetails(mechUser: mechUser);
+    notifyListeners();
+  }
 }

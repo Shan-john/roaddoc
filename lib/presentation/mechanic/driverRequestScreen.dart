@@ -6,7 +6,7 @@ import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/function/calculateDistanceLatitudemandLongitude.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
-import 'package:roaddoc/service/firebase/firebaserealtime.dart';
+ 
 import 'package:roaddoc/service/provider/provider.dart';
 
 class DriverRequesDetailsScreen extends StatelessWidget {
@@ -16,8 +16,8 @@ class DriverRequesDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
-    double distance = calculateDistance(point1, point2);
-    print(distance); 
+
+   
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -58,8 +58,7 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                       label: "ACCEPT",
                       onpressed: () {
                         appProvider.removeRequest(data);
-                        firebaseRealtimeStorageHelper.instance
-                            .requeststatuschager(value: true, id: data.id);
+                      
                         FirebasefirestoreHelper.instance
                             .removeRequest(id: data.id);
                         FirebasefirestoreHelper.instance
@@ -73,7 +72,7 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                   Primarybutton(
                     size: 300,
                     colors: Colors.transparent,
-                    label: distance.toString(),
+                    label:" distance.toString()",
                     fontsize: 20,
                     Textcolor: Colors.black,
                     bordercolor: Colors.black,
@@ -89,8 +88,8 @@ class DriverRequesDetailsScreen extends StatelessWidget {
   }
 }
 
-// my 9.357348, 76.866933// map
-// chenganuur 9.318288, 76.611102
-final LatLng point1 = LatLng(9.357348, 76.866933); // New York City
-final LatLng point2 = LatLng(9.318288, 76.611102);  // Los Angeles
+// // my 9.357348, 76.866933// map
+// // chenganuur 9.318288, 76.611102
+// final LatLng point1 = LatLng(9.357348, 76.866933); // New York City
+// final LatLng point2 = LatLng(9.318288, 76.611102);  // Los Angeles
    

@@ -10,10 +10,11 @@ import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/StatusScreen.dart';
+import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
-import 'package:roaddoc/service/firebase/firebaserealtime.dart';
+
 import 'package:roaddoc/service/provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -41,13 +42,16 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of(listen: true, context);
+    appProvider.getCurrentAcceptedMech(
+        driverUser: appProvider.getuserInfromation);
+    appProvider.getHistoryList(appProvider.getuserInfromation);
     Position position = appProvider.getUserlocation;
     position.latitude == 0.0 ? isloading = true : isloading = false;
 
     print(position.longitude);
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 28,
+          toolbarHeight: 37,
           leading: IconButton(
               onPressed: () {
                 FireBaseAuthHelper.instance.logOut();
@@ -58,6 +62,17 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 Icons.arrow_back,
                 color: Colors.black,
               )),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Routes.instance.push(
+                      widget: HistoryScreen(UserHistory: appProvider.listofHistory), context: context);
+                },
+                icon: Icon(
+                  Icons.history,
+                  size: 30,
+                ))
+          ],
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(10),
@@ -101,50 +116,108 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         ),
                       ),
               ),
-              Primarybutton(
-                  bordercolor: Colors.black,
-                  borderwidth: 2,
-                  size: 390,
-                  colors: Colors.white,
-                  label: "REQUEST MECHANIC",
-                  onpressed: () async {
-                    loaderIndicator(context);
+              Gap(10),
+              // Primarybutton(
+              //     bordercolor: Colors.black,
+              //     borderwidth: 2,
+              //     size: 390,
+              //     colors: Colors.white,
+              //     label: "REQUEST MECHANIC",
+              //     onpressed: () async {
+              //       loaderIndicator(context);
 
-                    listofrequest = appProvider.getDriverRequestlist;
-                    print(" altitude : ${position.latitude}");
-                    UserModel userModel = appProvider.getuserInfromation
-                        .copyWith(
-                            inspectionmessage: "ho bro",
-                            latitude: position.latitude,
-                            longitude: position.longitude);
-                    appProvider.getCurrentAcceptedMech(
-                        driverUser: appProvider.getuserInfromation);
-                    appProvider.updateuserinfo(userModel);
-                    appProvider.currentAvailableMechUser.id == ""
-                        ? requestbuttom(appProvider.getuserInfromation.id)
-                        : showMessage("Mechanic already accepted your request");
-                    Routes.instance
-                        .push(widget: StatusScreen(), context: context);
-                  },
-                  fontsize: 18,
-                  Textcolor: Colors.black),
-              Gap(5),
-              Primarybutton(
-                  bordercolor: Colors.black,
-                  borderwidth: 2,
-                  size: 390,
-                  colors: Colors.white,
-                  label: " CANNCEL REQUEST",
-                  onpressed: () async {
-                    loaderIndicator(context);
-                    appProvider.currentAvailableMechUser.id == ""
-                        ? FirebasefirestoreHelper.instance.removeRequest(
-                            id: appProvider.getuserInfromation.id)
-                        : showMessage("your Request is already accepted");
-                    Routes.instance.pop(context);
-                  },
-                  fontsize: 18,
-                  Textcolor: Colors.black)
+              //       listofrequest = appProvider.getDriverRequestlist;
+              //       print(" altitude : ${position.latitude}");
+              //       UserModel userModel = appProvider.getuserInfromation
+              //           .copyWith(
+              //               inspectionmessage: "ho bro",
+              //               latitude: position.latitude,
+              //               longitude: position.longitude);
+              //       appProvider.getCurrentAcceptedMech(
+              //           driverUser: appProvider.getuserInfromation);
+              //       appProvider.updateuserinfo(userModel);
+
+              //       if (appProvider.currentAvailableMechUser.id == null) {
+              //         requestbuttom(appProvider.getuserInfromation.id);
+              //       } else {
+              //         Routes.instance.pop(context);
+              //         Routes.instance
+              //             .push(widget: StatusScreen(), context: context);
+              //         showMessage("Mechanic already accepted your request");
+              //       }
+              //     },
+              //     fontsize: 18,
+              //     Textcolor: Colors.black),
+              // Gap(5),
+              // Primarybutton(
+              //     bordercolor: Colors.black,
+              //     borderwidth: 2,
+              //     size: 390,
+              //     colors: Colors.white,
+              //     label: " CANNCEL REQUEST",
+              //     onpressed: () async {
+              //       loaderIndicator(context);
+              //       appProvider.currentAvailableMechUser.id == ""
+              //           ? FirebasefirestoreHelper.instance.removeRequest(
+              //               id: appProvider.getuserInfromation.id)
+              //           : showMessage("your Request is already accepted");
+              //       Routes.instance.pop(context);
+              //     },
+              //     fontsize: 18,
+              //     Textcolor: Colors.black)
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Primarybutton(
+                      Textcolor: Colors.black,
+                      height: 60,
+                      size: 189,
+                      colors: Colors.white,
+                      label: "REQUEST MECHANIC",
+                      onpressed: () {
+                        loaderIndicator(context);
+ appProvider.getCurrentAcceptedMech(
+                            driverUser: appProvider.getuserInfromation);
+                        listofrequest = appProvider.getDriverRequestlist;
+                        print(" altitude : ${position.latitude}");
+                        UserModel userModel =
+                            appProvider.getuserInfromation.copyWith(
+                           
+                                latitude: position.latitude,
+                                longitude: position.longitude);
+                       
+                        appProvider.updateuserinfo(userModel);
+
+                        if (appProvider.currentAvailableMechUser.id == null) {
+                          requestbuttom(appProvider.getuserInfromation.id);
+                        } else {
+                          Routes.instance.pop(context);
+                          Routes.instance
+                              .push(widget: StatusScreen(), context: context);
+                          showMessage("Mechanic already accepted your request");
+                        }
+                      },
+                      bordercolor: Colors.black,
+                      borderwidth: 3,
+                      fontsize: 15),
+                  Primarybutton(
+                      fontsize: 18,
+                      Textcolor: Colors.white,
+                      height: 60,
+                      size: 189,
+                      colors: Colors.black,
+                      label: "CANCEL REQUEST",
+                      onpressed: () {
+                        loaderIndicator(context);
+                        appProvider.currentAvailableMechUser.id == ""
+                            ? FirebasefirestoreHelper.instance.removeRequest(
+                                id: appProvider.getuserInfromation.id)
+                            : showMessage("your Request is already accepted");
+                        Routes.instance.pop(context);
+                      })
+                ],
+              )
             ],
           ),
         )
@@ -165,9 +238,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     Routes.instance.pop(context);
 
     if (userModel.id == "") {
-      firebaseRealtimeStorageHelper.instance
-          .requeststatuschager(id: id, value: false);
-
       bool uploaded =
           await FirebasefirestoreHelper.instance.uploadRequest(context, id);
       uploaded == true
