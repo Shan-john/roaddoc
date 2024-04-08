@@ -2,15 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/firebase_options.dart';
-import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
-import 'package:roaddoc/presentation/auth/loginScreen/login_screen.dart';
-
-import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
-import 'package:roaddoc/presentation/auth/registerScreen/user_select-Screen.dart';
-import 'package:roaddoc/presentation/mechanic/driverRequestScreen.dart';
-import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
+ 
 import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
-import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
+ 
 import 'package:roaddoc/service/provider/provider.dart';
 
 void main() async {

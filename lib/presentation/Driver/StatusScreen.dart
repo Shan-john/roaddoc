@@ -48,95 +48,117 @@ class _StatusScreenState extends State<StatusScreen> {
       ),
       body: SafeArea(
         minimum: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            titleText("Status", 40),
-            Gap(10),
-            Primarybutton(
-              size: 390,
-              colors: isMechanicAccepted == false
-                  ? Colors.white
-                  : Color.fromARGB(255, 0, 255, 157),
-              label: "Request accepted?",
-              onpressed: () {
-                isMechanicAccepted
-                    ? Routes.instance.push(
-                        widget: AcceptedMechUserDetailsScreen(
-                          mechUser: mechUser,
-                        ),
-                        context: context)
-                    : showMessage("Pending acceptance..");
-              },
-              fontsize: 18,
-              Textcolor: Colors.black,
-              bordercolor: Colors.black,
-              borderwidth: 2,
-              height: 100,
-            ),
-            Gap(10),
-            isMechanicAccepted
-                ? Container(
-                    height: MediaQuery.of(context).size.height / 2.2,
-                    width: double.infinity,
-                    child: FlutterMap(
-                        options: MapOptions(
-                          minZoom: 10,
-                          initialCenter: LatLng(mechUser.latitude ?? 0.0,
-                              mechUser.longitude ?? 0.0),
-                        ),
-                        children: [
-                          TileLayer(
-                            urlTemplate:
-                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            subdomains: ['a', 'b', 'c'],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              titleText("Status", 40),
+              Gap(10),
+              Primarybutton(
+                size: 390,
+                colors: isMechanicAccepted == false
+                    ? Colors.white
+                    : Color.fromARGB(255, 0, 255, 157),
+                label: "Request accepted?",
+                onpressed: () {
+                  isMechanicAccepted
+                      ? Routes.instance.push(
+                          widget: AcceptedMechUserDetailsScreen(
+                            mechUser: mechUser,
                           ),
-                          MarkerLayer(markers: [
-                            Marker(
-                                //  point: LatLng(9.357359, 76.866928),
-                                point: LatLng(mechUser.latitude ?? 0.0,
-                                    mechUser.longitude ?? 0.0),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.red,
-                                  size: 30,
-                                ))
-                          ])
-                        ]))
-                : Center(
-                    child: SizedBox(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-            Gap(20),
-            Primarybutton(
-              size: 390,
-              colors: Colors.white,
-              label: "Payment",
-              onpressed: () {
-                if (isMechanicAccepted) {
-                  Routes.instance.push(
-                      widget: FeedbackScreenDriver(
-                        MechUser: mechUser,
-                      ),
-                      context: context);
-                } else {
-                  showMessage("Pending acceptance..");
-                }
+                          context: context)
+                      : showMessage("Pending acceptance..");
+                },
+                fontsize: 18,
+                Textcolor: Colors.black,
+                bordercolor: Colors.black,
+                borderwidth: 2,
+                height: 100,
+              ),
+              Gap(10),
+              isMechanicAccepted
+                  ? Container(
+                      height: MediaQuery.of(context).size.height / 2.2,
+                      width: double.infinity,
+                      child: FlutterMap(
+                          options: MapOptions(
+                            minZoom: 10,
+                          initialZoom: 17,
+                            initialCenter: LatLng(mechUser.latitude ?? 0.0,
+                                mechUser.longitude ?? 0.0),
+                          ),
+                          children: [
+                            TileLayer(
+                              urlTemplate:
+                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                              subdomains: ['a', 'b', 'c'],
+                            ),
+                            MarkerLayer(markers: [
+                              Marker(
+                                  //  point: LatLng(9.357359, 76.866928),
+                                  point: LatLng(mechUser.latitude ?? 0.0,
+                                      mechUser.longitude ?? 0.0),
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.red,
+                                    size: 30,
+                                  )),
+                              Marker(
+                                     
+                                  point: LatLng(
+                                      appProvider.getUserlocation.latitude,
+                                      appProvider.getUserlocation.latitude),
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ))
+                            ]),
+                            // PolylineLayer(
+                            //   polylines: [
+                            //     Polyline(
+                            //       points: [
+                            //          LatLng(30, 30),  
+                            //         LatLng(30, 80), 
+                                   
+                                    
+                            //       ],
+                            //       color: Colors.blue,
+                            //     ),
+                            //   ],
+                            // ),
+                          ]))
+                  : SizedBox(),
+              Gap(20),
+              Primarybutton(
+                size: 390,
+                colors: Colors.white,
+                label: "Payment",
+                onpressed: () {
+                  if (isMechanicAccepted) {
+                    Routes.instance.push(
+                        widget: FeedbackScreenDriver(
+                          MechUser: mechUser,
+                        ),
+                        context: context);
+                  } else {
+                    showMessage("Pending acceptance..");
+                  }
 
-                // appProvider.removecurrentavailableMech(
-                //     driverUser: appProvider.getuserInfromation);
-                // setState(() {});
-              },
-              fontsize: 18,
-              Textcolor: Colors.black,
-              bordercolor: Colors.black,
-              borderwidth: 2,
-              height: 100,
-            ),
-            Gap(20),
-          ],
+                  // appProvider.removecurrentavailableMech(
+                  //     driverUser: appProvider.getuserInfromation);
+                  // setState(() {});
+                },
+                fontsize: 18,
+                Textcolor: Colors.black,
+                bordercolor: Colors.black,
+                borderwidth: 2,
+                height: 100,
+              ),
+              Gap(20),
+            ],
+          ),
         ),
       ),
     );

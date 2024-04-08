@@ -26,7 +26,7 @@ class FireBaseAuthHelper {
 
       return true;
     } on FirebaseAuthException catch (ex) {
-      // Routes.instance.pop(context);
+       Routes.instance.pop(context);
       showMessage(ex.code.toString());
       return false;
     }
@@ -51,9 +51,10 @@ class FireBaseAuthHelper {
           .doc(dirverUser.id)
           .set(dirverUser.toJson());
       return true;
-    } on FirebaseAuthException catch (ex) {
+    } on FirebaseAuthException catch (ex) { 
+      Routes.instance.pop(context);
       showMessage(ex.code.toString());
-     Routes.instance.pop(context);
+     
       return false;
     }
   }

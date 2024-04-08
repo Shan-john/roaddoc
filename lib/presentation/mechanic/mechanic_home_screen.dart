@@ -43,7 +43,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     appProvider.getUserloaction();
 
     Position position = appProvider.getUserlocation;
-    
+    print(position.latitude);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -55,6 +55,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
               icon: Icon(Icons.menu_sharp)),
           actions: [
             IconButton(
+                tooltip: "Confirmed Drivers Credentials",
                 onPressed: () {
                   appProvider.currenAcceptedDriverDetails.id != null
                       ? Routes.instance.push(
@@ -64,8 +65,14 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                           context: context)
                       : null;
                 },
-                icon: Icon(Icons.inventory_rounded)),
+                icon: Icon(
+                  Icons.inventory_rounded,
+                  color: appProvider.currenAcceptedDriverDetails.id != null
+                      ? Color.fromARGB(255, 29, 97, 9)
+                      : Color.fromARGB(255, 161, 0, 0),
+                )),
             IconButton(
+                tooltip: "History",
                 onPressed: () {
                   Routes.instance.push(
                       widget:
@@ -130,34 +137,42 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                         child: CircularButton(
                           color: Colors.green,
                           onpress: () {
-                            if (appProvider.currenAcceptedDriverDetails.id ==
-                                null) {
-                              appProvider.removeRequest(DriverUser);  
-                               FirebasefirestoreHelper.instance
-                                  .removeRequest(id: DriverUser.id);
-                              FirebasefirestoreHelper.instance
-                                  .uploadCurrenAcceptedDriverDetails(
-                                      driverUser: DriverUser,
-                                      MechUser: appProvider.getuserInfromation);
-
-                           
-                              UserModel UpdatedMech =
-                                  appProvider.getuserInfromation.copyWith(
-                                      latitude: position.latitude,
-                                      longitude: position.longitude);
-                              
-                              appProvider.updateuserinfo(UpdatedMech);
-                              FirebasefirestoreHelper.instance
-                                  .uploadCurrenAcceptedDriverDetails(
-                                      driverUser: DriverUser,
-                                      MechUser: appProvider.getuserInfromation);
-                              FirebasefirestoreHelper.instance
-                                  .uploadCurrentAccptedMech(
-                                      MechUser: appProvider.getuserInfromation,
-                                      driverUser: DriverUser);
-                            } else {
+                            if (position.altitude == 0 &&
+                                position.longitude == 0) {
                               showMessage(
-                                  "Already Accepted a request ,Check the details screen");
+                                  "Hold on, setting things up...");
+                            } else {
+                              if (appProvider.currenAcceptedDriverDetails.id ==
+                                  null) {
+                                appProvider.removeRequest(DriverUser);
+                                FirebasefirestoreHelper.instance
+                                    .removeRequest(id: DriverUser.id);
+                                FirebasefirestoreHelper.instance
+                                    .uploadCurrenAcceptedDriverDetails(
+                                        driverUser: DriverUser,
+                                        MechUser:
+                                            appProvider.getuserInfromation);
+
+                                UserModel UpdatedMech =
+                                    appProvider.getuserInfromation.copyWith(
+                                        latitude: position.latitude,
+                                        longitude: position.longitude);
+
+                                appProvider.updateuserinfo(UpdatedMech);
+                                FirebasefirestoreHelper.instance
+                                    .uploadCurrenAcceptedDriverDetails(
+                                        driverUser: DriverUser,
+                                        MechUser:
+                                            appProvider.getuserInfromation);
+                                FirebasefirestoreHelper.instance
+                                    .uploadCurrentAccptedMech(
+                                        MechUser:
+                                            appProvider.getuserInfromation,
+                                        driverUser: DriverUser);
+                              } else {
+                                showMessage(
+                                    "Already Accepted a request ,Check the details screen");
+                              }
                             }
                           },
                           radius: 40,

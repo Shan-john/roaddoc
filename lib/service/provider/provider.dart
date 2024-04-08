@@ -66,6 +66,7 @@ class AppProvider with ChangeNotifier {
     speed: 0.0,
     speedAccuracy: 0.0,
   );
+
   void getUserloaction() async {
     _position = await getlocation();
     notifyListeners();
@@ -82,7 +83,7 @@ class AppProvider with ChangeNotifier {
 
   List<UserModel> get listofHistory => _historylist;
 
-   UserModel _currenAcceptedDriverDetails = UserModel();
+  UserModel _currenAcceptedDriverDetails = UserModel();
   void getCurrenAcceptedDriverDetails({required UserModel mechUser}) async {
     _currenAcceptedDriverDetails = await FirebasefirestoreHelper.instance
         .getCurrenAcceptedDriverDetails(MechUser: mechUser);

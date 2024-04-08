@@ -8,6 +8,7 @@ import 'package:roaddoc/Widgets/simpletext.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
+
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/StatusScreen.dart';
 import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
@@ -49,6 +50,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     position.latitude == 0.0 ? isloading = true : isloading = false;
 
     print(position.longitude);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 37,
@@ -66,7 +68,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             IconButton(
                 onPressed: () {
                   Routes.instance.push(
-                      widget: HistoryScreen(UserHistory: appProvider.listofHistory), context: context);
+                      widget:
+                          HistoryScreen(UserHistory: appProvider.listofHistory),
+                      context: context);
                 },
                 icon: Icon(
                   Icons.history,
@@ -75,20 +79,25 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           ],
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.only(
+            left: 10,
+            right: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               titleText(titlelable, 40),
+
               const SimpleText(lable: "Available Mechanics Around"),
-              Gap(20),
+              Gap(size.height / 16),
               Container(
-                height: MediaQuery.of(context).size.height / 1.6,
+                height: MediaQuery.of(context).size.height / 1.7,
                 width: double.infinity,
                 child: !isloading
                     ? FlutterMap(
                         options: MapOptions(
                           minZoom: 10,
+                           initialZoom: 17,
                           initialCenter:
                               LatLng(position.latitude, position.longitude),
                         ),
@@ -116,7 +125,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         ),
                       ),
               ),
-              Gap(10),
+              Gap(size.height / 23),
               // Primarybutton(
               //     bordercolor: Colors.black,
               //     borderwidth: 2,
@@ -175,18 +184,19 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       size: 189,
                       colors: Colors.white,
                       label: "REQUEST MECHANIC",
-                      onpressed: () {
-                        loaderIndicator(context);
- appProvider.getCurrentAcceptedMech(
+                      onpressed: () async {
+                        if (position.altitude == 0 && position.longitude == 0) {
+                          showMessage("Hold on, setting things up...");
+                        } else { loaderIndicator(context);
+                        appProvider.getCurrentAcceptedMech(
                             driverUser: appProvider.getuserInfromation);
                         listofrequest = appProvider.getDriverRequestlist;
                         print(" altitude : ${position.latitude}");
-                        UserModel userModel =
-                            appProvider.getuserInfromation.copyWith(
-                           
+                        UserModel userModel = appProvider.getuserInfromation
+                            .copyWith(
                                 latitude: position.latitude,
                                 longitude: position.longitude);
-                       
+
                         appProvider.updateuserinfo(userModel);
 
                         if (appProvider.currentAvailableMechUser.id == null) {
@@ -196,7 +206,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                           Routes.instance
                               .push(widget: StatusScreen(), context: context);
                           showMessage("Mechanic already accepted your request");
-                        }
+                        }}
+
+                       
                       },
                       bordercolor: Colors.black,
                       borderwidth: 3,

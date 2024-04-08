@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 import 'package:roaddoc/service/provider/provider.dart';
@@ -64,6 +66,8 @@ class FeedbackScreenDriver extends StatelessWidget {
                     driverUser: UpdatedDriverUser);
                 appProvider.removeCurrenAcceptedDriverDetails(
                     mechUser: MechUser);
+                Routes.instance.pushandRemoveUntil(
+                    widget: DriverHomeScreen(), context: context);
               },
               fontsize: 18,
               Textcolor: Colors.black,

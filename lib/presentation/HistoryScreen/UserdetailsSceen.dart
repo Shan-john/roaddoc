@@ -1,14 +1,16 @@
-
 import 'package:flutter/material.dart';
+ 
 import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
+import 'package:roaddoc/core/url.dart';
+import 'package:roaddoc/function/urlLauncher.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 
 class UserDetailScreen extends StatelessWidget {
   final UserModel userModel;
-  const UserDetailScreen({super.key, required this.userModel});
+  UserDetailScreen({super.key, required this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +27,19 @@ class UserDetailScreen extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-           height: 400 ,
+            height: 400,
             margin: EdgeInsets.all(20),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.all(
                 Radius.circular(20),
-                
               ),
-              boxShadow:listoBoxshadow, 
+              boxShadow: listoBoxshadow,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextConfortaa("Details", 30),
                 Gap(20),
@@ -54,29 +54,49 @@ class UserDetailScreen extends StatelessWidget {
                   value: userModel.mailid!,
                   size: 25,
                 ),
-                   Gap(10),RowMaptile(
-                  icon:  Icons.vpn_key_outlined,
+                Gap(10),
+                RowMaptile(
+                  icon: Icons.vpn_key_outlined,
                   value: userModel.id.toString(),
-                  size: 25 ,
+                  size: 25,
                 ),
-                  Gap(10), RowMaptile(
+                Gap(10),
+                RowMaptile(
                   icon: Icons.call_outlined,
                   value: userModel.phoneNumber.toString(),
                   size: 25,
                 ),
-                   Gap(10),
-              userModel.inspectionCategory != null?   RowMaptile(
-                  icon:  Icons.category_outlined,
-                  value: userModel.inspectionCategory.toString(),
-                  size: 25 ,
-                ): SizedBox(),
-                   Gap(10),
-            userModel.inspectionmessage != null?      RowMaptile(
-                  icon:  Icons.message_outlined,
-                  value: userModel.inspectionmessage.toString(),
-                  size: 25 ,
-                ):SizedBox(),
-                  
+                Gap(10),
+                userModel.inspectionCategory != null
+                    ? RowMaptile(
+                        icon: Icons.category_outlined,
+                        value: userModel.inspectionCategory.toString(),
+                        size: 25,
+                      )
+                    : SizedBox(),
+                Gap(10),
+                userModel.inspectionmessage != null
+                    ? RowMaptile(
+                        icon: Icons.message_outlined,
+                        value: userModel.inspectionmessage.toString(),
+                        size: 25,
+                      )
+                    : SizedBox(),
+                Primarybutton(
+                  size: 390,
+                  colors: Colors.white,
+                  label: "Navigate",
+                  onpressed: () {
+                    launchGoogleMap(
+                        latitude: userModel.latitude ?? 0,
+                        longitude: userModel.longitude ?? 0);
+                  },
+                  fontsize: 18,
+                  Textcolor: Colors.red,
+                  bordercolor: Colors.black,
+                  borderwidth: 2,
+                  height: 50,
+                ),
               ],
             ),
           ),
@@ -94,7 +114,7 @@ class RowMaptile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [ 
+      children: [
         Row(
           children: [
             Icon(icon),
