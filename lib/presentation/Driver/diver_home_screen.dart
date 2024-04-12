@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/loadingindication.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/Widgets/simpletext.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
+import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
 
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/StatusScreen.dart';
 import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
+import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
+import 'package:roaddoc/service/https/httpsCall.dart';
 
 import 'package:roaddoc/service/provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -36,9 +41,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     super.initState();
   }
 
-  // _get_lat_long() async {
-  //   position = await getlocation();
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,55 +56,29 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     Position position = appProvider.getUserlocation;
     position.latitude == 0.0 ? isloading = true : isloading = false;
 
-    print(position.longitude);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 37,
-          leading: IconButton(
-              onPressed: () {
-                FireBaseAuthHelper.instance.logOut();
-                Routes.instance.pushandRemoveUntil(
-                    widget: WelcomeScreen(), context: context);
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              )),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Routes.instance.push(
-                      widget:
-                          HistoryScreen(UserHistory: appProvider.listofHistory),
-                      context: context);
-                },
-                icon: Icon(
-                  Icons.history,
-                  size: 30,
-                ))
-          ],
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
+      appBar: AppBar(
+        toolbarHeight: 37,
+        title: TextConfortaa(text: "ROAD DOC", size: 20),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               titleText(titlelable, 40),
-
               const SimpleText(lable: "Available Mechanics Around"),
               Gap(size.height / 16),
               Container(
-                height: MediaQuery.of(context).size.height / 1.7,
+                height: MediaQuery.of(context).size.height / 1.8,
                 width: double.infinity,
                 child: !isloading
                     ? FlutterMap(
                         options: MapOptions(
                           minZoom: 10,
-                           initialZoom: 17,
+                          initialZoom: 17,
                           initialCenter:
                               LatLng(position.latitude, position.longitude),
                         ),
@@ -126,55 +107,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       ),
               ),
               Gap(size.height / 23),
-              // Primarybutton(
-              //     bordercolor: Colors.black,
-              //     borderwidth: 2,
-              //     size: 390,
-              //     colors: Colors.white,
-              //     label: "REQUEST MECHANIC",
-              //     onpressed: () async {
-              //       loaderIndicator(context);
-
-              //       listofrequest = appProvider.getDriverRequestlist;
-              //       print(" altitude : ${position.latitude}");
-              //       UserModel userModel = appProvider.getuserInfromation
-              //           .copyWith(
-              //               inspectionmessage: "ho bro",
-              //               latitude: position.latitude,
-              //               longitude: position.longitude);
-              //       appProvider.getCurrentAcceptedMech(
-              //           driverUser: appProvider.getuserInfromation);
-              //       appProvider.updateuserinfo(userModel);
-
-              //       if (appProvider.currentAvailableMechUser.id == null) {
-              //         requestbuttom(appProvider.getuserInfromation.id);
-              //       } else {
-              //         Routes.instance.pop(context);
-              //         Routes.instance
-              //             .push(widget: StatusScreen(), context: context);
-              //         showMessage("Mechanic already accepted your request");
-              //       }
-              //     },
-              //     fontsize: 18,
-              //     Textcolor: Colors.black),
-              // Gap(5),
-              // Primarybutton(
-              //     bordercolor: Colors.black,
-              //     borderwidth: 2,
-              //     size: 390,
-              //     colors: Colors.white,
-              //     label: " CANNCEL REQUEST",
-              //     onpressed: () async {
-              //       loaderIndicator(context);
-              //       appProvider.currentAvailableMechUser.id == ""
-              //           ? FirebasefirestoreHelper.instance.removeRequest(
-              //               id: appProvider.getuserInfromation.id)
-              //           : showMessage("your Request is already accepted");
-              //       Routes.instance.pop(context);
-              //     },
-              //     fontsize: 18,
-              //     Textcolor: Colors.black)
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -185,30 +117,45 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       colors: Colors.white,
                       label: "REQUEST MECHANIC",
                       onpressed: () async {
+                          
                         if (position.altitude == 0 && position.longitude == 0) {
                           showMessage("Hold on, setting things up...");
-                        } else { loaderIndicator(context);
-                        appProvider.getCurrentAcceptedMech(
-                            driverUser: appProvider.getuserInfromation);
-                        listofrequest = appProvider.getDriverRequestlist;
-                        print(" altitude : ${position.latitude}");
-                        UserModel userModel = appProvider.getuserInfromation
-                            .copyWith(
-                                latitude: position.latitude,
-                                longitude: position.longitude);
-
-                        appProvider.updateuserinfo(userModel);
-
-                        if (appProvider.currentAvailableMechUser.id == null) {
-                          requestbuttom(appProvider.getuserInfromation.id);
                         } else {
-                          Routes.instance.pop(context);
-                          Routes.instance
-                              .push(widget: StatusScreen(), context: context);
-                          showMessage("Mechanic already accepted your request");
-                        }}
+                          Placemark placemark = await getPlaceName(
+                              latitude: position.latitude,
+                              longitude: position.longitude);
 
-                       
+                          LocationModel locationModel =
+                              await getLocationDetails(
+                                  placemark.postalCode.toString());
+
+                          String Address =
+                              "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
+                          
+                          loaderIndicator(context);
+                          appProvider.getCurrentAcceptedMech(
+                              driverUser: appProvider.getuserInfromation);
+                          listofrequest = appProvider.getDriverRequestlist;
+
+                          UserModel userModel = appProvider.getuserInfromation
+                              .copyWith(
+                                  address: Address,
+                                  latitude: position.latitude,
+                                  longitude: position.longitude);
+
+                          appProvider.updateuserinfo(userModel, null);
+
+                          if (appProvider.currentAvailableMechUser.id == null) {
+                            requestbuttom(appProvider.getuserInfromation.id);
+                          } else {
+                            Routes.instance.pop(context);
+
+                            showMessage(
+                                "Mechanic already accepted your request");
+                            Routes.instance
+                                .push(widget: StatusScreen(), context: context);
+                          }
+                        }
                       },
                       bordercolor: Colors.black,
                       borderwidth: 3,
@@ -232,9 +179,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               )
             ],
           ),
-        )
-        //
-        );
+        ),
+      ),
+    );
   }
 
   void requestbuttom(String? id) async {
@@ -261,30 +208,4 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       Routes.instance.push(widget: StatusScreen(), context: context);
     }
   }
-}
-
-loaderIndicator(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-    content: SizedBox(
-      width:
-          10.0, // Set the width and height to the same value to make it square
-      height: 50.0,
-      child: Builder(
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Color.fromARGB(255, 10, 207, 131),
-            ),
-          );
-        },
-      ),
-    ),
-  );
-  showDialog(
-    context: context,
-    builder: (context) {
-      return alert;
-    },
-  );
 }

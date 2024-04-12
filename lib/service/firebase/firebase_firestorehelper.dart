@@ -102,7 +102,8 @@ class FirebasefirestoreHelper {
     }
   }
 
-  Future<bool> deleteCurrentAccepetedMech({required  UserModel driverUser}) async {
+  Future<bool> deleteCurrentAccepetedMech(
+      {required UserModel driverUser}) async {
     try {
       firebaseFirestore
           .collection("Users")
@@ -156,7 +157,7 @@ class FirebasefirestoreHelper {
       return [];
     }
   }
-  
+
   Future<bool> uploadCurrenAcceptedDriverDetails(
       {required UserModel driverUser, required UserModel MechUser}) async {
     try {
@@ -173,7 +174,6 @@ class FirebasefirestoreHelper {
     }
   }
 
-  
   Future<UserModel> getCurrenAcceptedDriverDetails(
       {required UserModel MechUser}) async {
     UserModel? availableUser;
@@ -192,7 +192,8 @@ class FirebasefirestoreHelper {
     }
   }
 
-  Future<bool> deleteCurrenAcceptedDriverDetails({required UserModel mechUser}) async {
+  Future<bool> deleteCurrenAcceptedDriverDetails(
+      {required UserModel mechUser}) async {
     try {
       firebaseFirestore
           .collection("Users")
@@ -206,7 +207,4 @@ class FirebasefirestoreHelper {
       return false;
     }
   }
-
-   
-
 }

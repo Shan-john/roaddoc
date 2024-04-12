@@ -5,27 +5,31 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
   String? name;
-  String?  id;
+  String? id;
   String? mailid;
   int? phoneNumber;
-  double ?longitude;
+  double? longitude;
   double? latitude;
   String? type;
   String? dateAndTime;
   String? inspectionCategory;
   String? inspectionmessage;
+  String? image;
+  String? address;
 
   UserModel({
     this.mailid,
-     this.name,
-     this.id,
-     this.phoneNumber,
+    this.name,
+    this.id,
+    this.phoneNumber,
     this.longitude,
-     this.latitude,
-     this.type,
+    this.latitude,
+    this.type,
     this.dateAndTime,
     this.inspectionCategory,
     this.inspectionmessage,
+    this.image,
+    this.address,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -45,6 +49,8 @@ class UserModel {
     String? dateAndTime,
     String? inspectionCategory,
     String? inspectionmessage,
+    String? image,
+    String? address,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -57,6 +63,8 @@ class UserModel {
       dateAndTime: dateAndTime ?? this.dateAndTime,
       inspectionCategory: inspectionCategory ?? this.inspectionCategory,
       inspectionmessage: inspectionmessage ?? this.inspectionmessage,
+      image: image ?? this.image,
+      address: address ?? this.address,
     );
   }
 }

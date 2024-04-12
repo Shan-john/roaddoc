@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/loadingindication.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
@@ -23,8 +24,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -61,20 +60,11 @@ class LoginScreen extends StatelessWidget {
                           .login(mailIdTextEditingController.text,
                               passwordTextEditingController.text, context);
 
-                      
-                    
-                    
-                    
-                      
                       if (isregistered) {
                         Routes.instance.pop(context);
-                          
-                            
-                          Routes.instance.pushandRemoveUntil(
-                              widget: SplashScreen(), context: context);
-                         
-                                                       
-                        
+
+                        Routes.instance.pushandRemoveUntil(
+                            widget: SplashScreen(), context: context);
                       }
                     }
 

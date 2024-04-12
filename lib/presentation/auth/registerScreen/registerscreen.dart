@@ -1,4 +1,3 @@
- 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -64,9 +63,9 @@ class RegisterScreen extends StatelessWidget {
                       name: nameTextEditingController.text,
                       password: passwordTextEditingController.text,
                     );
-                      print(" done");
+                    print(" done");
                     if (isvalidated) {
-                        print(" done");
+                      print(" done");
                       bool isregistered =
                           await FireBaseAuthHelper.instance.signup(
                         nameTextEditingController.text,
@@ -76,18 +75,15 @@ class RegisterScreen extends StatelessWidget {
                         type,
                       );
                       if (isregistered) {
-                         print( "done");
+                        print("done");
                         if (type == usertype.DRIVER) {
                           Routes.instance.pushandRemoveUntil(
                               widget: DriverHomeScreen(), context: context);
                         } else {
-                        
                           Routes.instance.pushandRemoveUntil(
-                              widget: MechanicHomeScreen( ), context: context);
+                              widget: MechanicHomeScreen(), context: context);
                         }
-                      } else {
-                        
-                      }
+                      } else {}
                     }
                   },
                   height: 55,

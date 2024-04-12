@@ -53,7 +53,10 @@ dependencies:
   flutter_map: ^6.1.0
   latlong2: ^0.9.1 
   url_launcher: ^6.2.5
-    
+  geocoding: ^3.0.0
+  hexcolor: ^3.0.1
+  curved_navigation_bar: ^1.0.3
+  image_picker: ^1.0.8
 
 dev_dependencies:
   flutter_test:

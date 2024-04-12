@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/service/firebase/firebaseStorage.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 
 class AppProvider with ChangeNotifier {
@@ -30,13 +33,25 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateuserinfo(UserModel userModel) async {
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(userModel.id)
-        .set(userModel.toJson());
-    getUserInformationFirebase();
-    notifyListeners();
+  void updateuserinfo(UserModel userModel, File? file) async {
+    if (file == null) {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userModel.id)
+          .set(userModel.toJson());
+      getUserInformationFirebase();
+      notifyListeners();
+    } else {
+      String imageURl =
+          await FireBaseStoragehelper.instance.uploadUserImage(file);
+      _userModel = userModel.copyWith(image: imageURl);
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(_userModel.id)
+          .set(_userModel.toJson());
+
+      notifyListeners();
+    }
   }
 
   UserModel _currentAvailableMechUser = UserModel();

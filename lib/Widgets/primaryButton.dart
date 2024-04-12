@@ -23,6 +23,8 @@ class Primarybutton extends StatelessWidget {
     required this.Textcolor,
     this.bordercolor,
     this.borderwidth,
+    required,
+    Text? widget,
   });
 
   @override
@@ -69,11 +71,30 @@ titleText(String lable, double fontsize) {
   );
 }
 
-Text TextConfortaa(String text, double size) {
+Text TextConfortaa(
+    {required String text, required double size, Color? color = Colors.black}) {
   return Text(
-     
+    overflow: TextOverflow.ellipsis,
+    maxLines: 30,
     text,
     style: TextStyle(
-        fontSize: size, fontWeight: FontWeight.w400, fontFamily: "Confortaa"),
+        color: color,
+        fontSize: size,
+        fontWeight: FontWeight.w400,
+        fontFamily: "Confortaa"),
+  );
+}
+
+Text TextRoboto(
+    {required String text, required double size, Color? color = Colors.black}) {
+  return Text(
+    overflow: TextOverflow.ellipsis,
+    maxLines: 30,
+    text,
+    style: TextStyle(
+        color: color,
+        fontSize: size,
+        fontWeight: FontWeight.w400,
+        fontFamily: "Roboto"),
   );
 }

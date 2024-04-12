@@ -17,7 +17,7 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: TextConfortaa("History", 20),
+          title: TextConfortaa(text: "History", size: 20),
           leading: IconButton(
               onPressed: () {
                 Routes.instance.pop(context);
@@ -51,11 +51,14 @@ class HistoryScreen extends StatelessWidget {
                   child: ListTile(
                       leading: CircleAvatar(
                         radius: 37,
-                        child: TextConfortaa("${index + 1}", 20),
+                        child: TextConfortaa(text: "${index + 1}", size: 20),
                       ),
-                      title: TextConfortaa(data.name.toString(), 20),
-                      subtitle: TextConfortaa("+91 ${data.phoneNumber}", 18),
-                      trailing: TextConfortaa(data.inspectionmessage!, 20)),
+                      title:
+                          TextConfortaa(text: data.name.toString(), size: 20),
+                      subtitle: TextConfortaa(
+                          text: "+91 ${data.phoneNumber}", size: 18),
+                      trailing: TextConfortaa(
+                          text: data.inspectionmessage!, size: 20)),
                 ),
               );
             },
@@ -75,14 +78,14 @@ class HistoryScreen extends StatelessWidget {
 //                 return InkWell(
 //                   onTap: () async {
 //                     //Position position = await getlocation();
-        
+
 //                     // Routes.instance.push(
 //                     //     widget: DriverRequesDetailsScreen(
 //                     //       data: data,
 //                     //     ),
 //                     //     context: context);
 //                   },
-                  // child: 
+// child:
 //                 );
 //               },
 //               // separatorBuilder: (context, index) {

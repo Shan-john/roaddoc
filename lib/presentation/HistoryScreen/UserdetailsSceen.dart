@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
- 
+import 'package:flutter/widgets.dart';
+
 import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
@@ -27,7 +28,7 @@ class UserDetailScreen extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            height: 400,
+            height: 550,
             margin: EdgeInsets.all(20),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -39,64 +40,43 @@ class UserDetailScreen extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextConfortaa("Details", 30),
-                Gap(20),
+                TextConfortaa(text: "Details", size: 30),
                 RowMaptile(
                   icon: Icons.person_3_outlined,
                   value: userModel.name!,
-                  size: 25,
+                  size: 18,
                 ),
-                Gap(10),
                 RowMaptile(
                   icon: Icons.mail_outlined,
                   value: userModel.mailid!,
-                  size: 25,
+                  size: 18,
                 ),
-                Gap(10),
                 RowMaptile(
                   icon: Icons.vpn_key_outlined,
                   value: userModel.id.toString(),
-                  size: 25,
+                  size: 18,
                 ),
-                Gap(10),
                 RowMaptile(
                   icon: Icons.call_outlined,
                   value: userModel.phoneNumber.toString(),
-                  size: 25,
+                  size: 18,
                 ),
-                Gap(10),
-                userModel.inspectionCategory != null
+                userModel.inspectionCategory != ""
                     ? RowMaptile(
                         icon: Icons.category_outlined,
                         value: userModel.inspectionCategory.toString(),
-                        size: 25,
+                        size: 18,
                       )
                     : SizedBox(),
-                Gap(10),
-                userModel.inspectionmessage != null
+                userModel.inspectionmessage != ""
                     ? RowMaptile(
                         icon: Icons.message_outlined,
                         value: userModel.inspectionmessage.toString(),
-                        size: 25,
+                        size: 18,
                       )
                     : SizedBox(),
-                Primarybutton(
-                  size: 390,
-                  colors: Colors.white,
-                  label: "Navigate",
-                  onpressed: () {
-                    launchGoogleMap(
-                        latitude: userModel.latitude ?? 0,
-                        longitude: userModel.longitude ?? 0);
-                  },
-                  fontsize: 18,
-                  Textcolor: Colors.red,
-                  bordercolor: Colors.black,
-                  borderwidth: 2,
-                  height: 50,
-                ),
               ],
             ),
           ),
@@ -113,17 +93,35 @@ class RowMaptile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Row(
-          children: [
-            Icon(icon),
-            Gap(5),
-            TextConfortaa(value, 18),
-          ],
-        ),
-        Gap(15)
+        Icon(icon),
+        Gap(5),
+        SizedBox(
+            width: 300,
+            child: Text(
+              overflow: TextOverflow.clip,
+              maxLines: 30,
+              value,
+              style: TextStyle(fontFamily: "Comfortaa", fontSize: size),
+            )),
       ],
     );
   }
 }
+
+//  Primarybutton(
+//                 size: 390,
+//                 colors: Colors.white,
+//                 label: "Navigate",
+//                 onpressed: () {
+//                   launchGoogleMap(
+//                       latitude: userModel.latitude ?? 0,
+//                       longitude: userModel.longitude ?? 0);
+//                 },
+//                 fontsize: 18,
+//                 Textcolor: Colors.red,
+//                 bordercolor: Colors.black,
+//                 borderwidth: 2,
+//                 height: 50,
+//               ),

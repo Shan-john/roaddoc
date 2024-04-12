@@ -3,22 +3,26 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
+import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/HistoryScreen/UserdetailsSceen.dart';
 import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
+import 'package:roaddoc/presentation/mechanic/acceptedDriverrUserDetailScreen.dart';
 
 import 'package:roaddoc/presentation/mechanic/driverRequestScreen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
+import 'package:roaddoc/service/https/httpsCall.dart';
 
 import 'package:roaddoc/service/provider/provider.dart';
 
@@ -46,21 +50,15 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     print(position.latitude);
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                FireBaseAuthHelper.instance.logOut();
-                Routes.instance.pushandRemoveUntil(
-                    widget: WelcomeScreen(), context: context);
-              },
-              icon: Icon(Icons.menu_sharp)),
+          title: TextConfortaa(text: "ROAD DOC", size: 20),
           actions: [
             IconButton(
                 tooltip: "Confirmed Drivers Credentials",
                 onPressed: () {
                   appProvider.currenAcceptedDriverDetails.id != null
                       ? Routes.instance.push(
-                          widget: UserDetailScreen(
-                              userModel:
+                          widget: AcceptedDriverUserScreen(
+                              driverUser:
                                   appProvider.currenAcceptedDriverDetails),
                           context: context)
                       : null;
@@ -71,35 +69,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                       ? Color.fromARGB(255, 29, 97, 9)
                       : Color.fromARGB(255, 161, 0, 0),
                 )),
-            IconButton(
-                tooltip: "History",
-                onPressed: () {
-                  Routes.instance.push(
-                      widget:
-                          HistoryScreen(UserHistory: appProvider.listofHistory),
-                      context: context);
-                },
-                icon: Icon(
-                  Icons.history,
-                  size: 30,
-                ))
           ],
-        ),
-        drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            )
-          ]),
         ),
         body: ListView.separated(
             itemBuilder: (context, index) {
@@ -127,23 +97,34 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 37,
-                      child: TextConfortaa("${index + 1}", 20),
+                      child: TextConfortaa(text: "${index + 1}", size: 20),
                     ),
-                    title: TextConfortaa(DriverUser.name.toString(), 20),
-                    subtitle:
-                        TextConfortaa("+91 ${DriverUser.phoneNumber}", 18),
+                    title: TextConfortaa(
+                        text: DriverUser.name.toString(), size: 20),
+                    subtitle: TextConfortaa(
+                        text: "+91 ${DriverUser.phoneNumber}", size: 18),
                     trailing: SizedBox(
                         width: 100,
                         child: CircularButton(
                           color: Colors.green,
-                          onpress: () {
+                          onpress: ()async {
                             if (position.altitude == 0 &&
                                 position.longitude == 0) {
-                              showMessage(
-                                  "Hold on, setting things up...");
+                              showMessage("Hold on, setting things up...");
                             } else {
                               if (appProvider.currenAcceptedDriverDetails.id ==
                                   null) {
+                                     Placemark placemark = await getPlaceName(
+                              latitude: position.latitude,
+                              longitude: position.longitude);
+
+                          LocationModel locationModel =
+                              await getLocationDetails(
+                                  placemark.postalCode.toString());
+
+                          String Address =
+                              "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
+                          
                                 appProvider.removeRequest(DriverUser);
                                 FirebasefirestoreHelper.instance
                                     .removeRequest(id: DriverUser.id);
@@ -155,10 +136,11 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
 
                                 UserModel UpdatedMech =
                                     appProvider.getuserInfromation.copyWith(
+                                      address: Address,
                                         latitude: position.latitude,
                                         longitude: position.longitude);
 
-                                appProvider.updateuserinfo(UpdatedMech);
+                                appProvider.updateuserinfo(UpdatedMech, null);
                                 FirebasefirestoreHelper.instance
                                     .uploadCurrenAcceptedDriverDetails(
                                         driverUser: DriverUser,

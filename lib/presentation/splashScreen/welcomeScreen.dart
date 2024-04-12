@@ -5,7 +5,6 @@ import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/presentation/auth/loginScreen/login_screen.dart';
 
- 
 import 'package:roaddoc/presentation/auth/registerScreen/user_select-Screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -40,17 +39,19 @@ class _loginAndRegister extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Primarybutton(
-            Textcolor: Colors.black,
-            height: 60,
-            size: 180,
-            colors: Colors.white,
-            label: "LOGIN",
-            onpressed: () {
-              Routes.instance.push(widget: LoginScreen(), context: context);
-            },
-            bordercolor: Colors.black,
-            borderwidth: 3,
-            fontsize: 18),
+          Textcolor: Colors.black,
+          height: 60,
+          size: 180,
+          colors: Colors.white,
+          label: "LOGIN",
+          onpressed: () {
+            Routes.instance.push(widget: LoginScreen(), context: context);
+          },
+          bordercolor: Colors.black,
+          borderwidth: 3,
+          fontsize: 18,
+          widget: null,
+        ),
         Primarybutton(
             fontsize: 18,
             Textcolor: Colors.white,

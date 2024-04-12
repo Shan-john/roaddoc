@@ -9,6 +9,7 @@ import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/function/type_of_users.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
+import 'package:roaddoc/home.dart';
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
@@ -39,17 +40,19 @@ class _SplashScreenState extends State<SplashScreen> {
               stream: FireBaseAuthHelper.instance.getAuthChange,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                   appProvider.getUserloaction();
+                  appProvider.getUserloaction();
                   if (appProvider.getuserInfromation.type ==
                       usertype.DRIVER.toString()) {
-                  
                     showMessage(appProvider.getuserInfromation.type.toString());
-                    return DriverHomeScreen();
+                    return Mainscreen(
+                      userModel: appProvider.getuserInfromation,
+                    );
                   } else if (appProvider.getuserInfromation.type ==
                       usertype.MECHANIC.toString()) {
-                           
                     showMessage(appProvider.getuserInfromation.type.toString());
-                    return MechanicHomeScreen();
+                    return Mainscreen(
+                      userModel: appProvider.getuserInfromation,
+                    );
                   } else {
                     showMessage("NetWork Issue");
                     return const SplashScreen();

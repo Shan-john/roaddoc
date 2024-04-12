@@ -30,8 +30,7 @@ class _StatusScreenState extends State<StatusScreen> {
     appProvider.getCurrentAcceptedMech(
         driverUser: appProvider.getuserInfromation);
     UserModel mechUser = appProvider.currentAvailableMechUser;
-    print("kdk ${mechUser.latitude}");
-    print("mm");
+
     mechUser.id == null
         ? isMechanicAccepted = false
         : isMechanicAccepted = true;
@@ -47,7 +46,7 @@ class _StatusScreenState extends State<StatusScreen> {
             icon: Icon(Icons.arrow_back_ios)),
       ),
       body: SafeArea(
-        minimum: EdgeInsets.all(10),
+        minimum: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +83,7 @@ class _StatusScreenState extends State<StatusScreen> {
                       child: FlutterMap(
                           options: MapOptions(
                             minZoom: 10,
-                          initialZoom: 17,
+                            initialZoom: 17,
                             initialCenter: LatLng(mechUser.latitude ?? 0.0,
                                 mechUser.longitude ?? 0.0),
                           ),
@@ -97,15 +96,29 @@ class _StatusScreenState extends State<StatusScreen> {
                             MarkerLayer(markers: [
                               Marker(
                                   //  point: LatLng(9.357359, 76.866928),
+                                  height: 50,
                                   point: LatLng(mechUser.latitude ?? 0.0,
                                       mechUser.longitude ?? 0.0),
-                                  child: Icon(
-                                    Icons.location_on,
-                                    color: Colors.red,
-                                    size: 30,
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Colors.red,
+                                        size: 30,
+                                      ),
+                                    ],
                                   )),
                               Marker(
-                                     
+                                point: LatLng(
+                                    appProvider.getUserlocation.latitude,
+                                    appProvider.getUserlocation.latitude),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: const Color.fromARGB(255, 54, 57, 244),
+                                  size: 30,
+                                ),
+                              ),
+                              Marker(
                                   point: LatLng(
                                       appProvider.getUserlocation.latitude,
                                       appProvider.getUserlocation.latitude),
@@ -115,19 +128,6 @@ class _StatusScreenState extends State<StatusScreen> {
                                     size: 30,
                                   ))
                             ]),
-                            // PolylineLayer(
-                            //   polylines: [
-                            //     Polyline(
-                            //       points: [
-                            //          LatLng(30, 30),  
-                            //         LatLng(30, 80), 
-                                   
-                                    
-                            //       ],
-                            //       color: Colors.blue,
-                            //     ),
-                            //   ],
-                            // ),
                           ]))
                   : SizedBox(),
               Gap(20),
