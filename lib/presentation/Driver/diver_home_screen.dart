@@ -113,7 +113,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       onpressed: () async {
                         if (position.altitude == 0 && position.longitude == 0) {
                           showMessage("Hold on, setting things up...");
-                        } else {
+                        } else { 
+                          loaderIndicator(context);
                           Placemark placemark = await getPlaceName(
                               latitude: position.latitude,
                               longitude: position.longitude);
@@ -125,7 +126,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                           String Address =
                               "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
 
-                          loaderIndicator(context);
+                         
                           appProvider.getCurrentAcceptedMech(
                               driverUser: appProvider.getuserInfromation);
                           listofrequest = appProvider.getDriverRequestlist;
@@ -197,7 +198,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           : null;
     } else {
       showMessage("Already requested routing to the status page.");
-
+       Routes.instance.pop(context);
       Routes.instance.push(widget: StatusScreen(), context: context);
     }
   }

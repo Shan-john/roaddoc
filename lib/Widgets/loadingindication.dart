@@ -19,6 +19,7 @@ loaderIndicator(BuildContext context) {
     ),
   );
   showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return alert;

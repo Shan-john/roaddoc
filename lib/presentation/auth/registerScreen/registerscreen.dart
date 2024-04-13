@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/loadingindication.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
@@ -59,6 +60,7 @@ class RegisterScreen extends StatelessWidget {
               Gap(10),
               Primarybutton(
                   onpressed: () async {
+                    loaderIndicator(context);
                     bool isvalidated = Registorvalidation(
                       Phonenumber: phoneNumberTextEditingController.text,
                       email: mailIdTextEditingController.text,
@@ -79,9 +81,11 @@ class RegisterScreen extends StatelessWidget {
                       if (isregistered) {
                         print("done");
                         if (type == usertype.DRIVER) {
+                          Routes.instance.pop(context);
                           Routes.instance.pushandRemoveUntil(
                               widget: SplashScreen(), context: context);
                         } else {
+                            Routes.instance.pop(context);
                           Routes.instance.pushandRemoveUntil(
                               widget: SplashScreen(), context: context);
                         }
