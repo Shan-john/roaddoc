@@ -44,7 +44,6 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     List<UserModel> requestdriverlist = appProvider.getDriverRequestlist;
     appProvider.getCurrenAcceptedDriverDetails(
         mechUser: appProvider.getuserInfromation);
-    appProvider.getUserloaction();
 
     Position position = appProvider.getUserlocation;
     print(position.latitude);
@@ -107,24 +106,24 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                         width: 100,
                         child: CircularButton(
                           color: Colors.green,
-                          onpress: ()async {
+                          onpress: () async {
                             if (position.altitude == 0 &&
                                 position.longitude == 0) {
                               showMessage("Hold on, setting things up...");
                             } else {
                               if (appProvider.currenAcceptedDriverDetails.id ==
                                   null) {
-                                     Placemark placemark = await getPlaceName(
-                              latitude: position.latitude,
-                              longitude: position.longitude);
+                                Placemark placemark = await getPlaceName(
+                                    latitude: position.latitude,
+                                    longitude: position.longitude);
 
-                          LocationModel locationModel =
-                              await getLocationDetails(
-                                  placemark.postalCode.toString());
+                                LocationModel locationModel =
+                                    await getLocationDetails(
+                                        placemark.postalCode.toString());
 
-                          String Address =
-                              "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
-                          
+                                String Address =
+                                    "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
+
                                 appProvider.removeRequest(DriverUser);
                                 FirebasefirestoreHelper.instance
                                     .removeRequest(id: DriverUser.id);
@@ -136,7 +135,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
 
                                 UserModel UpdatedMech =
                                     appProvider.getuserInfromation.copyWith(
-                                      address: Address,
+                                        address: Address,
                                         latitude: position.latitude,
                                         longitude: position.longitude);
 

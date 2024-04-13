@@ -23,97 +23,92 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of(listen: false, context);
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            //  crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  height: 340,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 46, 46, 46),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20))),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                          radius: 70,
-                          backgroundImage: appProvider
-                                      .getuserInfromation.image !=
-                                  null
-                              ? NetworkImage(
-                                  appProvider.getuserInfromation.image!)
-                              : NetworkImage(
-                                   personAvatar)),
-                      Gap(30),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextConfortaa(
-                              text: appProvider.getuserInfromation.name!,
-                              size: 25,
-                              color: Colors.white),
-                          Gap(10),
-                          TextRoboto(
-                              text: appProvider.getuserInfromation.mailid!,
-                              size: 20,
-                              color: Color.fromARGB(255, 228, 228, 228)),
-                          Gap(10),
-                          Primarybutton(
-                              height: 40,
-                              size: 145,
-                              colors: Colors.white,
-                              label: "EDIT PROFILE",
-                              onpressed: () => Routes.instance.push(
-                                  widget: ProfileEditScreen(),
-                                  context: context),
-                              fontsize: 17,
-                              Textcolor: Colors.black)
-                        ],
-                      )
-                    ],
-                  )),
-              Gap(30),
-              SizedBox(
-                height: 350,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SingleChildScrollView(
+        child: Column(
+          //  crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                height: 340,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 46, 46, 46),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20))),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    detailstile(
-                        appProvider.getuserInfromation.phoneNumber.toString(),
-                        Icons.phone,
-                        () {},
-                        false),
-                    detailstile(appProvider.getuserInfromation.id!, Icons.code,
-                        () {}, false),
-                    detailstile("HISTORY", Icons.history, () {
-                      Routes.instance.push(
-                          widget: HistoryScreen(
-                              UserHistory: appProvider.listofHistory),
-                          context: context);
-                    }, true),
-                    Primarybutton(
-                      size: 100,
-                      colors: Colors.red,
-                      label: "LOGOUT",
-                      fontsize: 15,
-                      Textcolor: Colors.white,
-                      onpressed: () {
-                        FireBaseAuthHelper.instance.logOut();
-                        Routes.instance.pushandRemoveUntil(
-                            widget: WelcomeScreen(), context: context);
-                      },
+                    CircleAvatar(
+                        radius: 70,
+                        backgroundImage:
+                            appProvider.getuserInfromation.image != null
+                                ? NetworkImage(
+                                    appProvider.getuserInfromation.image!)
+                                : NetworkImage(personAvatar)),
+                    Gap(30),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextConfortaa(
+                            text: appProvider.getuserInfromation.name!,
+                            size: 25,
+                            color: Colors.white),
+                        Gap(10),
+                        TextRoboto(
+                            text: appProvider.getuserInfromation.mailid!,
+                            size: 20,
+                            color: Color.fromARGB(255, 228, 228, 228)),
+                        Gap(10),
+                        Primarybutton(
+                            height: 40,
+                            size: 145,
+                            colors: Colors.white,
+                            label: "EDIT PROFILE",
+                            onpressed: () => Routes.instance.push(
+                                widget: ProfileEditScreen(), context: context),
+                            fontsize: 17,
+                            Textcolor: Colors.black)
+                      ],
                     )
                   ],
-                ),
-              )
-            ],
-          ),
+                )),
+            Gap(30),
+            SizedBox(
+              height: 350,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  detailstile(
+                      appProvider.getuserInfromation.phoneNumber.toString(),
+                      Icons.phone,
+                      () {},
+                      false),
+                  detailstile(appProvider.getuserInfromation.id!, Icons.code,
+                      () {}, false),
+                  detailstile("HISTORY", Icons.history, () {
+                    Routes.instance.push(
+                        widget: HistoryScreen(
+                            UserHistory: appProvider.listofHistory),
+                        context: context);
+                  }, true),
+                  Primarybutton(
+                    size: 100,
+                    colors: Colors.red,
+                    label: "LOGOUT",
+                    fontsize: 15,
+                    Textcolor: Colors.white,
+                    onpressed: () {
+                      FireBaseAuthHelper.instance.logOut();
+                      Routes.instance.pushandRemoveUntil(
+                          widget: WelcomeScreen(), context: context);
+                    },
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

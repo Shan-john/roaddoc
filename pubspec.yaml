@@ -57,7 +57,8 @@ dependencies:
   hexcolor: ^3.0.1
   curved_navigation_bar: ^1.0.3
   image_picker: ^1.0.8
-
+  flutter_upi_pay: ^0.0.2
+  upi_chooser: ^0.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

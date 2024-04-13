@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
     appProvider.getUserInformationFirebase();
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -44,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   if (appProvider.getuserInfromation.type ==
                       usertype.DRIVER.toString()) {
                     showMessage(appProvider.getuserInfromation.type.toString());
+                    print("driver screen");
                     return Mainscreen(
                       userModel: appProvider.getuserInfromation,
                     );
@@ -65,6 +66,12 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ));
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

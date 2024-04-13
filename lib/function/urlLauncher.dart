@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:roaddoc/core/url.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
@@ -24,4 +25,40 @@ Future<void> makePhoneCall(String phoneNumber) async {
     path: phoneNumber,
   );
   await launchUrl(launchUri);
+}
+
+void launchUPIApp({
+  required String upi_id,
+  required String name,
+  required String code,
+  required String transactionid,
+  required String transaction_reference,
+  required String transaction_amount,
+}) async {
+  // String upiUrl =
+  //     "upi://pay?pa=${upi_id}&pn=${name}&mc=${code}&tid=${transactionid}&tr=${transaction_reference}&tn=Service&am=${transaction_amount}&cu=INR";
+  String upiUrl = "upi://pay?pa=${upi_id}&pn=${name}&cu=INR";
+  final uri = Uri.parse(upiUrl);
+  if (await launchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    // Handle if the UPI app cannot be launched
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text("Error"),
+    //       content: Text("Could not launch UPI app."),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text("OK"),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    //   );
+  }
 }

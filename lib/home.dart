@@ -28,22 +28,22 @@ class _MainscreenState extends State<Mainscreen> {
   List<Widget> Mechscreen = [MechanicHomeScreen(), ProfileScreen()];
   @override
   void initState() {
+    super.initState();
     Future.delayed(Duration(seconds: 3), () {
       isloading = true;
       setState(() {});
     });
-    super.initState();
   }
 
-// @override
-// void dispose() {
-//     // TODO: implement dispose
+  @override
+  void dispose() {
+    // TODO: implement dispose
 
-//     super.dispose();
-//   }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppProvider>(context, listen: true);
     return Scaffold(
         bottomNavigationBar: isloading == true
             ? CurvedNavigationBar(

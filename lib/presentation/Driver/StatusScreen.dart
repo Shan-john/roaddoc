@@ -54,26 +54,28 @@ class _StatusScreenState extends State<StatusScreen> {
             children: [
               titleText("Status", 40),
               Gap(10),
-              Primarybutton(
-                size: 390,
-                colors: isMechanicAccepted == false
-                    ? Colors.white
-                    : Color.fromARGB(255, 0, 255, 157),
-                label: "Request accepted?",
-                onpressed: () {
-                  isMechanicAccepted
-                      ? Routes.instance.push(
-                          widget: AcceptedMechUserDetailsScreen(
-                            mechUser: mechUser,
-                          ),
-                          context: context)
-                      : showMessage("Pending acceptance..");
-                },
-                fontsize: 18,
-                Textcolor: Colors.black,
-                bordercolor: Colors.black,
-                borderwidth: 2,
-                height: 100,
+              Center(
+                child: Primarybutton(
+                  size: 390,
+                  colors: isMechanicAccepted == false
+                      ? Colors.white
+                      : Color.fromARGB(255, 0, 255, 157),
+                  label: "Request accepted?",
+                  onpressed: () {
+                    isMechanicAccepted
+                        ? Routes.instance.push(
+                            widget: AcceptedMechUserDetailsScreen(
+                              mechUser: mechUser,
+                            ),
+                            context: context)
+                        : showMessage("Pending acceptance..");
+                  },
+                  fontsize: 18,
+                  Textcolor: Colors.black,
+                  bordercolor: Colors.black,
+                  borderwidth: 2,
+                  height: 100,
+                ),
               ),
               Gap(10),
               isMechanicAccepted
@@ -131,30 +133,32 @@ class _StatusScreenState extends State<StatusScreen> {
                           ]))
                   : SizedBox(),
               Gap(20),
-              Primarybutton(
-                size: 390,
-                colors: Colors.white,
-                label: "Payment",
-                onpressed: () {
-                  if (isMechanicAccepted) {
+              Center(
+                child: Primarybutton(
+                  size: 390,
+                  colors: Colors.white,
+                  label: "Payment",
+                  onpressed: () {
+                    // if (isMechanicAccepted) {
                     Routes.instance.push(
                         widget: FeedbackScreenDriver(
                           MechUser: mechUser,
                         ),
                         context: context);
-                  } else {
-                    showMessage("Pending acceptance..");
-                  }
+                    // } else {
+                    //   showMessage("Pending acceptance..");
+                    // }
 
-                  // appProvider.removecurrentavailableMech(
-                  //     driverUser: appProvider.getuserInfromation);
-                  // setState(() {});
-                },
-                fontsize: 18,
-                Textcolor: Colors.black,
-                bordercolor: Colors.black,
-                borderwidth: 2,
-                height: 100,
+                    // appProvider.removecurrentavailableMech(
+                    //     driverUser: appProvider.getuserInfromation);
+                    // setState(() {});
+                  },
+                  fontsize: 18,
+                  Textcolor: Colors.black,
+                  bordercolor: Colors.black,
+                  borderwidth: 2,
+                  height: 100,
+                ),
               ),
               Gap(20),
             ],

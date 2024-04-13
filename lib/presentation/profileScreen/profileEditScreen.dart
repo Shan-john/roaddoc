@@ -74,7 +74,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   },
                   child: CircleAvatar(
                     radius: 100,
-                    backgroundImage: appProvider.getuserInfromation.image != null
+                    backgroundImage: appProvider.getuserInfromation.image !=
+                            null
                         ? NetworkImage(appProvider.getuserInfromation.image!)
                         : NetworkImage(personAvatar),
                   ),
@@ -94,7 +95,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextConfortaa(
-                    text: "id: ${appProvider.getuserInfromation.id!}", size: 18),
+                    text: "id: ${appProvider.getuserInfromation.id!}",
+                    size: 18),
               ),
               customDivider(),
               Gap(20),
@@ -119,24 +121,27 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onpressed: () async {
                   UserModel userModel = appProvider.getuserInfromation;
                   appProvider.updateuserinfo(userModel, image);
-          
+
                   if (newnamecontroller.text == "" &&
                       newphonecontroller.text == "") {
                   } else if (newnamecontroller.text == "") {
-                    UserModel userModel = appProvider.getuserInfromation.copyWith(
-                        phoneNumber: int.parse(newphonecontroller.text));
+                    UserModel userModel = appProvider.getuserInfromation
+                        .copyWith(
+                            phoneNumber: int.parse(newphonecontroller.text));
                     appProvider.updateuserinfo(userModel, image);
                     showMessage("sucessfully Update the profile");
                   } else if (newphonecontroller.text == "") {
-                    UserModel userModel = appProvider.getuserInfromation.copyWith(
+                    UserModel userModel =
+                        appProvider.getuserInfromation.copyWith(
                       name: newnamecontroller.text,
                     );
                     appProvider.updateuserinfo(userModel, image);
                     showMessage("sucessfully Update the profile");
                   } else {
-                    UserModel userModel = appProvider.getuserInfromation.copyWith(
-                        name: newnamecontroller.text,
-                        phoneNumber: int.parse(newphonecontroller.text));
+                    UserModel userModel = appProvider.getuserInfromation
+                        .copyWith(
+                            name: newnamecontroller.text,
+                            phoneNumber: int.parse(newphonecontroller.text));
                     appProvider.updateuserinfo(userModel, image);
                     showMessage("sucessfully Update the profile");
                   }

@@ -10,11 +10,10 @@ Future<Position> getlocation() async {
   return position;
 }
 
-
-  Future<Placemark> getPlaceName(
-      {required double latitude, required double longitude}) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(latitude, longitude);
-    print(placemark[0].street);
-    return placemark[0];
-  }
+Future<Placemark> getPlaceName(
+    {required double latitude, required double longitude}) async {
+  List<Placemark> placemark =
+      await placemarkFromCoordinates(latitude, longitude);
+  print(placemark[0].street);
+  return placemark[0];
+}

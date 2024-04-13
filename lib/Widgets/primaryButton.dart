@@ -29,37 +29,35 @@ class Primarybutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-          width: size,
-          height: height,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: bordercolor ?? Colors.transparent,
-              width: borderwidth ?? 0.0,
-            ),
-            borderRadius: BorderRadius.circular(5),
-            color: colors,
+    return Container(
+        width: size,
+        height: height,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: bordercolor ?? Colors.transparent,
+            width: borderwidth ?? 0.0,
           ),
-          child: MaterialButton(
-            onPressed: onpressed,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                icon ?? const SizedBox(),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: Textcolor,
-                    fontSize: fontsize,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w900,
-                  ),
+          borderRadius: BorderRadius.circular(5),
+          color: colors,
+        ),
+        child: MaterialButton(
+          onPressed: onpressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon ?? const SizedBox(),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Textcolor,
+                  fontSize: fontsize,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w900,
                 ),
-              ],
-            ),
-          )),
-    );
+              ),
+            ],
+          ),
+        ));
   }
 }
 

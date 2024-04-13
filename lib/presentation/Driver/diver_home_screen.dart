@@ -11,16 +11,10 @@ import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
-
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/StatusScreen.dart';
-import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
-import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
-import 'package:roaddoc/presentation/splashScreen/welcomeScreen.dart';
-import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 import 'package:roaddoc/service/https/httpsCall.dart';
-
 import 'package:roaddoc/service/provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -117,7 +111,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       colors: Colors.white,
                       label: "REQUEST MECHANIC",
                       onpressed: () async {
-                          
                         if (position.altitude == 0 && position.longitude == 0) {
                           showMessage("Hold on, setting things up...");
                         } else {
@@ -131,7 +124,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
                           String Address =
                               "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
-                          
+
                           loaderIndicator(context);
                           appProvider.getCurrentAcceptedMech(
                               driverUser: appProvider.getuserInfromation);

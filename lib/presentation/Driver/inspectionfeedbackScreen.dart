@@ -51,13 +51,17 @@ class FeedbackScreenDriver extends StatelessWidget {
               colors: Colors.white,
               label: "Payment",
               onpressed: () {
-                if (inspectionMessageController.text.isEmpty ||
-                    inspectionCatogoryController.text.isEmpty) {
-                  showMessage("fill the feedback");
-                } else {
-                  Routes.instance
-                      .push(widget: PaymentScreen(), context: context);
-                }
+                // if (inspectionMessageController.text.isEmpty ||
+                //     inspectionCatogoryController.text.isEmpty) {
+                //   showMessage("fill the feedback");
+                // } else {
+                Routes.instance.push(
+                    widget: PaymentScreen(
+                      inceptioncategory: inspectionCatogoryController.text,
+                      inspectionMessage: inspectionMessageController.text,
+                    ),
+                    context: context);
+                // }
               },
               fontsize: 18,
               Textcolor: Colors.black,

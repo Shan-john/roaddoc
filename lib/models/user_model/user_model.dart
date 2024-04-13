@@ -16,21 +16,24 @@ class UserModel {
   String? inspectionmessage;
   String? image;
   String? address;
+  String? amount;
+  String? paymentmethod;
 
-  UserModel({
-    this.mailid,
-    this.name,
-    this.id,
-    this.phoneNumber,
-    this.longitude,
-    this.latitude,
-    this.type,
-    this.dateAndTime,
-    this.inspectionCategory,
-    this.inspectionmessage,
-    this.image,
-    this.address,
-  });
+  UserModel(
+      {this.mailid,
+      this.name,
+      this.id,
+      this.phoneNumber,
+      this.longitude,
+      this.latitude,
+      this.type,
+      this.dateAndTime,
+      this.inspectionCategory,
+      this.inspectionmessage,
+      this.image,
+      this.address,
+      this.amount,
+      this.paymentmethod});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return _$UserModelFromJson(json);
@@ -51,6 +54,8 @@ class UserModel {
     String? inspectionmessage,
     String? image,
     String? address,
+    String? amount,
+    String? paymentmethod,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -65,6 +70,8 @@ class UserModel {
       inspectionmessage: inspectionmessage ?? this.inspectionmessage,
       image: image ?? this.image,
       address: address ?? this.address,
+      amount: amount ?? this.amount,
+      paymentmethod: paymentmethod ?? this.paymentmethod,
     );
   }
 }

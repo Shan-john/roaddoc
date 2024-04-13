@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/calculateDistanceLatitudemandLongitude.dart';
 import 'package:roaddoc/function/getlocation.dart';
@@ -52,8 +53,9 @@ class DriverRequesDetailsScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 70,
-                  backgroundImage:
-                      data.image!.isNotEmpty ? NetworkImage(data.image!) : null,
+                  backgroundImage: data.image == ""
+                      ? NetworkImage(data.image!)
+                      : NetworkImage(personAvatar),
                 ),
                 Gap(20),
                 TextConfortaa(text: data.name.toString(), size: 20),
@@ -150,51 +152,51 @@ class DriverRequesDetailsScreen extends StatelessWidget {
     );
   }
 }
-  // if (position.altitude == 0 &&
-  //                               position.longitude == 0) {
-  //                             showMessage("Hold on, setting things up...");
-  //                           } else {
-  //                             if (appProvider.currenAcceptedDriverDetails.id ==
-  //                                 null) {
-  //                                    Placemark placemark = await getPlaceName(
-  //                             latitude: position.latitude,
-  //                             longitude: position.longitude);
+// if (position.altitude == 0 &&
+//                               position.longitude == 0) {
+//                             showMessage("Hold on, setting things up...");
+//                           } else {
+//                             if (appProvider.currenAcceptedDriverDetails.id ==
+//                                 null) {
+//                                    Placemark placemark = await getPlaceName(
+//                             latitude: position.latitude,
+//                             longitude: position.longitude);
 
-  //                         LocationModel locationModel =
-  //                             await getLocationDetails(
-  //                                 placemark.postalCode.toString());
+//                         LocationModel locationModel =
+//                             await getLocationDetails(
+//                                 placemark.postalCode.toString());
 
-  //                         String Address =
-  //                             "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
-                          
-  //                               appProvider.removeRequest(DriverUser);
-  //                               FirebasefirestoreHelper.instance
-  //                                   .removeRequest(id: DriverUser.id);
-  //                               FirebasefirestoreHelper.instance
-  //                                   .uploadCurrenAcceptedDriverDetails(
-  //                                       driverUser: DriverUser,
-  //                                       MechUser:
-  //                                           appProvider.getuserInfromation);
+//                         String Address =
+//                             "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
 
-  //                               UserModel UpdatedMech =
-  //                                   appProvider.getuserInfromation.copyWith(
-  //                                     address: Address,
-  //                                       latitude: position.latitude,
-  //                                       longitude: position.longitude);
+//                               appProvider.removeRequest(DriverUser);
+//                               FirebasefirestoreHelper.instance
+//                                   .removeRequest(id: DriverUser.id);
+//                               FirebasefirestoreHelper.instance
+//                                   .uploadCurrenAcceptedDriverDetails(
+//                                       driverUser: DriverUser,
+//                                       MechUser:
+//                                           appProvider.getuserInfromation);
 
-  //                               appProvider.updateuserinfo(UpdatedMech, null);
-  //                               FirebasefirestoreHelper.instance
-  //                                   .uploadCurrenAcceptedDriverDetails(
-  //                                       driverUser: DriverUser,
-  //                                       MechUser:
-  //                                           appProvider.getuserInfromation);
-  //                               FirebasefirestoreHelper.instance
-  //                                   .uploadCurrentAccptedMech(
-  //                                       MechUser:
-  //                                           appProvider.getuserInfromation,
-  //                                       driverUser: DriverUser);
-  //                             } else {
-  //                               showMessage(
-  //                                   "Already Accepted a request ,Check the details screen");
-  //                             }
-  //                           }
+//                               UserModel UpdatedMech =
+//                                   appProvider.getuserInfromation.copyWith(
+//                                     address: Address,
+//                                       latitude: position.latitude,
+//                                       longitude: position.longitude);
+
+//                               appProvider.updateuserinfo(UpdatedMech, null);
+//                               FirebasefirestoreHelper.instance
+//                                   .uploadCurrenAcceptedDriverDetails(
+//                                       driverUser: DriverUser,
+//                                       MechUser:
+//                                           appProvider.getuserInfromation);
+//                               FirebasefirestoreHelper.instance
+//                                   .uploadCurrentAccptedMech(
+//                                       MechUser:
+//                                           appProvider.getuserInfromation,
+//                                       driverUser: DriverUser);
+//                             } else {
+//                               showMessage(
+//                                   "Already Accepted a request ,Check the details screen");
+//                             }
+//                           }

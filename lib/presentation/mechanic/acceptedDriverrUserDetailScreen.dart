@@ -82,7 +82,7 @@ class AcceptedDriverUserScreen extends StatelessWidget {
                       ),
                     ),
                     RowMaptile(
-                      icon: Icons.vpn_key_outlined,
+                      icon: Icons.code,
                       value: driverUser.id.toString(),
                       size: 25,
                     ),

@@ -6,10 +6,12 @@ import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
 
 import 'package:roaddoc/function/type_of_users.dart';
+import 'package:roaddoc/home.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
+import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
 import 'package:roaddoc/service/provider/provider.dart';
 
@@ -78,10 +80,10 @@ class RegisterScreen extends StatelessWidget {
                         print("done");
                         if (type == usertype.DRIVER) {
                           Routes.instance.pushandRemoveUntil(
-                              widget: DriverHomeScreen(), context: context);
+                              widget: SplashScreen(), context: context);
                         } else {
                           Routes.instance.pushandRemoveUntil(
-                              widget: MechanicHomeScreen(), context: context);
+                              widget: SplashScreen(), context: context);
                         }
                       } else {}
                     }
