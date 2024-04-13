@@ -67,7 +67,7 @@ class UserDetailScreen extends StatelessWidget {
                       size: 18,
                     ),
                     RowMaptile(
-                      icon: Icons.vpn_key_outlined,
+                      icon: Icons.code,
                       value: userModel.id.toString(),
                       size: 18,
                     ),

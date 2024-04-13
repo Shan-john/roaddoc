@@ -28,6 +28,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   TextEditingController newnamecontroller = TextEditingController();
 
   File? image;
+  File? nullimage;
 
   void pickImageFromGallery() async {
     final picker = ImagePicker();
@@ -59,12 +60,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               Icons.arrow_back_ios,
               color: Colors.black,
             )),
+         
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Center(
@@ -73,12 +75,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     pickImageFromGallery();
                   },
                   child: CircleAvatar(
-                    radius: 100,
-                    backgroundImage: appProvider.getuserInfromation.image !=
-                            null
-                        ? NetworkImage(appProvider.getuserInfromation.image!)
-                        : NetworkImage(personAvatar),
-                  ),
+                      radius: 100,
+                      backgroundColor: Colors.black,
+                      backgroundImage: appProvider.getuserInfromation.image != ""? NetworkImage(
+                          appProvider.getuserInfromation.image! 
+                              ):NetworkImage(
+                         personAvatar 
+                              )),
                 ),
               ),
               textfieldeditor(
@@ -92,27 +95,26 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   hintlable: "PhoneNumber",
                   border: true),
               Gap(20),
-                
-             
-               
-              Padding( 
+
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     TextConfortaa(
-                    text: "id: ${appProvider.getuserInfromation.id!}",
-                    size: 18),
-                     customDivider(),
-                     Gap(20),
                     TextConfortaa(
-                        text: "mail id: ${appProvider.getuserInfromation.mailid!}",
+                        text: "id: ${appProvider.getuserInfromation.id!}",
                         size: 18),
-                            customDivider(),
+                    customDivider(),
+                    Gap(20),
+                    TextConfortaa(
+                        text:
+                            "mail id: ${appProvider.getuserInfromation.mailid!}",
+                        size: 18),
+                    customDivider(),
                   ],
                 ),
               ),
-               
+
               //  textfieldeditor(
               //       controller:  ,
               //       hintlable: "UPi",

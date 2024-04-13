@@ -38,22 +38,23 @@ class ProfileScreen extends StatelessWidget {
                         bottomRight: Radius.circular(20))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CircleAvatar(
                         radius: 70,
-                        backgroundImage:
-                            appProvider.getuserInfromation.image != null
-                                ? NetworkImage(
-                                    appProvider.getuserInfromation.image!)
-                                : NetworkImage(personAvatar)),
-                    Gap(30),
+                          backgroundColor: Colors.black, 
+                        backgroundImage: appProvider.getuserInfromation.image != ""? NetworkImage(
+                          appProvider.getuserInfromation.image! 
+                              ):NetworkImage(
+                         personAvatar 
+                              )
+                           ), 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: [    
                         TextConfortaa(
-                            text: appProvider.getuserInfromation.name!,
+                            text: appProvider.getuserInfromation.name!   , 
                             size: 25,
                             color: Colors.white),
                         Gap(10),
@@ -70,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                             onpressed: () => Routes.instance.push(
                                 widget: ProfileEditScreen(), context: context),
                             fontsize: 17,
-                            Textcolor: Colors.black)
+                            Textcolor: Colors.black)   
                       ],
                     )
                   ],
