@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -75,7 +76,8 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 )),
             Gap(30),
-            SizedBox(
+            Container(
+             padding: const EdgeInsets.symmetric(horizontal: 14.0),
               height: 350,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                   }, true,true),
                   Primarybutton(
                     size: 100,
-                    colors: Colors.red,
+                    colors: Colors.black87,
                     label: "LOGOUT",
                     fontsize: 15,
                     Textcolor: Colors.white,
@@ -119,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
 detailstile(
      String value, IconData icons, Function() ontap, bool directionicons, bool Divider  ) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+    padding: const EdgeInsets.symmetric(horizontal: 0.0),
     child: InkWell(
       onTap: ontap,
       child: Column(

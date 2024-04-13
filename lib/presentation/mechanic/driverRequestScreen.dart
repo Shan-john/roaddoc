@@ -63,15 +63,16 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                 detailstile("${data.address}", Icons.location_on_outlined, () {
                   launchGoogleMap(
                       latitude: data.latitude!, longitude: data.longitude!);
-                }, true,true),
+                }, true, true),
                 Gap(10),
                 detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
                   makePhoneCall(data.phoneNumber.toString());
-                }, true,true),
+                }, true, true),
                 Gap(10),
-                detailstile("${data.mailid}", Icons.code, () {}, false,true),
+                detailstile("${data.mailid}", Icons.code, () {}, false, true),
                 Gap(10),
-                detailstile("${data.id}", Icons.mail_outline, () {}, false,true)
+                detailstile(
+                    "${data.id}", Icons.mail_outline, () {}, false, true)
               ],
             ),
           ),
@@ -83,6 +84,7 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                     colors: Colors.green,
                     label: "ACCEPT",
                     onpressed: () async {
+                      appProvider.getUserloaction();
                       if (position.altitude == 0 && position.longitude == 0) {
                         showMessage("Hold on, setting things up...");
                       } else {

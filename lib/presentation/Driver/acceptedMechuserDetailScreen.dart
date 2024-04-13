@@ -7,6 +7,7 @@ import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
 import 'package:roaddoc/function/urlLauncher.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
 
 class AcceptedMechUserDetailsScreen extends StatelessWidget {
   final UserModel mechUser;
@@ -26,11 +27,12 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
               )),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               backgroundColor: Colors.black,
               radius: 70,
-              backgroundImage: mechUser.image == ""
+              backgroundImage: mechUser.image != ""
                   ? NetworkImage(mechUser.image!)
                   : NetworkImage(personAvatar),
             ),
@@ -55,34 +57,30 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
                       icon: Icons.person_3_outlined,
                       value: mechUser.name!,
                       size: 25,
+                    ), RowMaptile(
+                      icon: Icons.vpn_key_outlined,
+                      value: mechUser.id.toString(),
+                      size: 25,
                     ),
                     RowMaptile(
                       icon: Icons.mail_outlined,
                       value: mechUser.mailid!,
                       size: 25,
                     ),
-                    InkWell(
-                      onTap: () {
-                        makePhoneCall(mechUser.phoneNumber.toString());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          RowMaptile(
-                            icon: Icons.call_outlined,
-                            value: mechUser.phoneNumber.toString(),
-                            size: 25,
-                          ),
-                          Icon(Icons.arrow_forward_ios_outlined)
-                        ],
-                      ),
-                    ),
-                    RowMaptile(
-                      icon: Icons.vpn_key_outlined,
-                      value: mechUser.id.toString(),
-                      size: 25,
-                    ),
+                    detailstile(
+                        "${mechUser.phoneNumber}", Icons.call_outlined, () {
+                      makePhoneCall(
+                        mechUser.phoneNumber.toString(),
+                      );
+                    }, true, false),
+                   
+                     detailstile(
+                        "${mechUser.address}", Icons.location_on_outlined, () {
+                          launchGoogleMap(
+                          latitude: mechUser.latitude!,
+                          longitude: mechUser.longitude!);
+                      
+                    }, true, false),
                   ],
                 ),
               ),

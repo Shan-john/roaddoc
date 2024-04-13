@@ -49,9 +49,10 @@ class HistoryScreen extends StatelessWidget {
                     boxShadow: listoBoxshadow,
                   ),
                   child: ListTile(
-                      leading: CircleAvatar(
+                      leading: CircleAvatar( 
+                        backgroundColor: Colors.black87,
                         radius: 37,
-                        child: TextConfortaa(text: "${index + 1}", size: 20),
+                        child: TextConfortaa(text: "${index + 1}", size: 20,color: Colors.white ),
                       ),
                       title:
                           TextConfortaa(text: data.name.toString(), size: 20),

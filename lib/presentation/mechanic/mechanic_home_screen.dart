@@ -44,7 +44,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     List<UserModel> requestdriverlist = appProvider.getDriverRequestlist;
     appProvider.getCurrenAcceptedDriverDetails(
         mechUser: appProvider.getuserInfromation);
-    appProvider.getUserloaction();
+    
     Position position = appProvider.getUserlocation;
 
     return Scaffold(
@@ -96,6 +96,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 37,
+                       backgroundColor: Colors.black87, 
                       child: TextConfortaa(text: "${index + 1}", size: 20),
                     ),
                     title: TextConfortaa(
@@ -107,54 +108,58 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                         child: CircularButton(
                           color: Colors.green,
                           onpress: () async {
-                            if (position.altitude == 0 &&
-                                position.longitude == 0) {
-                              showMessage("Hold on, setting things up...");
-                            } else {
-                              if (appProvider.currenAcceptedDriverDetails.id ==
-                                  null) {
-                                Placemark placemark = await getPlaceName(
-                                    latitude: position.latitude,
-                                    longitude: position.longitude);
+                            Routes.instance.push(
+                                widget:
+                                    DriverRequesDetailsScreen(data: DriverUser),
+                                context: context);
+                            // if (position.altitude == 0 &&
+                            //     position.longitude == 0) {
+                            //   showMessage("Hold on, setting things up...");
+                            // } else {
+                            //   if (appProvider.currenAcceptedDriverDetails.id ==
+                            //       null) {
+                            //     Placemark placemark = await getPlaceName(
+                            //         latitude: position.latitude,
+                            //         longitude: position.longitude);
 
-                                LocationModel locationModel =
-                                    await getLocationDetails(
-                                        placemark.postalCode.toString());
+                            //     LocationModel locationModel =
+                            //         await getLocationDetails(
+                            //             placemark.postalCode.toString());
 
-                                String Address =
-                                    "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
+                            //     String Address =
+                            //         "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
 
-                                appProvider.removeRequest(DriverUser);
-                                FirebasefirestoreHelper.instance
-                                    .removeRequest(id: DriverUser.id);
-                                FirebasefirestoreHelper.instance
-                                    .uploadCurrenAcceptedDriverDetails(
-                                        driverUser: DriverUser,
-                                        MechUser:
-                                            appProvider.getuserInfromation);
+                            //     appProvider.removeRequest(DriverUser);
+                            //     FirebasefirestoreHelper.instance
+                            //         .removeRequest(id: DriverUser.id);
+                            //     FirebasefirestoreHelper.instance
+                            //         .uploadCurrenAcceptedDriverDetails(
+                            //             driverUser: DriverUser,
+                            //             MechUser:
+                            //                 appProvider.getuserInfromation);
 
-                                UserModel UpdatedMech =
-                                    appProvider.getuserInfromation.copyWith(
-                                        address: Address,
-                                        latitude: position.latitude,
-                                        longitude: position.longitude);
+                            //     UserModel UpdatedMech =
+                            //         appProvider.getuserInfromation.copyWith(
+                            //             address: Address,
+                            //             latitude: position.latitude,
+                            //             longitude: position.longitude);
 
-                                appProvider.updateuserinfo(UpdatedMech, null);
-                                FirebasefirestoreHelper.instance
-                                    .uploadCurrenAcceptedDriverDetails(
-                                        driverUser: DriverUser,
-                                        MechUser:
-                                            appProvider.getuserInfromation);
-                                FirebasefirestoreHelper.instance
-                                    .uploadCurrentAccptedMech(
-                                        MechUser:
-                                            appProvider.getuserInfromation,
-                                        driverUser: DriverUser);
-                              } else {
-                                showMessage(
-                                    "Already Accepted a request ,Check the details screen");
-                              }
-                            }
+                            //     appProvider.updateuserinfo(UpdatedMech, null);
+                            //     FirebasefirestoreHelper.instance
+                            //         .uploadCurrenAcceptedDriverDetails(
+                            //             driverUser: DriverUser,
+                            //             MechUser:
+                            //                 appProvider.getuserInfromation);
+                            //     FirebasefirestoreHelper.instance
+                            //         .uploadCurrentAccptedMech(
+                            //             MechUser:
+                            //                 appProvider.getuserInfromation,
+                            //             driverUser: DriverUser);
+                            //   } else {
+                            //     showMessage(
+                            //         "Already Accepted a request ,Check the details screen");
+                            //   }
+                            // }
                           },
                           radius: 40,
                           child: const Icon(
