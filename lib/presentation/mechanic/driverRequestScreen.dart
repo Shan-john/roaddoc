@@ -63,15 +63,15 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                 detailstile("${data.address}", Icons.location_on_outlined, () {
                   launchGoogleMap(
                       latitude: data.latitude!, longitude: data.longitude!);
-                }, true),
+                }, true,true),
                 Gap(10),
                 detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
                   makePhoneCall(data.phoneNumber.toString());
-                }, true),
+                }, true,true),
                 Gap(10),
-                detailstile("${data.mailid}", Icons.code, () {}, false),
+                detailstile("${data.mailid}", Icons.code, () {}, false,true),
                 Gap(10),
-                detailstile("${data.id}", Icons.mail_outline, () {}, false)
+                detailstile("${data.id}", Icons.mail_outline, () {}, false,true)
               ],
             ),
           ),

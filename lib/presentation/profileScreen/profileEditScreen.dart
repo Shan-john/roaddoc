@@ -92,21 +92,27 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   hintlable: "PhoneNumber",
                   border: true),
               Gap(20),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextConfortaa(
+                
+             
+               
+              Padding( 
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     TextConfortaa(
                     text: "id: ${appProvider.getuserInfromation.id!}",
                     size: 18),
+                     customDivider(),
+                     Gap(20),
+                    TextConfortaa(
+                        text: "mail id: ${appProvider.getuserInfromation.mailid!}",
+                        size: 18),
+                            customDivider(),
+                  ],
+                ),
               ),
-              customDivider(),
-              Gap(20),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextConfortaa(
-                    text: "id: ${appProvider.getuserInfromation.mailid!}",
-                    size: 18),
-              ),
-              customDivider(),
+               
               //  textfieldeditor(
               //       controller:  ,
               //       hintlable: "UPi",

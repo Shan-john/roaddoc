@@ -20,7 +20,15 @@ Widget textfieldeditor(
       keyboardType: keyboardType,
       style: const TextStyle(color: Color.fromARGB(255, 10, 10, 10)),
       controller: controller,
-      decoration: InputDecoration(
+      cursorColor: Colors.black,
+      decoration: InputDecoration( 
+         
+       
+        focusedBorder: UnderlineInputBorder(      
+      borderSide: border == true ? BorderSide(color: Color.fromARGB(255, 0, 3, 5), width: 2.0) : BorderSide(
+         color: Colors.transparent
+      ),   
+    ),  
         border: border == false ? InputBorder.none : null,
         // ink well to switch the visiblity to true and false
         labelText: labelText,

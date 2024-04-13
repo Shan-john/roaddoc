@@ -52,14 +52,15 @@ class _StatusScreenState extends State<StatusScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              titleText("Status", 40),
+              
+               TextConfortaa(text: "Status", size: 40),
               Gap(10),
               Center(
                 child: Primarybutton(
                   size: 390,
                   colors: isMechanicAccepted == false
                       ? Colors.white
-                      : Color.fromARGB(255, 0, 255, 157),
+                      : Color.fromARGB(255, 0, 255, 179),
                   label: "Request accepted?",
                   onpressed: () {
                     isMechanicAccepted

@@ -10,10 +10,8 @@ import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
 import 'package:roaddoc/service/provider/provider.dart';
 
 class Mainscreen extends StatefulWidget {
-  final UserModel userModel;
   const Mainscreen({
     super.key,
-    required this.userModel,
   });
 
   @override
@@ -21,19 +19,11 @@ class Mainscreen extends StatefulWidget {
 }
 
 class _MainscreenState extends State<Mainscreen> {
-  bool isloading = false;
+  bool isloading = true;
 
   int currentindex = 0;
   List<Widget> Driverscreen = [DriverHomeScreen(), ProfileScreen()];
   List<Widget> Mechscreen = [MechanicHomeScreen(), ProfileScreen()];
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 3), () {
-      isloading = true;
-      setState(() {});
-    });
-  }
 
   @override
   void dispose() {
@@ -44,35 +34,35 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context, listen: true);
+    
+    isloading = false;
     return Scaffold(
-        bottomNavigationBar: isloading == true
-            ? CurvedNavigationBar(
-                animationCurve: Curves.easeInOutSine,
-                height: 50,
-                color: Color.fromARGB(255, 46, 46, 46),
-                backgroundColor: Colors.white,
-
-                // buttonBackgroundColor: Colors.white,
-                onTap: (index) {
-                  setState(() {
-                    currentindex = index;
-                  });
-                },
-                items: const [
-                  Icon(
-                    Icons.home_outlined,
-                    color: Colors.white,
-                  ),
-                  Icon(
-                    Icons.person_outline_sharp,
-                    color: Colors.white,
-                  ),
-                ],
-              )
-            : null,
-        body: widget.userModel.type.toString() == usertype.DRIVER.toString()
-            ? Driverscreen[currentindex]
-            : Mechscreen[currentindex]);
+        bottomNavigationBar: CurvedNavigationBar(
+          animationCurve: Curves.easeInOutSine,
+          height: 50,
+          color: Color.fromARGB(255, 46, 46, 46),
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+              currentindex = index;
+            });
+          },
+          items: const [
+            Icon(
+              Icons.home_outlined,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.person_outline_sharp,
+              color: Colors.white,
+            ),
+          ],
+        ),
+        body:   appProvider.getuserInfromation.type == usertype.DRIVER.toString()
+                ? Driverscreen[currentindex]
+                : appProvider.getuserInfromation.type == usertype.MECHANIC.toString() ?Mechscreen[currentindex] :SizedBox()
+             );
   }
 }
 

@@ -41,7 +41,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              titleText("Register", 40),
+              TextConfortaa(text: "Register", size: 40),
               Gap(10),
               textfieldeditor(
                   controller: nameTextEditingController, hintlable: "Name"),
@@ -80,16 +80,10 @@ class RegisterScreen extends StatelessWidget {
                       );
                       if (isregistered) {
                         print("done");
-                        if (type == usertype.DRIVER) {
-                          Routes.instance.pop(context);
-                          Routes.instance.pushandRemoveUntil(
-                              widget: SplashScreen(), context: context);
-                        } else {
-                            Routes.instance.pop(context);
-                          Routes.instance.pushandRemoveUntil(
-                              widget: SplashScreen(), context: context);
-                        }
-                      } else {}
+                        Routes.instance.pop(context);
+                        Routes.instance.pushandRemoveUntil(
+                            widget: SplashScreen(), context: context);
+                      }
                     }
                   },
                   height: 55,

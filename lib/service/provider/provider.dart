@@ -16,6 +16,11 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeUserdatafromprovide() async {
+    _userModel.type = _userModel.type = "";
+    notifyListeners();
+  }
+
   //passing userModel using "get" keyword
   UserModel get getuserInfromation => _userModel;
 

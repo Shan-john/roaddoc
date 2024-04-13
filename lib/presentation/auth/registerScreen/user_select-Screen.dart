@@ -19,44 +19,49 @@ class UserTypeSelectionScreen extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios))),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          logoSection(),
-          Column(
-            children: [
-              Primarybutton(
-                  bordercolor: Colors.black,
-                  borderwidth: 2,
-                  size: 180,
-                  colors: Colors.white,
-                  label: "As A USER",
-                  onpressed: () {
-                    Routes.instance.push(
-                        widget: RegisterScreen(type: usertype.DRIVER),
-                        context: context);
-                  },
-                  fontsize: 18,
-                  Textcolor: Colors.black),
-              Gap(50),
-              Primarybutton(
-                  bordercolor: Colors.black,
-                  borderwidth: 2,
-                  size: 180,
-                  colors: Colors.white,
-                  label: "As A MECHANIC",
-                  onpressed: () {
-                    Routes.instance.push(
-                        widget: RegisterScreen(type: usertype.MECHANIC),
-                        context: context);
-                  },
-                  fontsize: 18,
-                  Textcolor: Colors.black),
-            ],
-          ),
-          const Gap(40),
-        ],
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            logoSection(),
+            Column( 
+                  crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Primarybutton(
+                    bordercolor: Colors.black,
+                    borderwidth: 2,
+                    size: 180,
+                    colors: Colors.white,
+                    label: "As A USER",
+                    onpressed: () {
+                      Routes.instance.push(
+                          widget: RegisterScreen(type: usertype.DRIVER),
+                          context: context);
+                    },
+                    fontsize: 18,
+                    Textcolor: Colors.black),
+                Gap(50),
+                Primarybutton(
+                    bordercolor: Colors.black,
+                    borderwidth: 2,
+                    size: 180,
+                    colors: Colors.white,
+                    label: "As A MECHANIC",
+                    onpressed: () {
+                      Routes.instance.push(
+                          widget: RegisterScreen(type: usertype.MECHANIC),
+                          context: context);
+                    },
+                    fontsize: 18,
+                    Textcolor: Colors.black),
+              ],
+            ),
+            const Gap(40),
+          ],
+        ),
       ),
     );
   }

@@ -44,9 +44,9 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     List<UserModel> requestdriverlist = appProvider.getDriverRequestlist;
     appProvider.getCurrenAcceptedDriverDetails(
         mechUser: appProvider.getuserInfromation);
-
+    appProvider.getUserloaction();
     Position position = appProvider.getUserlocation;
-    print(position.latitude);
+
     return Scaffold(
         appBar: AppBar(
           title: TextConfortaa(text: "ROAD DOC", size: 20),
@@ -75,7 +75,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
               final DriverUser = requestdriverlist[index];
               return InkWell(
                 onTap: () async {
-                  //Position position = await getlocation();
+                  appProvider.getUserloaction();
 
                   Routes.instance.push(
                       widget: DriverRequesDetailsScreen(

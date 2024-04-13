@@ -6,6 +6,7 @@ import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
 import 'package:roaddoc/function/type_of_users.dart';
+import 'package:roaddoc/home.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
@@ -24,6 +25,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -38,7 +40,8 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              titleText("Log in", 40),
+               
+              TextConfortaa(text: "Log in", size: 40),
               Gap(10),
               textfieldeditor(
                   controller: mailIdTextEditingController,
@@ -62,7 +65,7 @@ class LoginScreen extends StatelessWidget {
 
                       if (isregistered) {
                         Routes.instance.pop(context);
-
+                      
                         Routes.instance.pushandRemoveUntil(
                             widget: SplashScreen(), context: context);
                       }

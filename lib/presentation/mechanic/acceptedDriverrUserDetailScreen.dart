@@ -9,6 +9,7 @@ import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
 import 'package:roaddoc/function/urlLauncher.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
+import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
 
 class AcceptedDriverUserScreen extends StatelessWidget {
   final UserModel driverUser;
@@ -16,6 +17,7 @@ class AcceptedDriverUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -34,8 +36,8 @@ class AcceptedDriverUserScreen extends StatelessWidget {
               backgroundColor: Colors.black,
               radius: 70,
               backgroundImage: driverUser.image == ""
-                  ? NetworkImage(driverUser.image!)
-                  : NetworkImage(personAvatar),
+                  ? NetworkImage(personAvatar)
+                  : NetworkImage(driverUser.image!),
             ),
             Center(
               child: Container(
@@ -64,28 +66,24 @@ class AcceptedDriverUserScreen extends StatelessWidget {
                       value: driverUser.mailid!,
                       size: 25,
                     ),
-                    InkWell(
-                      onTap: () {
-                        makePhoneCall(driverUser.phoneNumber.toString());
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RowMaptile(
-                            icon: Icons.call_outlined,
-                            value: driverUser.phoneNumber.toString(),
-                            size: 25,
-                          ),
-                          Icon(Icons.arrow_forward_ios_rounded)
-                        ],
-                      ),
-                    ),
+                    detailstile(
+                        "${driverUser.phoneNumber}", Icons.call_outlined, () {
+                      makePhoneCall(
+                        driverUser.phoneNumber.toString(),
+                      );
+                    }, true, false),
                     RowMaptile(
                       icon: Icons.code,
                       value: driverUser.id.toString(),
                       size: 25,
                     ),
+                    detailstile(
+                        "${driverUser.address}", Icons.location_on_outlined,
+                        () {
+                      launchGoogleMap(
+                          latitude: driverUser.latitude!,
+                          longitude: driverUser.longitude!);
+                    }, true, false),
                     Primarybutton(
                       size: 390,
                       colors: Colors.white,

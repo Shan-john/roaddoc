@@ -31,8 +31,9 @@ class PaymentScreen extends StatelessWidget {
       {super.key,
       required this.inceptioncategory,
       required this.inspectionMessage});
+      
   TextEditingController paymentcontroller = TextEditingController();
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,8 @@ class PaymentScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gap(10),
-            titleText("PAYMENT DETAIL", 40),
+             
+            TextConfortaa(text: "PAYMENT DETAIL", size: 40),
             Gap(10),
             TextRoboto(text: "INVOICE", size: 20),
             Divider(),
@@ -68,6 +70,7 @@ class PaymentScreen extends StatelessWidget {
             Primarybutton(
                 onpressed: () {
                   if (paymentcontroller.text.isEmpty) {
+
                     showMessage("Enter the amount");
                   } else {
                     Routes.instance.push(
@@ -106,6 +109,7 @@ class PaymentScreen extends StatelessWidget {
                 margin: EdgeInsets.only(left: 100),
                 width: 100,
                 child: textfieldeditor(
+                  keyboardType: TextInputType.number,
                     maxline: 1,
                     controller: paymentcontroller,
                     hintlable: "₹",

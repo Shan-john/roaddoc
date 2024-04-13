@@ -29,9 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
     //get User infromation;
     super.initState();
     // Delay navigation to home screen
-    AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
-    appProvider.getUserInformationFirebase();
-
+    // AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+    // appProvider.getUserInformationFirebase();
+        AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
+                     appProvider.getUserInformationFirebase();
+                     appProvider.getUserloaction();
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
           context,
@@ -40,24 +42,28 @@ class _SplashScreenState extends State<SplashScreen> {
               stream: FireBaseAuthHelper.instance.getAuthChange,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  appProvider.getUserloaction();
-                  if (appProvider.getuserInfromation.type ==
-                      usertype.DRIVER.toString()) {
-                    showMessage(appProvider.getuserInfromation.type.toString());
-                    print("driver screen");
-                    return Mainscreen(
-                      userModel: appProvider.getuserInfromation,
+                  
+                   
+                                      return Mainscreen(
+                      
                     );
-                  } else if (appProvider.getuserInfromation.type ==
-                      usertype.MECHANIC.toString()) {
-                    showMessage(appProvider.getuserInfromation.type.toString());
-                    return Mainscreen(
-                      userModel: appProvider.getuserInfromation,
-                    );
-                  } else {
-                    showMessage("NetWork Issue");
-                    return const SplashScreen();
-                  }
+                  // if (appProvider.getuserInfromation.type ==
+                  //     usertype.DRIVER.toString()) {
+                  //   showMessage(appProvider.getuserInfromation.type.toString());
+                  //   print("driver screen");
+                  //   return Mainscreen(
+                  //     userModel: appProvider.getuserInfromation,
+                  //   );
+                  // } else if (appProvider.getuserInfromation.type ==
+                  //     usertype.MECHANIC.toString()) {
+                  //   showMessage(appProvider.getuserInfromation.type.toString());
+                  //   return Mainscreen(
+                  //     userModel: appProvider.getuserInfromation,
+                  //   );
+                  // } else {
+                  //   showMessage("NetWork Issue");
+                  //   return SplashScreen();
+                  // }
                 } //  return if the user is driver goto drivermain page() other wize mechanic homepage;
                 else {
                   return const WelcomeScreen();

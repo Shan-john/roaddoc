@@ -14,7 +14,8 @@ class logoSection extends StatelessWidget {
       child: Column(
         children: [
           Image.asset("assets/logo.png"),
-          titleText("Road Doc", 40),
+           
+          TextConfortaa(text: "Road Doc", size: 40)
         ],
       ),
     );

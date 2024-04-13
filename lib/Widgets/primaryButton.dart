@@ -61,13 +61,7 @@ class Primarybutton extends StatelessWidget {
   }
 }
 
-/// custom
-titleText(String lable, double fontsize) {
-  return Text(
-    lable,
-    style: TextStyle(fontSize: fontsize, fontFamily: "Comfortaa"),
-  );
-}
+ 
 
 Text TextConfortaa(
     {required String text, required double size, Color? color = Colors.black}) {
@@ -77,7 +71,7 @@ Text TextConfortaa(
     text,
     style: TextStyle(
         color: color,
-        fontSize: size,
+        fontSize: size, 
         fontWeight: FontWeight.w400,
         fontFamily: "Confortaa"),
   );

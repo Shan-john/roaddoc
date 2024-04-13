@@ -84,15 +84,15 @@ class ProfileScreen extends StatelessWidget {
                       appProvider.getuserInfromation.phoneNumber.toString(),
                       Icons.phone,
                       () {},
-                      false),
+                      false,true),
                   detailstile(appProvider.getuserInfromation.id!, Icons.code,
-                      () {}, false),
+                      () {}, false,true),
                   detailstile("HISTORY", Icons.history, () {
                     Routes.instance.push(
                         widget: HistoryScreen(
                             UserHistory: appProvider.listofHistory),
                         context: context);
-                  }, true),
+                  }, true,true),
                   Primarybutton(
                     size: 100,
                     colors: Colors.red,
@@ -101,6 +101,7 @@ class ProfileScreen extends StatelessWidget {
                     Textcolor: Colors.white,
                     onpressed: () {
                       FireBaseAuthHelper.instance.logOut();
+                      appProvider.removeUserdatafromprovide();
                       Routes.instance.pushandRemoveUntil(
                           widget: WelcomeScreen(), context: context);
                     },
@@ -116,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
 }
 
 detailstile(
-    String value, IconData icons, Function() ontap, bool? directionicons) {
+     String value, IconData icons, Function() ontap, bool directionicons, bool Divider  ) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10.0),
     child: InkWell(
@@ -132,7 +133,7 @@ detailstile(
                   : SizedBox()
             ],
           ),
-          customDivider()
+        Divider ==true?  customDivider():SizedBox()
         ],
       ),
     ),

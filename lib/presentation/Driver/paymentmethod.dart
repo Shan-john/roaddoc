@@ -54,12 +54,13 @@ class PaymentMethodScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                titleText("Payment", 40),
+                
+                TextConfortaa(text: "Payment", size: 40),
                 Gap(10),
                 Center(
                   child: Primarybutton(
                     size: 390,
-                    colors: Color.fromARGB(255, 0, 153, 255),
+                    colors: Color.fromARGB(255, 0, 255, 179),
                     label: "Direct Payment",
                     onpressed: () {
                       UserModel UpdatedMechUser = mechUser.copyWith(
@@ -83,7 +84,7 @@ class PaymentMethodScreen extends StatelessWidget {
                           mechUser: mechUser);
                       Routes.instance.pushandRemoveUntil(
                           widget: Mainscreen(
-                              userModel: appProvider.getuserInfromation),
+                             ),
                           context: context);
                     },
                     fontsize: 18,
