@@ -66,6 +66,11 @@ class UserDetailScreen extends StatelessWidget {
                       value: userModel.mailid!,
                       size: 18,
                     ),
+                     RowMaptile(
+                      icon: Icons.calendar_month,
+                      value: userModel.dateAndTime!,
+                      size: 18,
+                    ),
                     RowMaptile(
                       icon: Icons.code,
                       value: userModel.id.toString(),

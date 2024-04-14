@@ -10,7 +10,7 @@ import 'package:roaddoc/home.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/service/firebase/firebase_firestorehelper.dart';
 import 'package:roaddoc/service/provider/provider.dart';
-
+import 'package:intl/intl.dart';
 class PaymentMethodScreen extends StatelessWidget {
   final String inceptioncategory;
   final String inspectionMessage;
@@ -63,16 +63,20 @@ class PaymentMethodScreen extends StatelessWidget {
                     colors: Color.fromARGB(255, 0, 255, 179),
                     label: "Direct Payment",
                     onpressed: () {
+                      DateTime now = DateTime.now();
+                      String formattedDate = DateFormat('dd/MM/yyyy').format(now);
                       UserModel UpdatedMechUser = mechUser.copyWith(
                           inspectionCategory: inceptioncategory,
                           inspectionmessage: inspectionMessage,
                           paymentmethod: "Direct Payment",
+                          dateAndTime: formattedDate,
                           amount: amount);
                       UserModel UpdatedDriverUser =
                           appProvider.getuserInfromation.copyWith(
                               inspectionCategory: inceptioncategory,
                               inspectionmessage: inspectionMessage,
                               paymentmethod: "Direct Payment",
+                              dateAndTime:  formattedDate,
                               amount: amount);
 
                       FirebasefirestoreHelper.instance.uploadhistory(
