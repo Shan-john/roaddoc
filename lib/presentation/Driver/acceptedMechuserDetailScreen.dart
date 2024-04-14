@@ -32,9 +32,9 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.black,
               radius: 70,
-              backgroundImage: mechUser.image != ""
-                  ? NetworkImage(mechUser.image!)
-                  : NetworkImage(personAvatar),
+              backgroundImage:  
+                  NetworkImage(mechUser.image??personAvatar)
+                  
             ),
             Center(
               child: Container(
@@ -49,16 +49,16 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
                   boxShadow: listoBoxshadow,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextConfortaa(text: "Mechanic Details", size: 30),
+                    Center(child: TextConfortaa(text: "Mechanic Details", size: 30)),
                     RowMaptile(
                       icon: Icons.person_3_outlined,
                       value: mechUser.name!,
-                      size: 25,
+                      size: 25, 
                     ), RowMaptile(
-                      icon: Icons.vpn_key_outlined,
+                      icon: Icons.code,
                       value: mechUser.id.toString(),
                       size: 25,
                     ),
@@ -74,13 +74,18 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
                       );
                     }, true, false),
                    
-                     detailstile(
-                        "${mechUser.address}", Icons.location_on_outlined, () {
+                      InkWell(
+                        onTap: () {
                           launchGoogleMap(
-                          latitude: mechUser.latitude!,
-                          longitude: mechUser.longitude!);
-                      
-                    }, true, false),
+                              latitude: mechUser.latitude!,
+                              longitude: mechUser.longitude!);
+                        },
+                        child:  RowMaptile(
+                                icon: Icons.location_on_outlined,
+                                value: mechUser.address.toString(),
+                                size: 18,
+                              ),
+                      ),
                   ],
                 ),
               ),

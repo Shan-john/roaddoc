@@ -82,7 +82,7 @@ class PaymentScreen extends StatelessWidget {
                         context: context);
                   }
                 },
-                size: 100,
+                size: 110,
                 colors: Colors.green,
                 label: "Proceed",
                 fontsize: 20,

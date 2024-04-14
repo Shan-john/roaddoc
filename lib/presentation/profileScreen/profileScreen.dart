@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -43,10 +45,8 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                         radius: 70,
                           backgroundColor: Colors.black, 
-                        backgroundImage: appProvider.getuserInfromation.image != ""? NetworkImage(
-                          appProvider.getuserInfromation.image! 
-                              ):NetworkImage(
-                         personAvatar 
+                        backgroundImage: NetworkImage(
+                          appProvider.getuserInfromation.image??personAvatar
                               )
                            ), 
                     Column(
@@ -121,8 +121,9 @@ class ProfileScreen extends StatelessWidget {
 
 detailstile(
      String value, IconData icons, Function() ontap, bool directionicons, bool Divider  ) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+  return SizedBox(
+    
+      // width: 400, 
     child: InkWell(
       onTap: ontap,
       child: Column(

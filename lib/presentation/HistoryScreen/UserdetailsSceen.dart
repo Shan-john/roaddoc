@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,87 +30,102 @@ class UserDetailScreen extends StatelessWidget {
                 color: Colors.black,
               )),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.black,
-              radius: 70,
-              backgroundImage: userModel.image != ""
-                  ? NetworkImage(userModel.image??"")
-                  : NetworkImage(personAvatar), 
-            ),
-            Gap(20),
-            Center(
-              child: Container(
-                height: 550,
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  backgroundColor: Colors.black,
+                  radius: 70,
+                  backgroundImage:
+                      NetworkImage(userModel.image ?? personAvatar)),
+              Gap(20),
+              Center(
+                child: Container(
+                  height: 550,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: listoBoxshadow,
                   ),
-                  boxShadow: listoBoxshadow,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextConfortaa(text: "Details", size: 30),
-                    RowMaptile(
-                      icon: Icons.person_3_outlined,
-                      value: userModel.name!,
-                      size: 18,
-                    ),
-                    RowMaptile(
-                      icon: Icons.mail_outlined,
-                      value: userModel.mailid!,
-                      size: 18,
-                    ),
-                     RowMaptile(
-                      icon: Icons.calendar_month,
-                      value: userModel.dateAndTime!,
-                      size: 18,
-                    ),
-                    RowMaptile(
-                      icon: Icons.code,
-                      value: userModel.id.toString(),
-                      size: 18,
-                    ),
-                    detailstile(
-                            "${userModel.phoneNumber}", Icons.call_outlined, () {
-                          makePhoneCall(
-                            userModel.phoneNumber.toString(),
-                          );
-                        }, true, false),
-                         detailstile(
-                            "${userModel.address}", Icons.location_on_outlined, () {
-                              launchGoogleMap(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Center(child: TextConfortaa(text: "Details", size: 30)),
+                      RowMaptile(
+                        icon: Icons.person_3_outlined,
+                        value: userModel.name!,
+                        size: 18,
+                      ),
+                      RowMaptile(
+                        icon: Icons.mail_outlined,
+                        value: userModel.mailid!,
+                        size: 18,
+                      ),
+                      RowMaptile(
+                        icon: Icons.code,
+                        value: userModel.id.toString(),
+                        size: 18,
+                      ),
+                      detailstile(
+                          "${userModel.phoneNumber}", Icons.call_outlined, () {
+                        makePhoneCall(
+                          userModel.phoneNumber.toString(),
+                        );
+                      }, true, false),
+                       InkWell(
+                        onTap: () {
+                          launchGoogleMap(
                               latitude: userModel.latitude!,
                               longitude: userModel.longitude!);
-                          
-                        }, true, false),
-                          
-                    userModel.inspectionCategory != ""
-                        ? RowMaptile(
-                            icon: Icons.category_outlined,
-                            value: userModel.inspectionCategory.toString(),
-                            size: 18,
-                          )
-                        : SizedBox(),
-                    userModel.inspectionmessage != ""
-                        ? RowMaptile(
-                            icon: Icons.message_outlined,
-                            value: userModel.inspectionmessage.toString(),
-                            size: 18,
-                          )
-                        : SizedBox(),
-                  ],
+                        },
+                        child:  RowMaptile(
+                                icon: Icons.location_on_outlined,
+                                value: userModel.address.toString(),
+                                size: 18,
+                              ),
+                      ),
+                      RowMaptile(
+                        icon: Icons.calendar_month,
+                        value: userModel.dateAndTime ?? "",
+                        size: 18,
+                      ),
+                      RowMaptile(
+                        icon: Icons.payment_outlined,
+                        value: userModel.amount ?? "",
+                        size: 18,
+                      ),
+                      userModel.inspectionCategory != ""
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: RowMaptile(
+                                icon: Icons.category_outlined,
+                                value: userModel.inspectionCategory.toString(),
+                                size: 18,
+                              ),
+                            )
+                          : SizedBox(),
+                      userModel.inspectionmessage != ""
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: RowMaptile(
+                                icon: Icons.message_outlined,
+                                value: userModel.inspectionmessage.toString(),
+                                size: 18,
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
@@ -127,9 +144,9 @@ class RowMaptile extends StatelessWidget {
         Icon(icon),
         Gap(5),
         SizedBox(
-            width: 300,
+            width: 290,
             child: Text(
-              overflow: TextOverflow.clip,
+              overflow: TextOverflow.ellipsis,
               maxLines: 30,
               value,
               style: TextStyle(fontFamily: "Comfortaa", fontSize: size),

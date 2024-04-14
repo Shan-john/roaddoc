@@ -59,11 +59,11 @@ class FirebasefirestoreHelper {
           .doc(id)
           .delete();
 
-      showMessage("Request accepted successfully");
+     
 
       return true;
     } catch (e) {
-      showMessage("Failed to accept request: $e");
+       
       return false;
     }
   }

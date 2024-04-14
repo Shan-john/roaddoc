@@ -69,7 +69,9 @@ Text TextConfortaa(
     overflow: TextOverflow.ellipsis,
     maxLines: 30,
     text,
+    
     style: TextStyle(
+      
         color: color,
         fontSize: size, 
         fontWeight: FontWeight.w400,

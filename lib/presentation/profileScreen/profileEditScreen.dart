@@ -77,11 +77,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   child: CircleAvatar(
                       radius: 100,
                       backgroundColor: Colors.black,
-                      backgroundImage: appProvider.getuserInfromation.image != ""? NetworkImage(
-                          appProvider.getuserInfromation.image! 
-                              ):NetworkImage(
-                         personAvatar 
-                              )),
+                      backgroundImage: NetworkImage(
+                          appProvider.getuserInfromation.image??personAvatar
+                              ) ),
                 ),
               ),
               textfieldeditor(

@@ -7,10 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
+import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
 import 'package:roaddoc/function/calculateDistanceLatitudemandLongitude.dart';
 import 'package:roaddoc/function/getlocation.dart';
 import 'package:roaddoc/function/urlLauncher.dart';
+import 'package:roaddoc/home.dart';
 import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/acceptedMechuserDetailScreen.dart';
@@ -53,17 +55,34 @@ class DriverRequesDetailsScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 70,
-                  backgroundImage: data.image == ""
-                      ? NetworkImage(data.image!)
-                      : NetworkImage(personAvatar),
+                  backgroundImage: NetworkImage(
+                     data.image??personAvatar
+                              )
                 ),
                 Gap(20),
                 TextConfortaa(text: data.name.toString(), size: 20),
                 Gap(50),
-                detailstile("${data.address}", Icons.location_on_outlined, () {
-                  launchGoogleMap(
-                      latitude: data.latitude!, longitude: data.longitude!);
-                }, true, true),
+                InkWell(
+                        onTap: () {
+                          launchGoogleMap(
+                              latitude: data.latitude!,
+                              longitude: data.longitude!);
+                        },
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              RowMaptile(
+                                icon: Icons.location_on_outlined,
+                                value: data.address.toString(),
+                                size: 18,
+                              ),
+                              Icon(Icons.arrow_forward_ios) 
+                            ],
+                          ),
+                        ),
+                      ),
                 Gap(10),
                 detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
                   makePhoneCall(data.phoneNumber.toString());
@@ -99,13 +118,14 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                                   placemark.postalCode.toString());
 
                           String Address =
-                              "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
-
+                              "${placemark.locality??""}_${locationModel.postOffice?[0].district??""}_${locationModel.postOffice?[0].state??""}_${placemark.postalCode??""}";
+                               
                           appProvider.removeRequest(data);
                           FirebasefirestoreHelper.instance
                               .removeRequest(id: data.id);
                           FirebasefirestoreHelper.instance
                               .uploadCurrenAcceptedDriverDetails(
+
                                   driverUser: data,
                                   MechUser: appProvider.getuserInfromation);
 
@@ -128,6 +148,8 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                           showMessage(
                               "Already Accepted a request ,Check the details screen");
                         }
+                        Routes.instance.pushandRemoveUntil(
+                            widget: Mainscreen(), context: context);
                       }
                     },
                     fontsize: 20,

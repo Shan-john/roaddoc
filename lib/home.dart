@@ -1,9 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/function/type_of_users.dart';
-import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/profileScreen/profileScreen.dart';
@@ -22,27 +20,25 @@ class _MainscreenState extends State<Mainscreen> {
   bool isloading = true;
 
   int currentindex = 0;
-  List<Widget> Driverscreen = [DriverHomeScreen(), ProfileScreen()];
-  List<Widget> Mechscreen = [MechanicHomeScreen(), ProfileScreen()];
+  List<Widget> driverscreen = [DriverHomeScreen(), const ProfileScreen()];
+  List<Widget> mechscreen = [MechanicHomeScreen(), const ProfileScreen()];
 
   @override
   void dispose() {
-    // TODO: implement dispose
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: true);
-    
+
     isloading = false;
     return Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           animationCurve: Curves.easeInOutSine,
           height: 50,
-          color: Color.fromARGB(255, 46, 46, 46),
-          backgroundColor: Colors.white,
+          color: const Color.fromARGB(255, 46, 46, 46),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           onTap: (index) {
             setState(() {
               currentindex = index;
@@ -59,14 +55,16 @@ class _MainscreenState extends State<Mainscreen> {
             ),
           ],
         ),
-        body:   appProvider.getuserInfromation.type == usertype.DRIVER.toString()
-                ? Driverscreen[currentindex]
-                : appProvider.getuserInfromation.type == usertype.MECHANIC.toString() ?Mechscreen[currentindex] :SizedBox()
-             );
+        body: appProvider.getuserInfromation.type == usertype.DRIVER.toString()
+            ? driverscreen[currentindex]
+            : appProvider.getuserInfromation.type ==
+                    usertype.MECHANIC.toString()
+                ? mechscreen[currentindex]
+                : const SizedBox());
   }
 }
 
-Widget Padtext(
+Widget padtext(
     {required String title, required Color colors, String subtitle = ""}) {
   return Column(
     children: [
@@ -83,8 +81,8 @@ Widget Padtext(
       ),
       Text(
         subtitle,
-        style:
-            TextStyle(color: Color.fromARGB(171, 121, 120, 120), fontSize: 18),
+        style: const TextStyle(
+            color: Color.fromARGB(171, 121, 120, 120), fontSize: 18),
       ),
     ],
   );

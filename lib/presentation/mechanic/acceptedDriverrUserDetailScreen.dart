@@ -35,9 +35,9 @@ class AcceptedDriverUserScreen extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.black,
               radius: 70,
-              backgroundImage: driverUser.image == ""
-                  ? NetworkImage(personAvatar)
-                  : NetworkImage(driverUser.image!),
+              backgroundImage: NetworkImage(
+                     driverUser.image??personAvatar
+                              )
             ),
             Center(
               child: Container(
@@ -52,10 +52,10 @@ class AcceptedDriverUserScreen extends StatelessWidget {
                   boxShadow: listoBoxshadow,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextConfortaa(text: "Driver Details", size: 30),
+                    Center(child: TextConfortaa(text: "Driver Details", size: 30)),
                     RowMaptile(
                       icon: Icons.person_3_outlined,
                       value: driverUser.name!,
@@ -77,13 +77,18 @@ class AcceptedDriverUserScreen extends StatelessWidget {
                       value: driverUser.id.toString(),
                       size: 25,
                     ),
-                    detailstile(
-                        "${driverUser.address}", Icons.location_on_outlined,
-                        () {
-                      launchGoogleMap(
-                          latitude: driverUser.latitude!,
-                          longitude: driverUser.longitude!);
-                    }, true, false),
+                     InkWell(
+                        onTap: () {
+                          launchGoogleMap(
+                              latitude: driverUser.latitude!,
+                              longitude: driverUser.longitude!);
+                        },
+                        child:  RowMaptile(
+                                icon: Icons.location_on_outlined,
+                                value: driverUser.address.toString(),
+                                size: 18,
+                              ),
+                      ),
                     Primarybutton(
                       size: 390,
                       colors: Colors.white,

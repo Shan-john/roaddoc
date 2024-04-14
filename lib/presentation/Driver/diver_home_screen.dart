@@ -35,9 +35,9 @@ class DriverHomeScreen extends StatelessWidget {
         driverUser: appProvider.getuserInfromation);
     appProvider.getHistoryList(appProvider.getuserInfromation);
     Position position = appProvider.getUserlocation;
-    
+
     position.latitude == 0.0 ? isloading = true : isloading = false;
-   
+
     final size = MediaQuery.of(context).size;
     void requestbuttom(String? id) async {
       UserModel userModel = UserModel(id: "");
@@ -74,7 +74,6 @@ class DriverHomeScreen extends StatelessWidget {
               toolbarHeight: 37,
               title: TextConfortaa(text: "ROAD DOC", size: 20),
             ),
-            
             TextConfortaa(text: titlelable, size: 40),
             const SimpleText(lable: "Available Mechanics Around"),
             Gap(size.height / 16),
@@ -138,7 +137,7 @@ class DriverHomeScreen extends StatelessWidget {
                             placemark.postalCode.toString());
 
                         String Address =
-                            "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
+                            "${placemark.locality ?? ""}_${locationModel.postOffice?[0].district ?? ""}_${locationModel.postOffice?[0].state ?? ""}_${placemark.postalCode ?? ""}";
 
                         appProvider.getCurrentAcceptedMech(
                             driverUser: appProvider.getuserInfromation);
@@ -175,10 +174,14 @@ class DriverHomeScreen extends StatelessWidget {
                     label: "CANCEL REQUEST",
                     onpressed: () {
                       loaderIndicator(context);
-                      appProvider.currentAvailableMechUser.id == ""
-                          ? FirebasefirestoreHelper.instance.removeRequest(
-                              id: appProvider.getuserInfromation.id)
-                          : showMessage("your Request is already accepted");
+                      if (appProvider.currentAvailableMechUser.id == null) {
+                        FirebasefirestoreHelper.instance.removeRequest(
+                            id: appProvider.getuserInfromation.id);
+                        showMessage("Your Request is removed");
+                      } else {
+                        showMessage("Your Request is already accepted");
+                      }
+
                       Routes.instance.pop(context);
                     })
               ],

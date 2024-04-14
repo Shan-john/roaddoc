@@ -30,50 +30,52 @@ class FeedbackScreenDriver extends StatelessWidget {
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             
-           TextConfortaa(text: "Inspection report", size: 40),
-            Gap(30),
-            textfieldeditor(
-              controller: inspectionCatogoryController,
-              hintlable: "Problem Category",
-            ),
-            Gap(30),
-            textfieldeditor(
-                controller: inspectionMessageController,
-                hintlable: "Message",
-                maxline: 8),
-            Gap(30),
-            Center(
-              child: Primarybutton(
-                size: 390,
-                colors: Colors.white,
-                label: "Payment",
-                onpressed: () {
-                  // if (inspectionMessageController.text.isEmpty ||
-                  //     inspectionCatogoryController.text.isEmpty) {
-                  //   showMessage("fill the feedback");
-                  // } else {
-                  Routes.instance.push(
-                      widget: PaymentScreen(
-                        inceptioncategory: inspectionCatogoryController.text,
-                        inspectionMessage: inspectionMessageController.text,
-                      ),
-                      context: context);
-                  // }
-                },
-                fontsize: 18,
-                Textcolor: Colors.black,
-                bordercolor: Colors.black,
-                borderwidth: 2,
-                height: 80,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+               
+             TextConfortaa(text: "Inspection report", size: 40),
+              Gap(30),
+              textfieldeditor(
+                controller: inspectionCatogoryController,
+                hintlable: "Problem Category",
               ),
-            ),
-          ],
+              Gap(30),
+              textfieldeditor(
+                  controller: inspectionMessageController,
+                  hintlable: "Message",
+                  maxline: 8),
+              Gap(30),
+              Center(
+                child: Primarybutton(
+                  size: 390,
+                  colors: Colors.white,
+                  label: "Payment",
+                  onpressed: () {
+                    // if (inspectionMessageController.text.isEmpty ||
+                    //     inspectionCatogoryController.text.isEmpty) {
+                    //   showMessage("fill the feedback");
+                    // } else {
+                    Routes.instance.push(
+                        widget: PaymentScreen(
+                          inceptioncategory: inspectionCatogoryController.text,
+                          inspectionMessage: inspectionMessageController.text,
+                        ),
+                        context: context);
+                    // }
+                  },
+                  fontsize: 18,
+                  Textcolor: Colors.black,
+                  bordercolor: Colors.black,
+                  borderwidth: 2,
+                  height: 80,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
