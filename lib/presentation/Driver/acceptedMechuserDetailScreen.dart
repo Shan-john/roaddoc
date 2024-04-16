@@ -33,7 +33,8 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
               backgroundColor: Colors.black,
               radius: 70,
               backgroundImage:  
-                  NetworkImage(mechUser.image??personAvatar)
+            mechUser.image==null?
+                  NetworkImage(personAvatar):mechUser.image == "" ? NetworkImage(personAvatar):NetworkImage(mechUser.image!)
                   
             ),
             Center(

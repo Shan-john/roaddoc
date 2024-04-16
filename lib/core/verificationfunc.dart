@@ -7,6 +7,7 @@ bool loginvalidation(
 ) {
   if (email.isEmpty && password.isEmpty) {
     showMessage("Email is empty");
+     
     return false;
   } else if (email.isEmpty) {
     showMessage("Email is empty");

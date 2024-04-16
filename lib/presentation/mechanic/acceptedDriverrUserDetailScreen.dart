@@ -35,9 +35,8 @@ class AcceptedDriverUserScreen extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.black,
               radius: 70,
-              backgroundImage: NetworkImage(
-                     driverUser.image??personAvatar
-                              )
+              backgroundImage:   driverUser.image==null?
+                  NetworkImage(personAvatar):driverUser.image == "" ? NetworkImage(personAvatar):NetworkImage(driverUser.image!)
             ),
             Center(
               child: Container(

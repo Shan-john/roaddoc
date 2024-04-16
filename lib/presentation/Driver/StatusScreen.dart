@@ -140,19 +140,17 @@ class _StatusScreenState extends State<StatusScreen> {
                   colors: Colors.white,
                   label: "Payment",
                   onpressed: () {
-                    // if (isMechanicAccepted) {
+                      if (isMechanicAccepted) {
                     Routes.instance.push(
                         widget: FeedbackScreenDriver(
                           MechUser: mechUser,
                         ),
                         context: context);
-                    // } else {
-                    //   showMessage("Pending acceptance..");
-                    // }
+                    } else {
+                      showMessage("Pending acceptance..");
+                    }
 
-                    // appProvider.removecurrentavailableMech(
-                    //     driverUser: appProvider.getuserInfromation);
-                    // setState(() {});
+                    
                   },
                   fontsize: 18,
                   Textcolor: Colors.black,

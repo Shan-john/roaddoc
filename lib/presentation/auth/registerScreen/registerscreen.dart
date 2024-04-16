@@ -67,9 +67,8 @@ class RegisterScreen extends StatelessWidget {
                       name: nameTextEditingController.text,
                       password: passwordTextEditingController.text,
                     );
-                    print(" done");
+
                     if (isvalidated) {
-                      print(" done");
                       bool isregistered =
                           await FireBaseAuthHelper.instance.signup(
                         nameTextEditingController.text,
@@ -79,10 +78,11 @@ class RegisterScreen extends StatelessWidget {
                         type,
                       );
                       if (isregistered) {
-                        print("done");
                         Routes.instance.pop(context);
                         Routes.instance.pushandRemoveUntil(
-                            widget: SplashScreen(), context: context);
+                            widget: const SplashScreen(), context: context);
+                      } else {
+                        Routes.instance.pop(context);
                       }
                     }
                   },

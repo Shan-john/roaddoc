@@ -38,7 +38,8 @@ class UserDetailScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                   radius: 70,
                   backgroundImage:
-                      NetworkImage(userModel.image ?? personAvatar)),
+                    userModel.image==null?
+                  NetworkImage(personAvatar):userModel.image == "" ? NetworkImage(personAvatar):NetworkImage(userModel.image!)),
               Gap(20),
               Center(
                 child: Container(
@@ -92,7 +93,7 @@ class UserDetailScreen extends StatelessWidget {
                       ),
                       RowMaptile(
                         icon: Icons.calendar_month,
-                        value: userModel.dateAndTime ?? "",
+                        value: userModel.date ?? "",
                         size: 18,
                       ),
                       RowMaptile(

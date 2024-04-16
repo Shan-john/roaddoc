@@ -18,6 +18,7 @@ Widget textfieldeditor(
     child: TextFormField(
       maxLines: maxline,
       keyboardType: keyboardType,
+      
       style: const TextStyle(color: Color.fromARGB(255, 10, 10, 10)),
       controller: controller,
       cursorColor: Colors.black,
@@ -33,6 +34,7 @@ Widget textfieldeditor(
         // ink well to switch the visiblity to true and false
         labelText: labelText,
         hintText: hintlable,
+        
         hintStyle: const TextStyle(
             color: Color.fromARGB(151, 43, 43, 43), fontSize: 20),
       ),

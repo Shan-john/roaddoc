@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/logo.dart';
@@ -44,10 +45,64 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of(listen: false, context);
+    AppProvider appProvider = Provider.of(listen: true, context);
     newnamecontroller.text = appProvider.getuserInfromation.name!;
     newphonecontroller.text =
         appProvider.getuserInfromation.phoneNumber.toString();
+
+    Future displaybottomsheet(
+      BuildContext context,
+    ) async {
+      return showModalBottomSheet(
+          backgroundColor: HexColor("#242628"),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(50))),
+          context: context,
+          builder: (context) {
+            return Container(
+                height: 200,
+                width: double.infinity,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton.icon(
+                          onPressed: () {
+                            pickImageFromGallery();
+                            UserModel userModel =
+                                appProvider.getuserInfromation; 
+
+                            appProvider.updateuserinfo(userModel, image);
+                            appProvider.getUserInformationFirebase();
+                          },
+                          icon: Icon(
+                            Icons.image_outlined,
+                            color: Colors.white,
+                          ),
+                          label: TextConfortaa(
+                              text: "New profile picture",
+                              size: 18,
+                              color: Colors.white)),
+                      Gap(10),
+                      TextButton.icon(
+                          onPressed: () {
+                            UserModel userModel = appProvider.getuserInfromation
+                                .copyWith(image: "");
+                            appProvider.updateuserinfo(userModel, null);
+                            appProvider.getUserInformationFirebase();
+                          },
+                          icon: Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.red,
+                          ),
+                          label: TextConfortaa(
+                              text: "remove current picture",
+                              size: 18,
+                              color: Colors.red))
+                    ]));
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 37,
@@ -60,7 +115,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               Icons.arrow_back_ios,
               color: Colors.black,
             )),
-         
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -72,14 +126,20 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               Center(
                 child: InkWell(
                   onTap: () {
-                    pickImageFromGallery();
+                    displaybottomsheet(context);
                   },
-                  child: CircleAvatar(
-                      radius: 100,
-                      backgroundColor: Colors.black,
-                      backgroundImage: NetworkImage(
-                          appProvider.getuserInfromation.image??personAvatar
-                              ) ),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.black,
+                          backgroundImage:  appProvider.getuserInfromation.image==""?
+                  NetworkImage(personAvatar): appProvider.getuserInfromation.image==null ?NetworkImage(personAvatar):NetworkImage( appProvider.getuserInfromation.image!)),
+                      Gap(20),
+                      TextConfortaa(
+                          text: "Edit Picture", size: 18, color: Colors.blue)
+                    ],
+                  ),
                 ),
               ),
               textfieldeditor(

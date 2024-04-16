@@ -65,18 +65,19 @@ class PaymentMethodScreen extends StatelessWidget {
                     onpressed: () {
                       DateTime now = DateTime.now();
                       String formattedDate = DateFormat('dd/MM/yyyy').format(now);
+                    
                       UserModel UpdatedMechUser = mechUser.copyWith(
                           inspectionCategory: inceptioncategory,
                           inspectionmessage: inspectionMessage,
                           paymentmethod: "Direct Payment",
-                          dateAndTime: formattedDate,
+                          date: formattedDate,
                           amount: amount);
                       UserModel UpdatedDriverUser =
                           appProvider.getuserInfromation.copyWith(
                               inspectionCategory: inceptioncategory,
                               inspectionmessage: inspectionMessage,
                               paymentmethod: "Direct Payment",
-                              dateAndTime:  formattedDate,
+                              date:  formattedDate,
                               amount: amount);
 
                       FirebasefirestoreHelper.instance.uploadhistory(

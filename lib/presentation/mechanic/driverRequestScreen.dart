@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
@@ -42,136 +43,124 @@ class DriverRequesDetailsScreen extends StatelessWidget {
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        // cro
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CircleAvatar(
-                  radius: 70,
-                  backgroundImage: NetworkImage(
-                     data.image??personAvatar
-                              )
-                ),
-                Gap(20),
-                TextConfortaa(text: data.name.toString(), size: 20),
-                Gap(50),
-                InkWell(
-                        onTap: () {
-                          launchGoogleMap(
-                              latitude: data.latitude!,
-                              longitude: data.longitude!);
-                        },
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              RowMaptile(
-                                icon: Icons.location_on_outlined,
-                                value: data.address.toString(),
-                                size: 18,
-                              ),
-                              Icon(Icons.arrow_forward_ios) 
-                            ],
-                          ),
-                        ),
-                      ),
-                Gap(10),
-                detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
-                  makePhoneCall(data.phoneNumber.toString());
-                }, true, true),
-                Gap(10),
-                detailstile("${data.mailid}", Icons.code, () {}, false, true),
-                Gap(10),
-                detailstile(
-                    "${data.id}", Icons.mail_outline, () {}, false, true)
-              ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // cro
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundColor: Colors.black,
+                    backgroundImage:  data.image==null?
+                    NetworkImage(personAvatar):data.image == "" ? NetworkImage(personAvatar):NetworkImage(data.image!)
+                  ),
+                  Gap(20),
+                  TextConfortaa(text: data.name.toString(), size: 25), 
+                  Gap(50),
+                   detailstile("${data.address}", Icons.place_outlined, () {
+                    launchGoogleMap(
+                                latitude: data.latitude!,
+                                longitude: data.longitude!);
+                  }, true, true),
+                        
+                  Gap(10),
+                  detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
+                    makePhoneCall(data.phoneNumber.toString());
+                  }, true, true),
+                  Gap(10),
+                  detailstile("${data.mailid}", Icons.code, () {}, false, true),
+                  Gap(10),
+                  detailstile(
+                      "${data.id}", Icons.mail_outline, () {}, false, true)
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            child: Column(
-              children: [
-                Primarybutton(
-                    size: 300,
-                    colors: Colors.green,
-                    label: "ACCEPT",
-                    onpressed: () async {
-                      appProvider.getUserloaction();
-                      if (position.altitude == 0 && position.longitude == 0) {
-                        showMessage("Hold on, setting things up...");
-                      } else {
-                        if (appProvider.currenAcceptedDriverDetails.id ==
-                            null) {
-                          Placemark placemark = await getPlaceName(
-                              latitude: position.latitude,
-                              longitude: position.longitude);
-
-                          LocationModel locationModel =
-                              await getLocationDetails(
-                                  placemark.postalCode.toString());
-
-                          String Address =
-                              "${placemark.locality??""}_${locationModel.postOffice?[0].district??""}_${locationModel.postOffice?[0].state??""}_${placemark.postalCode??""}";
-                               
-                          appProvider.removeRequest(data);
-                          FirebasefirestoreHelper.instance
-                              .removeRequest(id: data.id);
-                          FirebasefirestoreHelper.instance
-                              .uploadCurrenAcceptedDriverDetails(
-
-                                  driverUser: data,
-                                  MechUser: appProvider.getuserInfromation);
-
-                          UserModel UpdatedMech = appProvider.getuserInfromation
-                              .copyWith(
-                                  address: Address,
-                                  latitude: position.latitude,
-                                  longitude: position.longitude);
-
-                          appProvider.updateuserinfo(UpdatedMech, null);
-                          FirebasefirestoreHelper.instance
-                              .uploadCurrenAcceptedDriverDetails(
-                                  driverUser: data,
-                                  MechUser: appProvider.getuserInfromation);
-                          FirebasefirestoreHelper.instance
-                              .uploadCurrentAccptedMech(
-                                  MechUser: appProvider.getuserInfromation,
-                                  driverUser: data);
+            SizedBox(
+              child: Column(
+                children: [
+                  Primarybutton(
+                      size: 300,
+                      colors: Colors.green,
+                      label: "ACCEPT",
+                      onpressed: () async {
+                        appProvider.getUserloaction();
+                        if (position.altitude == 0 && position.longitude == 0) {
+                          showMessage("Hold on, setting things up...");
                         } else {
-                          showMessage(
-                              "Already Accepted a request ,Check the details screen");
+                          if (appProvider.currenAcceptedDriverDetails.id ==
+                              null) {
+                            Placemark placemark = await getPlaceName(
+                                latitude: position.latitude,
+                                longitude: position.longitude);
+        
+                            LocationModel locationModel =
+                                await getLocationDetails(
+                                    placemark.postalCode.toString());
+        
+                            String Address =
+                                "${placemark.locality??""}_${locationModel.postOffice?[0].district??""}_${locationModel.postOffice?[0].state??""}_${placemark.postalCode??""}";
+                                 
+                            appProvider.removeRequest(data);
+                            FirebasefirestoreHelper.instance
+                                .removeRequest(id: data.id);
+                            FirebasefirestoreHelper.instance
+                                .uploadCurrenAcceptedDriverDetails(
+        
+                                    driverUser: data,
+                                    MechUser: appProvider.getuserInfromation);
+        
+                            UserModel UpdatedMech = appProvider.getuserInfromation
+                                .copyWith(
+                                    address: Address,
+                                    latitude: position.latitude,
+                                    longitude: position.longitude);
+        
+                            appProvider.updateuserinfo(UpdatedMech, null);
+                            FirebasefirestoreHelper.instance
+                                .uploadCurrenAcceptedDriverDetails(
+                                    driverUser: data,
+                                    MechUser: appProvider.getuserInfromation);
+                            FirebasefirestoreHelper.instance
+                                .uploadCurrentAccptedMech(
+                                    MechUser: appProvider.getuserInfromation,
+                                    driverUser: data);
+                          } else {
+                            showMessage(
+                                "Already Accepted a request ,Check the details screen");
+                          }
+                          Routes.instance.pushandRemoveUntil(
+                              widget: Mainscreen(), context: context);
                         }
-                        Routes.instance.pushandRemoveUntil(
-                            widget: Mainscreen(), context: context);
-                      }
+                      },
+                      fontsize: 20,
+                      Textcolor: Colors.white),
+                  Gap(20),
+                  Primarybutton(
+                    size: 300,
+                    colors: Colors.transparent,
+                    label: "Location Navigate",
+                    onpressed: () {
+                      launchGoogleMap(
+                          latitude: data.latitude!, longitude: data.longitude!);
                     },
                     fontsize: 20,
-                    Textcolor: Colors.white),
-                Gap(20),
-                Primarybutton(
-                  size: 300,
-                  colors: Colors.transparent,
-                  label: "Location Navigate",
-                  onpressed: () {
-                    launchGoogleMap(
-                        latitude: data.latitude!, longitude: data.longitude!);
-                  },
-                  fontsize: 20,
-                  Textcolor: Colors.black,
-                  bordercolor: Colors.black,
-                  borderwidth: 3,
-                )
-              ],
-            ),
-          )
-        ],
+                    Textcolor: Colors.black,
+                    bordercolor: Colors.black,
+                    borderwidth: 3,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

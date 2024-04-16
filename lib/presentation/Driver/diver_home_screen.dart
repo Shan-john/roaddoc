@@ -136,16 +136,24 @@ class DriverHomeScreen extends StatelessWidget {
                         LocationModel locationModel = await getLocationDetails(
                             placemark.postalCode.toString());
 
-                        String Address =
+                        String address =
                             "${placemark.locality ?? ""}_${locationModel.postOffice?[0].district ?? ""}_${locationModel.postOffice?[0].state ?? ""}_${placemark.postalCode ?? ""}";
+                        DateTime now = DateTime.now();
 
+                        String hour =
+                            (now.hour % 12).toString().padLeft(2, '0');
+                        String minute = now.minute.toString().padLeft(2, '0');
+
+                        String period = now.hour >= 12 ? 'PM' : 'AM';
+                        String _currentTime = '$hour:$minute:$period';
                         appProvider.getCurrentAcceptedMech(
                             driverUser: appProvider.getuserInfromation);
                         listofrequest = appProvider.getDriverRequestlist;
 
                         UserModel userModel = appProvider.getuserInfromation
                             .copyWith(
-                                address: Address,
+                                time: _currentTime,
+                                address: address,
                                 latitude: position.latitude,
                                 longitude: position.longitude);
 
@@ -164,7 +172,7 @@ class DriverHomeScreen extends StatelessWidget {
                     },
                     bordercolor: Colors.black,
                     borderwidth: 3,
-                    fontsize: 15),
+                    fontsize: 18),
                 Primarybutton(
                     fontsize: 18,
                     Textcolor: Colors.white,
@@ -177,9 +185,9 @@ class DriverHomeScreen extends StatelessWidget {
                       if (appProvider.currentAvailableMechUser.id == null) {
                         FirebasefirestoreHelper.instance.removeRequest(
                             id: appProvider.getuserInfromation.id);
-                        showMessage("Your Request is removed");
+                        showMessage("Your request has been cancelled.");
                       } else {
-                        showMessage("Your Request is already accepted");
+                        showMessage("Request is already accepted");
                       }
 
                       Routes.instance.pop(context);

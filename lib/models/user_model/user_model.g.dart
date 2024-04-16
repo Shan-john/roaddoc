@@ -14,12 +14,13 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       longitude: (json['longitude'] as num?)?.toDouble(),
       latitude: (json['latitude'] as num?)?.toDouble(),
       type: json['type'] as String?,
-      dateAndTime: json['dateAndTime'] as String?,
+      date: json['date'] as String?,
       inspectionCategory: json['inspectionCategory'] as String?,
       inspectionmessage: json['inspectionmessage'] as String?,
       image: json['image'] as String?,
       address: json['address'] as String?,
       amount: json['amount'] as String?,
+      time: json['time'] as String?,
       paymentmethod: json['paymentmethod'] as String?,
     );
 
@@ -31,11 +32,12 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'longitude': instance.longitude,
       'latitude': instance.latitude,
       'type': instance.type,
-      'dateAndTime': instance.dateAndTime,
+      'date': instance.date,
       'inspectionCategory': instance.inspectionCategory,
       'inspectionmessage': instance.inspectionmessage,
       'image': instance.image,
       'address': instance.address,
       'amount': instance.amount,
       'paymentmethod': instance.paymentmethod,
+      'time': instance.time,
     };

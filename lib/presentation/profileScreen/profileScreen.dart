@@ -45,9 +45,9 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                         radius: 70,
                           backgroundColor: Colors.black, 
-                        backgroundImage: NetworkImage(
-                          appProvider.getuserInfromation.image??personAvatar
-                              )
+                        backgroundImage:  appProvider.getuserInfromation.image==""?
+                  NetworkImage(personAvatar,): appProvider.getuserInfromation.image==null ?NetworkImage(personAvatar):NetworkImage( appProvider.getuserInfromation.image!),
+                 
                            ), 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,

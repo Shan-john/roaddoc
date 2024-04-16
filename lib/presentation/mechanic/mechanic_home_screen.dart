@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
 import 'package:roaddoc/function/ShowMessage.dart';
@@ -94,36 +95,19 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                     boxShadow: listoBoxshadow,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 37,
-                       backgroundColor: Colors.black87, 
-                      child: TextConfortaa(text: "${index + 1}", size: 20,color: Colors.white),
+                    leading:   CircleAvatar(
+                      radius: 20,
+                      backgroundImage: DriverUser.image==null?
+                  NetworkImage(personAvatar):DriverUser.image == "" ?    NetworkImage(personAvatar):   NetworkImage(DriverUser.image!),
                     ),
                     title: TextConfortaa(
                         text: DriverUser.name.toString(), size: 20),
                     subtitle: TextConfortaa(
                         text: "+91 ${DriverUser.phoneNumber}", size: 18),
-                    trailing: SizedBox(
-                        width: 60,
-                        child: CircularButton(
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          onpress: () async {
-                            Routes.instance.push(
-                                widget:
-                                    DriverRequesDetailsScreen(data: DriverUser),
-                                context: context);
-                         
-                          },
-                          radius: 40,
-                          child: const Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white,
-                          ),
-                        )),
-                  ),
+                    trailing: TextConfortaa(text: DriverUser.time!, size: 18),)
                 ),
               );
-            },
+            }, 
             separatorBuilder: (context, index) {
               return Gap(10);
             },

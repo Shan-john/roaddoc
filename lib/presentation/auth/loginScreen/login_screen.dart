@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/loadingindication.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
-import 'package:roaddoc/function/type_of_users.dart';
-import 'package:roaddoc/home.dart';
-import 'package:roaddoc/models/user_model/user_model.dart';
-import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
-import 'package:roaddoc/presentation/mechanic/mechanic_home_screen.dart';
 import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
 import 'package:roaddoc/service/firebase/firebase_auth.dart';
-import 'package:roaddoc/service/provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -25,14 +18,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(Icons.arrow_back_ios)),
+            icon: const Icon(Icons.arrow_back_ios)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -40,16 +32,15 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               
               TextConfortaa(text: "Log in", size: 40),
-              Gap(10),
+          const    Gap(10),
               textfieldeditor(
                   controller: mailIdTextEditingController,
                   hintlable: "Mail id"),
-              Gap(10),
+            const  Gap(10),
               PasswordTextField(
                   passwordcontroller: passwordTextEditingController),
-              Gap(10),
+            const  Gap(10),
               Primarybutton(
                   onpressed: () async {
                     loaderIndicator(context);
@@ -64,11 +55,13 @@ class LoginScreen extends StatelessWidget {
                               passwordTextEditingController.text, context);
 
                       if (isregistered) {
-                        Routes.instance.pop(context);
-                      
+                         Routes.instance.pop(context);
+
                         Routes.instance.pushandRemoveUntil(
-                            widget: SplashScreen(), context: context);
+                            widget:const SplashScreen(), context: context);
                       }
+                    } else {
+                      Routes.instance.pop(context);
                     }
 
                     // }
