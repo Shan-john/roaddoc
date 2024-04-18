@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
@@ -35,8 +36,7 @@ class AcceptedDriverUserScreen extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.black,
               radius: 70,
-              backgroundImage:   driverUser.image==null?
-                  NetworkImage(personAvatar):driverUser.image == "" ? NetworkImage(personAvatar):NetworkImage(driverUser.image!)
+              backgroundImage:  avatarImageProvider(model:driverUser)
             ),
             Center(
               child: Container(

@@ -44,9 +44,11 @@ class RegisterScreen extends StatelessWidget {
               TextConfortaa(text: "Register", size: 40),
               Gap(10),
               textfieldeditor(
+                 maxline: 1,
                   controller: nameTextEditingController, hintlable: "Name"),
               Gap(10),
               textfieldeditor(
+                 maxline: 1,
                   controller: mailIdTextEditingController,
                   hintlable: "Mail id"),
               Gap(10),
@@ -54,6 +56,7 @@ class RegisterScreen extends StatelessWidget {
                   passwordcontroller: passwordTextEditingController),
               Gap(10),
               textfieldeditor(
+                 maxline: 1,
                   keyboardType: TextInputType.number,
                   controller: phoneNumberTextEditingController,
                   hintlable: "Phone number"),
@@ -73,7 +76,9 @@ class RegisterScreen extends StatelessWidget {
                           await FireBaseAuthHelper.instance.signup(
                         nameTextEditingController.text,
                         mailIdTextEditingController.text,
-                        phoneNumberTextEditingController.text.toString(),
+                         phoneNumberTextEditingController.text,
+                        passwordTextEditingController.text,
+
                         context,
                         type,
                       );

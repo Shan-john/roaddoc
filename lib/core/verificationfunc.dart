@@ -13,7 +13,7 @@ bool loginvalidation(
     showMessage("Email is empty");
     return false;
   } else if (password.isEmpty) {
-    showMessage("Email is empty");
+    showMessage("password is empty");
     return false;
   } else {
     return true;
@@ -43,6 +43,7 @@ bool Registorvalidation({
     showMessage("Name is not found");
     return false;
   } else if (Phonenumber.isEmpty) {
+     showMessage("Phonenumber is not found");
     return false;
   } else {
     return true;

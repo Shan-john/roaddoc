@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:gap/gap.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
@@ -38,8 +39,7 @@ class UserDetailScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                   radius: 70,
                   backgroundImage:
-                    userModel.image==null?
-                  NetworkImage(personAvatar):userModel.image == "" ? NetworkImage(personAvatar):NetworkImage(userModel.image!)),
+                    avatarImageProvider(model:userModel)),
               Gap(20),
               Center(
                 child: Container(

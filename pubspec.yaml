@@ -39,7 +39,6 @@ dependencies:
   geolocator: ^11.0.0
   flutter_polyline_points: ^2.0.0
   google_maps_flutter: ^2.6.0
-  
   firebase_core: ^2.28.0
   json_serializer: ^0.2.0
   json_serializable: ^6.7.1
@@ -57,8 +56,8 @@ dependencies:
   hexcolor: ^3.0.1
   curved_navigation_bar: ^1.0.3
   image_picker: ^1.0.8
-  flutter_upi_pay: ^0.0.2
-  upi_chooser: ^0.0.6
+  http: ^1.2.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

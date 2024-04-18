@@ -7,8 +7,8 @@ import 'package:roaddoc/function/type_of_users.dart';
 
 import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
 
-class UserTypeSelectionScreen extends StatelessWidget {
-  const UserTypeSelectionScreen({super.key});
+class usertypeSelectionScreen extends StatelessWidget {
+  const usertypeSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,8 @@ class UserTypeSelectionScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             logoSection(),
-            Column( 
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Primarybutton(
                     bordercolor: Colors.black,

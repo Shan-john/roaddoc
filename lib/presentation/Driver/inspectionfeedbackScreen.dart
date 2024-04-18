@@ -81,23 +81,3 @@ class FeedbackScreenDriver extends StatelessWidget {
     );
   }
 }
-
-//  UserModel UpdatedMechUser = MechUser.copyWith(
-//               inspectionCategory: inspectionCatogoryController.text,
-//               inspectionmessage: inspectionMessageController.text,
-//             );
-//             UserModel UpdatedDriverUser =
-//                 appProvider.getuserInfromation.copyWith(
-//               inspectionCategory: inspectionCatogoryController.text,
-//               inspectionmessage: inspectionMessageController.text,
-//             );
-
-//             FirebasefirestoreHelper.instance.uploadhistory(
-//                 updatedDriverUser: UpdatedDriverUser,
-//                 updatedMechUser: UpdatedMechUser);
-//             appProvider.removecurrentavailableMech(
-//                 driverUser: UpdatedDriverUser);
-//             appProvider.removeCurrenAcceptedDriverDetails(
-//                 mechUser: MechUser);
-//             Routes.instance.pushandRemoveUntil(
-//                 widget: DriverHomeScreen(), context: context);

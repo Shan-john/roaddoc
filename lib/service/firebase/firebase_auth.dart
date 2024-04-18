@@ -22,7 +22,7 @@ class FireBaseAuthHelper {
       showMessage("logining..");
 
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      showMessage("Login successfully completed ..");
+      showMessage("Login successful.");
 
       return true;
     } on FirebaseAuthException catch (ex) {
@@ -32,12 +32,12 @@ class FireBaseAuthHelper {
     }
   }
 
-  Future<bool> signup(String name, String email, String phonenumber,
+  Future<bool> signup(String name, String email, String phonenumber, String password,
       BuildContext context, usertype type) async {
     try {
       UserCredential? userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: phonenumber);
-      showMessage("Signuped successfully completed ..");
+          .createUserWithEmailAndPassword(email: email, password: password);
+      showMessage("Signup successfully completed");
 
       UserModel dirverUser = UserModel(
         mailid: email,

@@ -3,19 +3,15 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:geocoding/geocoding.dart';
+
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
-import 'package:roaddoc/core/images.dart';
+
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
-import 'package:roaddoc/function/ShowMessage.dart';
-import 'package:roaddoc/function/getlocation.dart';
-import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
+
 import 'package:roaddoc/models/user_model/user_model.dart';
-import 'package:roaddoc/presentation/Driver/diver_home_screen.dart';
-import 'package:roaddoc/presentation/HistoryScreen/UserdetailsSceen.dart';
-import 'package:roaddoc/presentation/HistoryScreen/historyScreen.dart';
 import 'package:roaddoc/presentation/mechanic/acceptedDriverrUserDetailScreen.dart';
 
 import 'package:roaddoc/presentation/mechanic/driverRequestScreen.dart';
@@ -91,20 +87,19 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
                   width: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    color: Color.fromARGB(255, 252, 252, 252),
+                    color: const Color.fromARGB(255, 252, 252, 252),
                     boxShadow: listoBoxshadow,
                   ),
                   child: ListTile(
                     leading:   CircleAvatar(
                       radius: 20,
-                      backgroundImage: DriverUser.image==null?
-                  NetworkImage(personAvatar):DriverUser.image == "" ?    NetworkImage(personAvatar):   NetworkImage(DriverUser.image!),
+                      backgroundImage: avatarImageProvider(model:DriverUser)
                     ),
                     title: TextConfortaa(
                         text: DriverUser.name.toString(), size: 20),
                     subtitle: TextConfortaa(
                         text: "+91 ${DriverUser.phoneNumber}", size: 18),
-                    trailing: TextConfortaa(text: DriverUser.time!, size: 18),)
+                    trailing: TextConfortaa(text: DriverUser.time??"", size: 18),),
                 ),
               );
             }, 
@@ -141,3 +136,5 @@ class CircularButton extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
 import 'package:roaddoc/presentation/HistoryScreen/UserdetailsSceen.dart';
@@ -49,17 +51,16 @@ class HistoryScreen extends StatelessWidget {
                     boxShadow: listoBoxshadow,
                   ),
                   child: ListTile(
-                      leading: CircleAvatar( 
-                        backgroundColor: Colors.black87,
-                        radius: 37,
-                        child: TextConfortaa(text: "${index + 1}", size: 20,color: Colors.white ),
-                      ),
+                      leading:CircleAvatar(
+                      radius: 20,
+                      backgroundImage:  avatarImageProvider(model:data)
+                    ),
                       title:
                           TextConfortaa(text: data.name.toString(), size: 20),
                       subtitle: TextConfortaa(
                           text: "+91 ${data.phoneNumber}", size: 18),
                       trailing: TextConfortaa(
-                          text: data.inspectionmessage!, size: 20)),
+                          text: data.date!, size: 20)),
                 ),
               );
             },

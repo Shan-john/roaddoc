@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
@@ -133,9 +134,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       CircleAvatar(
                           radius: 100,
                           backgroundColor: Colors.black,
-                          backgroundImage:  appProvider.getuserInfromation.image==""?
-                  NetworkImage(personAvatar): appProvider.getuserInfromation.image==null ?NetworkImage(personAvatar):NetworkImage( appProvider.getuserInfromation.image!)),
-                      Gap(20),
+                          backgroundImage:  avatarImageProvider(model: appProvider.getuserInfromation)),  Gap(20),
                       TextConfortaa(
                           text: "Edit Picture", size: 18, color: Colors.blue)
                     ],

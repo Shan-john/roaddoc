@@ -61,7 +61,7 @@ class _loginAndRegister extends StatelessWidget {
             label: "REGISTER",
             onpressed: () {
               Routes.instance
-                  .push(widget: UserTypeSelectionScreen(), context: context);
+                  .push(widget: usertypeSelectionScreen(), context: context);
             })
       ],
     );

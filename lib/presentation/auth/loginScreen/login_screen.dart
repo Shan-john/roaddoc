@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:roaddoc/Widgets/loadingindication.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
+import 'package:roaddoc/Widgets/showtext.dart';
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/verificationfunc.dart';
+import 'package:roaddoc/presentation/auth/registerScreen/registerscreen.dart';
+import 'package:roaddoc/presentation/auth/registerScreen/user_select-Screen.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/passwordtextfield.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 import 'package:roaddoc/presentation/splashScreen/splashScreen.dart';
@@ -35,12 +38,39 @@ class LoginScreen extends StatelessWidget {
               TextConfortaa(text: "Log in", size: 40),
           const    Gap(10),
               textfieldeditor(
+                  maxline: 1,
                   controller: mailIdTextEditingController,
                   hintlable: "Mail id"),
             const  Gap(10),
               PasswordTextField(
                   passwordcontroller: passwordTextEditingController),
-            const  Gap(10),
+                  Gap(20),
+                  
+ SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    showText(
+                        //if Screen type == login  the Display "Don't have an account !"
+                        label: "Don't have an account !",
+                        size: 16,
+                        color: Color.fromARGB(255, 73, 73, 73)),
+                    const Gap(10),
+                    InkWell(
+                      onTap: () {
+                        Routes.instance
+                            .pushreplace(widget: usertypeSelectionScreen(), context: context); 
+                      },
+                      child: showText(
+                          //if Screen type == login  the Display "Don't have an account !"
+                          label: "SignUp here",
+                          size: 16,
+                          color: const Color.fromARGB(255, 1, 88, 202)),
+                    ),
+                  ],
+                ),
+              ),
+            const  Gap(20), 
               Primarybutton(
                   onpressed: () async {
                     loaderIndicator(context);
@@ -79,3 +109,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+

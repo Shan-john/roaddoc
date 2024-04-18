@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_upi_pay/Src/payment.dart';
+ 
 
 import 'package:gap/gap.dart';
 
@@ -19,7 +19,7 @@ import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/Driver/paymentmethod.dart';
 import 'package:roaddoc/presentation/auth/registerScreen/widgets/textfeildeditor.dart';
 import 'package:roaddoc/service/provider/provider.dart';
-import 'package:upi_chooser/upi_apps.dart';
+ 
 
 import '../../service/firebase/firebase_firestorehelper.dart';
 

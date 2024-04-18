@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
@@ -45,9 +46,7 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                         radius: 70,
                           backgroundColor: Colors.black, 
-                        backgroundImage:  appProvider.getuserInfromation.image==""?
-                  NetworkImage(personAvatar,): appProvider.getuserInfromation.image==null ?NetworkImage(personAvatar):NetworkImage( appProvider.getuserInfromation.image!),
-                 
+                        backgroundImage: avatarImageProvider(model: appProvider.getuserInfromation)
                            ), 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,

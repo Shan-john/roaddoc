@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/logo.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
@@ -59,8 +60,7 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 70,
                     backgroundColor: Colors.black,
-                    backgroundImage:  data.image==null?
-                    NetworkImage(personAvatar):data.image == "" ? NetworkImage(personAvatar):NetworkImage(data.image!)
+                    backgroundImage: avatarImageProvider(model:data)
                   ),
                   Gap(20),
                   TextConfortaa(text: data.name.toString(), size: 25), 

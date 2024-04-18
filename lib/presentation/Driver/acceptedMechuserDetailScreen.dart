@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:roaddoc/Widgets/avatarimageProvider.dart';
 import 'package:roaddoc/Widgets/primaryButton.dart';
 import 'package:roaddoc/core/images.dart';
 import 'package:roaddoc/core/routes.dart';
@@ -33,8 +34,7 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
               backgroundColor: Colors.black,
               radius: 70,
               backgroundImage:  
-            mechUser.image==null?
-                  NetworkImage(personAvatar):mechUser.image == "" ? NetworkImage(personAvatar):NetworkImage(mechUser.image!)
+             avatarImageProvider(model:mechUser)
                   
             ),
             Center(

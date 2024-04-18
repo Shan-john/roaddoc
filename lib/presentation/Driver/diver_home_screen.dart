@@ -37,9 +37,16 @@ class DriverHomeScreen extends StatelessWidget {
     Position position = appProvider.getUserlocation;
 
     position.latitude == 0.0 ? isloading = true : isloading = false;
+    DateTime now = DateTime.now();
 
+    String hour = (now.hour % 12).toString().padLeft(2, '0');
+    String minute = now.minute.toString().padLeft(2, '0');
+
+    String period = now.hour >= 12 ? 'PM' : 'AM';
+    String currentTime = '$hour:$minute:$period';
+  
     final size = MediaQuery.of(context).size;
-    void requestbuttom(String? id) async {
+    void requestbuttom(String? id) async { 
       UserModel userModel = UserModel(id: "");
       if (listofrequest.isNotEmpty) {
         userModel =
@@ -138,21 +145,14 @@ class DriverHomeScreen extends StatelessWidget {
 
                         String address =
                             "${placemark.locality ?? ""}_${locationModel.postOffice?[0].district ?? ""}_${locationModel.postOffice?[0].state ?? ""}_${placemark.postalCode ?? ""}";
-                        DateTime now = DateTime.now();
 
-                        String hour =
-                            (now.hour % 12).toString().padLeft(2, '0');
-                        String minute = now.minute.toString().padLeft(2, '0');
-
-                        String period = now.hour >= 12 ? 'PM' : 'AM';
-                        String _currentTime = '$hour:$minute:$period';
                         appProvider.getCurrentAcceptedMech(
                             driverUser: appProvider.getuserInfromation);
                         listofrequest = appProvider.getDriverRequestlist;
 
                         UserModel userModel = appProvider.getuserInfromation
                             .copyWith(
-                                time: _currentTime,
+                                time: currentTime,
                                 address: address,
                                 latitude: position.latitude,
                                 longitude: position.longitude);
@@ -164,7 +164,7 @@ class DriverHomeScreen extends StatelessWidget {
                         } else {
                           Routes.instance.pop(context);
 
-                          showMessage("Mechanic already accepted your request");
+                          showMessage("Mechanic has accepted your request.");
                           Routes.instance
                               .push(widget: StatusScreen(), context: context);
                         }
@@ -187,7 +187,7 @@ class DriverHomeScreen extends StatelessWidget {
                             id: appProvider.getuserInfromation.id);
                         showMessage("Your request has been cancelled.");
                       } else {
-                        showMessage("Request is already accepted");
+                        showMessage("Mechanic has accepted your request.");
                       }
 
                       Routes.instance.pop(context);

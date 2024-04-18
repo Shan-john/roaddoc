@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
-  appcheck:
-    dependency: transitive
-    description:
-      name: appcheck
-      sha256: "2682c9c270c28d83f8d87d68bb607a83882778b14c6a8da19df423be1b386520"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   args:
     dependency: transitive
     description:
@@ -435,14 +427,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_upi_pay:
-    dependency: "direct main"
-    description:
-      name: flutter_upi_pay
-      sha256: ef2983dc9c1faab0fe954654773a6b7eb55f453ba4c8e1113137680a2445fbad
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -633,7 +617,7 @@ packages:
     source: hosted
     version: "0.15.4"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
@@ -1093,14 +1077,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
-  upi_chooser:
-    dependency: "direct main"
-    description:
-      name: upi_chooser
-      sha256: "76830204f89f913d57c9bfb28e86061b4be29fcf3e66a8ece54afb6d7fcdb450"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
   url_launcher:
     dependency: "direct main"
     description:
