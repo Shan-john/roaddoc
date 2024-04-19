@@ -26,14 +26,14 @@ import 'package:roaddoc/service/provider/provider.dart';
 
 class DriverRequesDetailsScreen extends StatelessWidget {
   final UserModel data;
-  const DriverRequesDetailsScreen({super.key, required this.data});
+ 
+  const DriverRequesDetailsScreen({super.key, required this.data, });
 
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
 
     appProvider.getUserloaction();
-
     Position position = appProvider.getUserlocation;
 
     return Scaffold(
@@ -58,19 +58,16 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.black,
-                    backgroundImage: avatarImageProvider(model:data)
-                  ),
+                      radius: 70,
+                      backgroundColor: Colors.black,
+                      backgroundImage: avatarImageProvider(model: data)),
                   Gap(20),
-                  TextConfortaa(text: data.name.toString(), size: 25), 
+                  TextConfortaa(text: data.name.toString(), size: 25),
                   Gap(50),
-                   detailstile("${data.address}", Icons.place_outlined, () {
+                  detailstile("${data.address}", Icons.place_outlined, () {
                     launchGoogleMap(
-                                latitude: data.latitude!,
-                                longitude: data.longitude!);
+                        latitude: data.latitude!, longitude: data.longitude!);
                   }, true, true),
-                        
                   Gap(10),
                   detailstile("${data.phoneNumber}", Icons.phone_outlined, () {
                     makePhoneCall(data.phoneNumber.toString());
@@ -92,37 +89,37 @@ class DriverRequesDetailsScreen extends StatelessWidget {
                       label: "ACCEPT",
                       onpressed: () async {
                         appProvider.getUserloaction();
-                        if (position.altitude == 0 && position.longitude == 0) {
+                         Placemark placemark = await getPlaceName(
+                                latitude: position.latitude,
+                                longitude: position.longitude);
+
+                            LocationModel locationModel =
+                                await getLocationDetails(
+                                    placemark.postalCode.toString());
+
+                            String Address =
+                                "${placemark.locality!}_${locationModel.postOffice?[0].district!}_${locationModel.postOffice?[0].state!}_${placemark.postalCode!}";
+
+                        if (position.altitude == 0 && position.longitude == 0&& Address.isEmpty) {
                           showMessage("Hold on, setting things up...");
                         } else {
                           if (appProvider.currenAcceptedDriverDetails.id ==
                               null) {
-                            Placemark placemark = await getPlaceName(
-                                latitude: position.latitude,
-                                longitude: position.longitude);
-        
-                            LocationModel locationModel =
-                                await getLocationDetails(
-                                    placemark.postalCode.toString());
-        
-                            String Address =
-                                "${placemark.locality??""}_${locationModel.postOffice?[0].district??""}_${locationModel.postOffice?[0].state??""}_${placemark.postalCode??""}";
-                                 
+                           
                             appProvider.removeRequest(data);
                             FirebasefirestoreHelper.instance
                                 .removeRequest(id: data.id);
                             FirebasefirestoreHelper.instance
                                 .uploadCurrenAcceptedDriverDetails(
-        
                                     driverUser: data,
                                     MechUser: appProvider.getuserInfromation);
-        
-                            UserModel UpdatedMech = appProvider.getuserInfromation
-                                .copyWith(
+
+                            UserModel UpdatedMech =
+                                appProvider.getuserInfromation.copyWith(
                                     address: Address,
                                     latitude: position.latitude,
                                     longitude: position.longitude);
-        
+
                             appProvider.updateuserinfo(UpdatedMech, null);
                             FirebasefirestoreHelper.instance
                                 .uploadCurrenAcceptedDriverDetails(
@@ -165,51 +162,5 @@ class DriverRequesDetailsScreen extends StatelessWidget {
     );
   }
 }
-// if (position.altitude == 0 &&
-//                               position.longitude == 0) {
-//                             showMessage("Hold on, setting things up...");
-//                           } else {
-//                             if (appProvider.currenAcceptedDriverDetails.id ==
-//                                 null) {
-//                                    Placemark placemark = await getPlaceName(
-//                             latitude: position.latitude,
-//                             longitude: position.longitude);
 
-//                         LocationModel locationModel =
-//                             await getLocationDetails(
-//                                 placemark.postalCode.toString());
-
-//                         String Address =
-//                             "${placemark.locality}, ${locationModel.postOffice![0].district}, ${locationModel.postOffice![0].state}, ${placemark.postalCode}";
-
-//                               appProvider.removeRequest(DriverUser);
-//                               FirebasefirestoreHelper.instance
-//                                   .removeRequest(id: DriverUser.id);
-//                               FirebasefirestoreHelper.instance
-//                                   .uploadCurrenAcceptedDriverDetails(
-//                                       driverUser: DriverUser,
-//                                       MechUser:
-//                                           appProvider.getuserInfromation);
-
-//                               UserModel UpdatedMech =
-//                                   appProvider.getuserInfromation.copyWith(
-//                                     address: Address,
-//                                       latitude: position.latitude,
-//                                       longitude: position.longitude);
-
-//                               appProvider.updateuserinfo(UpdatedMech, null);
-//                               FirebasefirestoreHelper.instance
-//                                   .uploadCurrenAcceptedDriverDetails(
-//                                       driverUser: DriverUser,
-//                                       MechUser:
-//                                           appProvider.getuserInfromation);
-//                               FirebasefirestoreHelper.instance
-//                                   .uploadCurrentAccptedMech(
-//                                       MechUser:
-//                                           appProvider.getuserInfromation,
-//                                       driverUser: DriverUser);
-//                             } else {
-//                               showMessage(
-//                                   "Already Accepted a request ,Check the details screen");
-//                             }
-//                           }
+ 

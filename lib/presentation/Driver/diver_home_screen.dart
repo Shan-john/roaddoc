@@ -44,9 +44,9 @@ class DriverHomeScreen extends StatelessWidget {
 
     String period = now.hour >= 12 ? 'PM' : 'AM';
     String currentTime = '$hour:$minute:$period';
-  
+
     final size = MediaQuery.of(context).size;
-    void requestbuttom(String? id) async { 
+    void requestbuttom(String? id) async {
       UserModel userModel = UserModel(id: "");
       if (listofrequest.isNotEmpty) {
         userModel =
@@ -130,22 +130,24 @@ class DriverHomeScreen extends StatelessWidget {
                     colors: Colors.white,
                     label: "REQUEST MECHANIC",
                     onpressed: () async {
+                      loaderIndicator(context);
                       appProvider.getUserloaction();
+                      Placemark placemark = await getPlaceName(
+                          latitude: position.latitude,
+                          longitude: position.longitude);
 
-                      if (position.altitude == 0 && position.longitude == 0) {
+                      LocationModel locationModel = await getLocationDetails(
+                          placemark.postalCode.toString());
+
+                      String address =
+                          "${placemark.locality}_${locationModel.postOffice?[0].district}_${locationModel.postOffice?[0].state}_${placemark.postalCode}";
+
+                      if (position.altitude == 0 &&
+                          position.longitude == 0 &&
+                          address.isEmpty) {
                         showMessage("Hold on, setting things up...");
+                        Routes.instance.pop(context);
                       } else {
-                        loaderIndicator(context);
-                        Placemark placemark = await getPlaceName(
-                            latitude: position.latitude,
-                            longitude: position.longitude);
-
-                        LocationModel locationModel = await getLocationDetails(
-                            placemark.postalCode.toString());
-
-                        String address =
-                            "${placemark.locality ?? ""}_${locationModel.postOffice?[0].district ?? ""}_${locationModel.postOffice?[0].state ?? ""}_${placemark.postalCode ?? ""}";
-
                         appProvider.getCurrentAcceptedMech(
                             driverUser: appProvider.getuserInfromation);
                         listofrequest = appProvider.getDriverRequestlist;

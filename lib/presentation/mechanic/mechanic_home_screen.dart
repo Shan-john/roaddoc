@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:geocoding/geocoding.dart';
 
 import 'package:provider/provider.dart';
 import 'package:roaddoc/Widgets/avatarimageProvider.dart';
@@ -10,6 +11,8 @@ import 'package:roaddoc/Widgets/primaryButton.dart';
 
 import 'package:roaddoc/core/routes.dart';
 import 'package:roaddoc/core/themes.dart';
+import 'package:roaddoc/function/getlocation.dart';
+import 'package:roaddoc/models/locationModel/location_model/location_model.dart';
 
 import 'package:roaddoc/models/user_model/user_model.dart';
 import 'package:roaddoc/presentation/mechanic/acceptedDriverrUserDetailScreen.dart';
@@ -33,6 +36,7 @@ class MechanicHomeScreen extends StatefulWidget {
 }
 
 class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
+  
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: true);
@@ -41,8 +45,10 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
     List<UserModel> requestdriverlist = appProvider.getDriverRequestlist;
     appProvider.getCurrenAcceptedDriverDetails(
         mechUser: appProvider.getuserInfromation);
-    
-    Position position = appProvider.getUserlocation;
+     
+
+
+
 
     return Scaffold(
         appBar: AppBar(
@@ -76,6 +82,7 @@ class _MechanicHomeScreenState extends State<MechanicHomeScreen> {
 
                   Routes.instance.push(
                       widget: DriverRequesDetailsScreen(
+                      
                         data: DriverUser,
                       ),
                       context: context);

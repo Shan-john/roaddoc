@@ -22,10 +22,7 @@ class AcceptedMechUserDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Routes.instance.pop(context);
               },
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              )),
+              icon: Icon(Icons.arrow_back_ios)),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
